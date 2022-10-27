@@ -1,0 +1,418 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  font-family: 'Lexend Deca';
+}
+
+.container {
+  display:grid;
+  height: 100vh;
+  grid-template-columns: 0.25fr 1fr;
+  grid-template-rows: 0.1fr 0.1fr 1fr 1fr;
+  grid-template-areas: 
+    "sidebar header header"
+    "sidebar search-area search-area"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar visitor visitor";
+  grid-gap: 0.5rem;
+  font-family: 'Lexend Deca';
+}
+
+
+/* sidebar items*/
+.menu {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px 10px 10px 20px;
+  color: white;
+  border-left: 5px solid transparent;
+}
+
+.menu:hover {
+  border-left: 5px solid #FFC700;
+  color: #FFC700;
+  transition: 0.2s;
+}
+
+
+.bulsu-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 18px;
+  align-items: center;
+  font-weight: 700;
+}
+
+.school-logo {
+  height:90px;
+  padding: 10px;
+}
+
+/* title box/bulsu icon on sidebar */
+.website-title {
+  display: flex;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.sidebar {
+  font-size: 15px;
+  background-color: #0085FF;
+  grid-area: sidebar;
+}
+
+
+.header {
+  background-color: #C1CFDB;
+  grid-area: header;
+  border-radius: 15px;
+  margin-top: 15px;
+  font-size: 15px;
+  margin-right: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+  "guard_box sg-box utility";
+}
+
+/* profile picture */
+.guard {
+  height: 60px;
+  display: flex;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.name-sg {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+/* type of user */
+.type {
+  color: #3CA1FF;
+  font-size: 14px;
+}
+
+/* box of profile picture */
+.guard_box {
+  grid-area: guard_box;
+  padding: 10px;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+}
+
+/* security guard box */
+.sg-box{
+  grid-area: sg-box;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.uti-divider {
+  font-size: 45px;
+  line-height: 20px;
+  width: 30px;
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+ /* header div icons */
+.utility {
+  grid-area: utility;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+/* header icons */
+.nav-logo {
+  color:#3CA1FF;
+  cursor: pointer;
+  align-items: center;
+  justify-items: center;  
+  border-radius: 15px;
+  padding: 8px;
+  font-size: 30px;
+  line-height: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.nav-logo:hover {
+  color:orange;
+  background-color: #3CA1FF;
+  border-radius: 15px;
+  transition: 0.2s;
+}
+
+/* sidebar text */
+.title {
+  padding:10px;
+}
+
+/* horizontal divider on side lowerside */
+.line {
+  background-color: white;
+  height: 3px;
+  margin: auto;
+  width: 210px;
+}
+
+/* horizontal divider on side topside */
+.line-1 {
+  background-color: white;
+  height: 3px;
+  margin: auto;
+  width: 210px;
+  margin-top: 10px;
+}
+
+.logout {
+  margin-top: 10px;
+}
+
+.home{
+  padding-top: 10px;
+  color:white;
+}
+.home:hover {
+  color:#FFC700;
+}
+
+.logs {
+  padding-bottom: 10px;
+}
+
+.search-area {
+  grid-area: search-area;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 20px;
+}
+
+.search-outline {
+  display: flex;
+  border: 2px solid black;
+  width: 300px;
+  border-radius: 15px;
+  align-items: center;
+}
+
+#search {
+  border: 0px solid transparent;
+  background: none;
+  padding: 5px;
+  font-size: 15px;
+  width: 220px;
+}
+
+#search:focus {
+  outline: none;
+}
+
+.search-icon {
+  font-size: 30px;
+  align-self: center;
+  line-height: 20px;
+  display: flex;
+  padding: 10px;
+  flex-direction: row;
+}
+
+::-webkit-input-placeholder{
+  font-size: 15px;
+
+}
+
+/* whole box of content */
+.content {
+  grid-area: content;
+  display:grid;
+  grid-template-columns: 1fr 5px 1fr ;
+  grid-template-rows: 1fr 1fr; 
+  grid-template-areas: 
+  "content1 divider content2"
+  "content1 divider content2";
+  border-radius: 15px;
+  border: 2px solid black;
+  height: 350px;
+  width: auto;
+  margin: 0px 20px 0px 10px;
+  flex-direction: row;
+}
+
+/* first half box of content */
+.content1 {
+  grid-area: content1;
+  display: flex;
+  margin: auto;
+}
+
+.output-box {
+  background-image: url("../images/icons/qrcode-1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  display: flex;
+  height: 280px;
+  width: 320px;
+  border-radius: 20px;
+  box-shadow: 0px 3px 5px 4px #BEBEBE;
+}
+
+.output-text {
+  display: flex;
+  flex-direction: column;
+  justify-self: flex-start;
+  align-self: flex-start;
+  padding: 10px;
+  text-indent: 15px;
+  width: 130px;
+  border-top-left-radius: 20px;
+  background: 
+  linear-gradient(-45deg, transparent 30px, white 0) right ;
+}
+
+/* second half box of content */
+.content2 {
+  grid:content2;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 70% 15% 19%;
+  grid-template-areas: 
+  "scanner"
+  "btn-scan"
+  "scan-icon";
+  justify-content:center;
+  padding: 5px;
+}
+
+/* divider on content box */
+.divider {
+  display: flex;
+  grid:divider;
+}
+
+.vertical-line {
+  display: flex;
+  width: 3px;
+  height: 330px;
+  margin-top: 10px;
+  background-color: #C1CFDB;
+}
+
+/* visitor button*/
+.visitor {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 15px;
+  padding-bottom: 10px;
+}
+
+/* scanner icon and gate # line */
+.scan-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px;
+  align-items:flex-end;
+}
+
+.usbcameraicon {
+  display: flex;
+  height: 36px;
+} 
+
+p {
+  align-self: flex-end;
+  font-weight:bolder;
+  text-transform: uppercase;
+}
+
+/* scanning ready button */
+.btn-scan {
+  cursor: pointer;
+  background: black;
+  border-radius: 20px;
+  color: white;
+  margin: auto;
+  text-transform: uppercase;
+  font-weight: 800;
+  padding: 10px;
+  width: 250px;
+  box-shadow: 0px 5px 10px gray;
+}
+
+.btn-scan:hover {
+  color:black;
+  background: white;
+  transition: 0.3s;
+
+}
+
+.btn-scan-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+/* place where the scanner takes place */
+.scanner {
+  display: flex;
+  margin: 10px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* properties of visitor button */
+#btn-visitor {
+  cursor: pointer;
+  background: black;
+  border-radius: 15px;
+  color: white;
+  padding: 5px;
+  grid-area: visitor;
+  font-size: 12px;
+  height: 30px;
+  width: 200px;
+  margin-bottom: 10px;
+  font-weight: 800;
+  border: none;
+}
+
+#btn-visitor:hover {
+  background:#0085FF;
+  color: black;
+  transition: 0.2s;
+}
+
+
+
+@media only screen and (max-width: 550px) {
+  .container{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: 
+    "sidebar"
+    "header"
+    "search-area"
+    "content"
+    "visitor";
+  }
+}
+

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security Officer</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lexend Deca"
+      rel="stylesheet"
+    />
+    <script
+      src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"
+      defer
+    ></script>
+    <link rel="stylesheet" href="home-main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <!-- title box/bulsu icon on sidebar -->
+        <div class="website-title">
+          <img class="school-logo" src="bulsu.png" alt="school-logo" />
+          <h1 class="bulsu-name">
+            BulSU Parking <br />
+            Management<br />
+            System
+          </h1>
+        </div>
+
+        <!-- sidebar divider -->
+        <div class="line-1"></div>
+
+        <div class="sidebar-pages">
+          <ul>
+            <li class="home" id="img-home">
+              <a href="security_officer_home.html" class="menu">
+                <div class="sidebar-logo">
+                  <iconify-icon
+                    icon="bxs:dashboard"
+                    style="height: 36px"
+                    width="36px"
+                  ></iconify-icon>
+                </div>
+                <div class="title">Home</div>
+              </a>
+            </li>
+            <li id="img-account">
+              <a href="security_officer_home.html" class="menu">
+                <div class="sidebar-logo">
+                  <iconify-icon
+                    icon="carbon:user-avatar-filled"
+                    style="height: 36px"
+                    width="36px"
+                  ></iconify-icon>
+                </div>
+                <div class="title">My Account</div>
+              </a>
+            </li>
+            <li class="logs" id="img-logs">
+              <a href="security_officer_home.html" class="menu">
+                <div class="sidebar-logo">
+                  <iconify-icon
+                    icon="heroicons:newspaper-solid"
+                    style="height: 36px"
+                    width="36px"
+                  ></iconify-icon>
+                </div>
+                <div class="title">Logs</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- sidebar divider -->
+        <div class="line"></div>
+
+        <div class="logout">
+          <ul>
+            <li>
+              <a href="security_officer_home.html" class="menu">
+                <div class="sidebar-logo">
+                  <iconify-icon
+                    icon="eva:log-out-outline"
+                    style="height: 36px"
+                    width="36px"
+                  ></iconify-icon>
+                </div>
+
+                <div class="title">Logout</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="header">
+        <!-- security guard box  -->
+        <div class="guard_box">
+          <img class="guard" src="../images/icons/sg-icon.png" alt="sg" />
+          <div class="sg-box">
+            <div class="name-sg">RIVERS, Bruce</div>
+            <div class="type">Security Officer</div>
+          </div>
+        </div>
+
+        <!-- box of navigation icons -->
+        <div class="utility">
+          <div class="nav-logo">
+            <iconify-icon icon="carbon:notification-filled"></iconify-icon>
+          </div>
+          <div class="nav-logo">
+            <iconify-icon icon="gg:dark-mode"></iconify-icon>
+          </div>
+          <div class="nav-logo">
+            <iconify-icon icon="octicon:screen-full-16"></iconify-icon>
+          </div>
+          <div class="uti-divider">
+            <iconify-icon icon="fluent:divider-short-16-filled"></iconify-icon>
+          </div>
+          <div class="nav-logo">
+            <iconify-icon icon="ci:settings-filled"></iconify-icon>
+          </div>
+        </div>
+      </div>
+      <div class="search-area">
+        <div class="search-outline">
+          <div class="search-icon">
+            <iconify-icon icon="bx:search-alt"></iconify-icon>
+          </div>
+          <input
+            type="input"
+            id="search"
+            placeholder="Type to search for user"
+          />
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="content1">
+          <div class="output-box">
+            <p class="output-text">Output</p>
+          </div>
+        </div>
+
+        <div class="divider">
+          <div class="vertical-line"></div>
+        </div>
+
+        <div class="content2">
+          <div class="scanner">Scanner</div>
+
+          <div class="btn-scan-area">
+            <a href="security_officer_home_unrecognized.html">
+              <button class="btn-scan" type="button">Scanning ready</button>
+            </a>
+          </div>
+
+          <div class="scan-icon">
+            <div class="usbcameraicon">
+              <img src="../images/icons/usbCamera.png" alt="" />
+            </div>
+            <p>Gate 4</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="visitor">
+        <button id="btn-visitor" type="button">Are You a Visitor?</button>
+      </div>
+    </div>
+
+    <script src="../scripts/security_officer.js"></script>
+  </body>
+</html>

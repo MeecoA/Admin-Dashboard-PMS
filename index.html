@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+    <meta name="keywords" content="BulSU, Parking, Management System" />
+    <meta name="description" content="A system created by ... " />
+    <meta name="author" content="Group #_" />
+
+    <!-- Refresh this document every (num) seconds -->
+    <meta http-equiv="refresh" content="7200" />
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js" defer></script>
+    <!-- Stylesheet here... -->
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="icon" href="images/icons/bxs-car-garage.svg" type="image/x-icon" />
+    <title>Edited</title>
+  </head>
+
+  <body>
+    <div class="main"></div>
+
+    <iframe
+      width="560"
+      height="315"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+
+    <!-- Main Container -->
+    <div class="container">
+      <header>
+        <!-- header here... -->
+      </header>
+      <main>
+        <h1>Counter Machine</h1>
+        <p id="score">0</p>
+
+        <hr />
+        <button id="increment" class="btn-1">Click Me!</button>
+      </main>
+
+      <footer>
+        <h3>Current Agenda:</h3>
+        <span><i>Baka gumawa na lang tayo ng sarili nating Teams para mas organized yung mga gagawin</i></span>
+        <ol>
+          <li>Do the layout for <b>Desktop view</b></li>
+          <li>Remaster the layout for <b>Mobile view</b></li>
+          <li>Create a new layout for <b>Tablet View</b></li>
+          <i>Might be optional kasi pwede web view pero maliit ang magiging hitsura</i>
+        </ol>
+        <!-- footer here... -->
+      </footer>
+    </div>
+    <!-- End of container class -->
+
+    <br />
+    <br />
+
+    <br />
+
+    <div class="container-qr">
+      <div class="inputs-container">
+        <h1>UPDATES:</h1>
+        <div class="input">
+          <ul>
+            <li><a href="dist/admin-dashboard.html">ADMIN DASHBOARD</a></li>
+          </ul>
+        </div>
+        <div class="input">
+          <ul>
+            <li><a href="user-home.html">USER</a></li>
+          </ul>
+        </div>
+
+        <h1>Sample qr generation</h1>
+        <div>
+          <h3>Enter anything below and press Enter.</h3>
+        </div>
+        <div class="input">
+          <input type="text" id="name" placeholder=" Enter Something.." onchange="create.render()" />
+        </div>
+        <div class="regbox">
+          <h2>Registered Users</h2>
+          <div class="regcount">0</div>
+        </div>
+        <!-- <div>
+                Last Name : <input type="text" id="lastName" placeholder = "Enter your Last Name">
+            </div> -->
+        <div class="result">
+          <br />
+          <div id="qrcode"></div>
+        </div>
+        <div class="securityScanning">
+          <div class="scannedContainer">
+            <h3>
+              Scanned QR Code :
+              <div><input type="text" id="text" /></div>
+            </h3>
+          </div>
+          <div class="videoContainer">
+            <video id="preview" width="30%"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <!-- Scripts here...-->
+  <script src="script.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="qrcode.min.js" defer></script>
+  <script src="scripts/sample.js" defer></script>
+</html>

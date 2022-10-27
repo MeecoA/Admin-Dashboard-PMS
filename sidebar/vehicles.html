@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicles</title>
+  </head>
+  <body>
+    <div class="ajax-container items table-box">
+      <div class="content-titles distri-flex">
+        <div class="sidebar-logo">
+          <iconify-icon
+            icon="fluent:vehicle-car-20-filled"
+            style="color: #474747"
+            width="36"
+            height="36"
+          ></iconify-icon>
+        </div>
+        <div class="distri-title">Vehicles</div>
+      </div>
+      <div class="box-table">
+        <div class="ajax-container">
+          <table id="sectable" class="display">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Owner</th>
+                <th>Model</th>
+                <th>Plate Number</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>A0001</td>
+                <td>Meeco Arcilla</td>
+                <td>Toyota Vios</td>
+                <td>CJX749</td>
+                <td>
+                  <div class="actions-button">
+                    <div class="view-btn">
+                      <iconify-icon
+                        class="view-icon"
+                        icon="bi:eye-fill"
+                        style="color: black"
+                        width="16"
+                        height="16"
+                      ></iconify-icon>
+                      <div>View</div>
+                    </div>
+                    <div class="delete-btn">
+                      <iconify-icon
+                        class="view-icon"
+                        icon="ep:delete-filled"
+                        style="color: white"
+                        width="16"
+                        height="16"
+                      ></iconify-icon>
+                      <div>Delete</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <script>
+        $(document).ready(function () {
+          $("#sectable").DataTable();
+        });
+      </script>
+    </div>
+
+    <!-- old td
+      <td>
+              <div class="drop-container">
+              <button onclick="secDrop()" class="drop-btn">
+              ACTIONS
+                <div class="drop-content">
+                  <a href="">View Details</a>
+                  <div class="view-button td-btn">
+                    <iconify-icon class="view-icon" icon="ci:edit" style="color: black" width="16" height="16"></iconify-icon>
+                    <a href="#editmodal" rel="modal:open">Edit</a>
+                  </div>
+                  <a href="">Edit Account Information</a>
+                  <div class="delete-button">
+                  <iconify-icon
+                    class="view-icon"
+                    icon="ep:delete-filled"
+                    style="color: white"
+                    width="16"
+                    height="16"
+                  ></iconify-icon>
+                  <div>Delete</div>
+                </div>
+                </div>
+              </button>
+            </div>
+          </td>
+    -->
+  </body>
+</html>
