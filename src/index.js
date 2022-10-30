@@ -104,49 +104,50 @@ loadSec.addEventListener("click", () => {
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
       //adding data
-      //adding security calling the form, calling the addDoc function from firebase
-      let uploaBtn = document.querySelector("#uploaBtn");
-      uploaBtn.addEventListener("click", () => {
-        const storage = getStorage();
-        const storageRef = ref(storage, "sample-Pic");
-
-        var file = document.querySelector("#imgInput").files[0];
-        var name = file.name;
-        var metadata = {
-          contentType: file.type,
-        };
-        uploadBytes(storageRef, file).then((snapshot) => {
-          console.log("UPLOADED");
-        });
+      const imgInput = document.querySelector("#imgInput");
+      imgInput.addEventListener("change", (e) => {
+        var image = document.querySelector("#output");
+        image.src = URL.createObjectURL(e.target.files[0]);
       });
+      // preview of uploaded photo
 
       const addSecurity = document.querySelector("#addSecForm");
       addSecurity.addEventListener("submit", (e) => {
         e.preventDefault();
-        // firestore database
-        addDoc(secColRef, {
-          barangay: addSecurity.secBrgy.value,
-          position: addSecurity.position.value,
-          email: addSecurity.secEmail.value,
-          firstname: addSecurity.secFname.value,
-          lastname: addSecurity.secLname.value,
-          middlename: addSecurity.secMname.value,
-          municipality: addSecurity.secMunicip.value,
-          password: addSecurity.secPassword.value,
-          phone: addSecurity.secPhone.value,
-          province: addSecurity.secProvince.value,
-          street: addSecurity.secStreet.value,
-          createdAt: serverTimestamp(),
-        }).then(() => {
-          addSecurity.reset();
-        });
         // authenticate
         const email = addSecurity.secEmail.value;
         const password = addSecurity.secPassword.value;
         createUserWithEmailAndPassword(auth, email, password).then((cred) => {
-          console.log("Security Created: ", cred.user);
-          addSecurity.reset();
-        });
+          const userSec = doc(collection(db, "security"), cred.user.uid);
+          setDoc(userSec, {
+            barangay: addSecurity.secBrgy.value,
+            position: addSecurity.position.value,
+            email: addSecurity.secEmail.value,
+            firstname: addSecurity.secFname.value,
+            lastname: addSecurity.secLname.value,
+            middlename: addSecurity.secMname.value,
+            municipality: addSecurity.secMunicip.value,
+            password: addSecurity.secPassword.value,
+            phone: addSecurity.secPhone.value,
+            province: addSecurity.secProvince.value,
+            street: addSecurity.secStreet.value,
+            createdAt: serverTimestamp(),
+          }).then(() => {
+            alert("Security Created: ", cred.user);
+            addSecurity.reset();
+          });
+
+          const storage = getStorage();
+          const storageRef = ref(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
+          var file = document.querySelector("#imgInput").files[0];
+          var name = file.name;
+          var metadata = {
+            contentType: file.type,
+          };
+          uploadBytes(storageRef, file).then((snapshot) => {
+            console.log("UPLOADED");
+          });
+        }); //end of createUserWithEmailAndPassword
       }); //end adding data
 
       //creating the table data

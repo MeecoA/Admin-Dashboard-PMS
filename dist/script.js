@@ -97,26 +97,40 @@ loadCouncil.addEventListener("click", () => {
       addCouncilForm.addEventListener("submit", (e) => {
         e.preventDefault();
         //adding council
-        fire
-          .myAddDoc(fire.councilColRef, {
-            firstname: addCouncilForm.fname.value,
-            lastname: addCouncilForm.lname.value,
-            middlename: addCouncilForm.mname.value,
-            email: addCouncilForm.email.value,
-            phone: addCouncilForm.phone.value,
-            idnum: addCouncilForm.idnum.value,
-          })
-          .then(() => {
-            addCouncilForm.reset();
-          });
-        //authenticate council
+
         const email = addCouncilForm.email.value;
         const password = addCouncilForm.password.value;
         fire.doAuth(fire.auth, email, password).then((cred) => {
-          console.log("Admin Council Created: ", cred.user);
-          addCouncilForm.reset();
+          const userAdminCouncil = fire.myDoc(fire.myCollection(fire.db, "admin-council"), cred.user.uid);
+          fire
+            .doSetDoc(userAdminCouncil, {
+              firstname: addCouncilForm.fname.value,
+              lastname: addCouncilForm.lname.value,
+              middlename: addCouncilForm.mname.value,
+              email: addCouncilForm.email.value,
+              phone: addCouncilForm.phone.value,
+              idnum: addCouncilForm.idnum.value,
+            })
+            .then(() => {
+              alert("Admin Council Created: ", cred.user);
+              addCouncilForm.reset();
+            });
         });
-      });
+
+        // fire
+        //   .myAddDoc(fire.councilColRef, {
+        //     firstname: addCouncilForm.fname.value,
+        //     lastname: addCouncilForm.lname.value,
+        //     middlename: addCouncilForm.mname.value,
+        //     email: addCouncilForm.email.value,
+        //     phone: addCouncilForm.phone.value,
+        //     idnum: addCouncilForm.idnum.value,
+        //   })
+        //   .then(() => {
+        //     addCouncilForm.reset();
+        //   });
+        //authenticate council
+      }); //end adding data
       // creating table data for council
       let iD;
       const councilTable = document.querySelector(".tbody-council");

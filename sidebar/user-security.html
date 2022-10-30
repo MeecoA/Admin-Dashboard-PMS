@@ -15,16 +15,16 @@
             <div class="sec-pic-holder">
               <div class="sec-pic" id="secUpload">
                 <label for="imgInput">
-                  <iconify-icon
-                    id="preview"
-                    icon="healthicons:ui-user-profile-negative"
-                    style="color: #000000"
-                    width="160"
-                    height="147"
-                  ></iconify-icon>
+                  <p>
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/126/126477.png"
+                      id="output"
+                      width="160"
+                      height="147"
+                    />
+                  </p>
                 </label>
-                <input type="file" id="imgInput" class="custom-file-input" />
-                <button id="uploaBtn" type="button">UPLOAD</button>
+                <input type="file" id="imgInput" class="custom-file-input" accept="image/*" />
               </div>
               <div class="position-holder">
                 <div>ADD PROFILE PICTURE</div>
@@ -456,15 +456,10 @@
     </div>
   </div>
   <!-- end of viewing security -->
-  <script>
-    function getImagePreview(event) {
-      var image = URL.createObjectURL(event.target.files[0]);
-      var imagediv = document.getElementById("preview");
-      var newimg = document.createElement("img");
-      imagediv.innerHTML = "";
-      newimg.src = image;
-      newimg.width = "300";
-      imagediv.appendChild(newimg);
-    }
-  </script>
+  <!-- <script>
+    var loadFile = function (event) {
+      var image = document.getElementById("output");
+      
+    };
+  </script> -->
 </body>
