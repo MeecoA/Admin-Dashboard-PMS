@@ -93,11 +93,17 @@ loadCouncil.addEventListener("click", () => {
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
 
+      const imgInputCouncil = document.querySelector("#imgInputCouncil");
+      imgInputCouncil.addEventListener("change", (e) => {
+        console.log("hello oct 31!");
+        var image = document.querySelector("#outputCouncil");
+        image.src = URL.createObjectURL(e.target.files[0]);
+      });
+
       const addCouncilForm = document.querySelector("#addCouncilForm");
       addCouncilForm.addEventListener("submit", (e) => {
         e.preventDefault();
         //adding council
-
         const email = addCouncilForm.email.value;
         const password = addCouncilForm.password.value;
         fire.doAuth(fire.auth, email, password).then((cred) => {
@@ -115,6 +121,16 @@ loadCouncil.addEventListener("click", () => {
               alert("Admin Council Created: ", cred.user);
               addCouncilForm.reset();
             });
+          const storage = fire.storage;
+          const storageRef = fire.myStorageRef(storage, `admin_council/${cred.user.uid}/profilepic.jpg`);
+          var file = document.querySelector("#imgInputCouncil").files[0];
+          var name = file.name;
+          var metadata = {
+            contentType: file.type,
+          };
+          fire.myUploadBytes(storageRef, file).then((snapshot) => {
+            console.log("UPLOADED");
+          });
         });
 
         // fire

@@ -20,7 +20,7 @@ import {
   increment,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 //this config connects the backend and frontend
 //after this, intall firebase in node.js
 const firebaseConfig = {
@@ -48,8 +48,11 @@ initializeApp(firebaseConfig);
 export const database = getFirestore(); //anything we do in our DB, we use this
 export const storage = getStorage(); //get the firebase storage
 export const auth = getAuth();
+
 //exports
 // Firestore
+export const myUploadBytes = uploadBytes;
+export const myStorageRef = ref;
 export const myGetFirestore = getFirestore;
 export const myCollection = collection;
 export const myOnSnapshot = onSnapshot;
@@ -325,6 +328,8 @@ loadSec.addEventListener("click", () => {
           viewAddress.textContent = fullAddress;
           viewPhone.textContent = docu.data().phone;
           viewEmail.textContent = docu.data().email;
+          const storage = getStorage();
+          const profileRef = ref(storage, "");
         });
         //end view
 

@@ -795,6 +795,9 @@ border: 1px solid red;
 #secUpload > input {
   display: none;
 }
+/* #CouncilUpload > input {
+  display: none;
+} */
 
 #uploaBtn {
   width: 100%;
@@ -1171,5 +1174,12 @@ border: 1px solid red;
   height: 35px;
   font-size: 25px;
   border-radius: 20px;
+}
+/* sec profile pic */
+#output {
+  cursor: pointer;
+}
+#outputCouncil {
+  cursor: pointer;
 }
 /* logs css */
