@@ -138,6 +138,8 @@ loadSec.addEventListener("click", () => {
           }).then(() => {
             alert("Security Created: ", cred.user);
             addSecurity.reset();
+            var image = document.querySelector("#output");
+            image.src = "https://static.thenounproject.com/png/571343-200.png";
           });
           const storage = getStorage();
           const storageRef = ref(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
