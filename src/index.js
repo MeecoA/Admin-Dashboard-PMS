@@ -19,7 +19,7 @@ import {
   arrayRemove,
   increment,
 } from "firebase/firestore";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 //this config connects the backend and frontend
 //after this, intall firebase in node.js
@@ -139,7 +139,6 @@ loadSec.addEventListener("click", () => {
             alert("Security Created: ", cred.user);
             addSecurity.reset();
           });
-
           const storage = getStorage();
           const storageRef = ref(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
           var file = document.querySelector("#imgInput").files[0];
@@ -311,6 +310,7 @@ loadSec.addEventListener("click", () => {
         });
 
         //viewing the security information
+        const secViewPic = document.querySelector("#secViewPic");
         const viewName = document.querySelector(".viewName");
         const viewPos = document.querySelector(".viewPos");
         const viewAddress = document.querySelector(".viewAddress");
@@ -323,13 +323,21 @@ loadSec.addEventListener("click", () => {
         }`;
 
         viewButton.addEventListener("click", () => {
+          const auth = getAuth();
+          const user = auth.currentUser;
+          // const userSec = doc(collection(db, "security"), cred.user.uid);
+          const storagePic = getStorage();
+          const storageRef = ref(storagePic, `secruity/${docu.id}/profilepic.jpg`);
+          getDownloadURL(storageRef).then((url) => {
+            console.log(url);
+            secViewPic.src = url;
+          });
+
           viewName.textContent = fullName;
           viewPos.textContent = docu.data().position;
           viewAddress.textContent = fullAddress;
           viewPhone.textContent = docu.data().phone;
           viewEmail.textContent = docu.data().email;
-          const storage = getStorage();
-          const profileRef = ref(storage, "");
         });
         //end view
 
