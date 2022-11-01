@@ -29,7 +29,7 @@
               </div>
               <div class="position-holder">
                 <div>ADD PROFILE PICTURE</div>
-                <select name="position" id="secPosition">
+                <select name="position" id="secPosition" required>
                   <option value="" disabled selected>POSITION</option>
                   <option value="Officer">Officer</option>
                 </select>
@@ -43,7 +43,7 @@
                   <p>First Name:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="text" name="secFname" />
+                  <input type="text" name="secFname" required />
                 </div>
               </div>
 
@@ -63,7 +63,7 @@
                   <p>Last Name:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="text" name="secLname" />
+                  <input type="text" name="secLname" required />
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@
                   <p>Phone Number:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="text" name="secPhone" />
+                  <input type="text" name="secPhone" required />
                 </div>
               </div>
 
@@ -84,7 +84,7 @@
                   <p>Email Address:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="text" name="secEmail" />
+                  <input type="text" name="secEmail" required />
                 </div>
               </div>
 
@@ -94,7 +94,7 @@
                   <p>Password:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="password" name="secPassword" />
+                  <input type="password" name="secPassword" required />
                 </div>
               </div>
 
@@ -104,7 +104,7 @@
                   <p>Confirm Password:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="password" name="secCpassword" />
+                  <input type="password" name="secCpassword" required />
                 </div>
               </div>
 
@@ -164,9 +164,7 @@
               </div>
             </div>
             <div class="add-sec-buttons">
-              <button class="sec-buttons cancel">
-                <a href="#" rel="modal:close"> CANCEL</a>
-              </button>
+              <a href="#" rel="modal:close"> <button class="sec-buttons cancel">CANCEL</button></a>
               <button class="sec-buttons add-entry" type="submit">ADD ENTRY</button>
             </div>
           </div>
@@ -183,7 +181,7 @@
     <!-- table of security -->
     <div class="box-table">
       <div class="ajax-container">
-        <table id="sectable" class="display">
+        <table id="sectable" class="display secprintMe">
           <thead>
             <tr>
               <th>ID</th>
@@ -195,7 +193,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody class="table-body"></tbody>
+          <tbody class="tbody-security"></tbody>
         </table>
       </div>
     </div>
@@ -203,7 +201,7 @@
   <!-- end table security -->
 
   <!-- edit modal -->
-  <div id="editmodal" class="modal">
+  <div id="editmodal" class="modal" style="max-width: 972px">
     <form id="editSecForm">
       <div class="add-new-box">
         <div class="entry-title"><p>EDIT USER INFORMATION</p></div>
@@ -328,7 +326,7 @@
   <!-- end of edit modal -->
 
   <!-- edit modal for account  -->
-  <div id="editAccInfo" class="modal">
+  <div id="editAccInfo" class="modal" style="max-width: 972px">
     <form id="editSecAccForm">
       <div class="add-new-box">
         <div class="entry-title"><p>EDIT ACCOUNT INFORMATION</p></div>
@@ -458,10 +456,4 @@
     </div>
   </div>
   <!-- end of viewing security -->
-  <!-- <script>
-    var loadFile = function (event) {
-      var image = document.getElementById("output");
-      
-    };
-  </script> -->
 </body>

@@ -47,7 +47,7 @@ function displayLogs() {
         console.log("DataTable");
         $(".table_id").DataTable({
           dom: "Bfrtip",
-          buttons: ["copy", "csv", "excel", "pdf", "print"],
+          buttons: ["copy", "pdf", "print"],
           data: logs,
           columns: [{ data: "time_in" }, { data: "time_out" }, { data: "plate_number" }, { data: "owner" }],
         });
@@ -80,9 +80,13 @@ loadLogs.addEventListener("click", () => {
   xhttp.send();
 });
 
-// Adding Admin Council
+// AJAX Start for Admin Council
 const loadCouncil = document.querySelector("#councilLink");
 loadCouncil.addEventListener("click", () => {
+  ajaxCouncil();
+});
+
+function ajaxCouncil() {
   headerTitle.textContent = "Users";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -92,10 +96,39 @@ loadCouncil.addEventListener("click", () => {
       persLink.classList.add("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      var t = $("#councilTable").DataTable({
+        dom: "Bfrtip",
+        buttons: [
+          {
+            extend: "copyHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "print",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "pdfHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          "colvis",
+        ],
+      });
+      const buttonsColvis = document.querySelector(".buttons-colvis");
+      buttonsColvis.textContent = "Filter By Category";
+      $(".facultyTbody").on("click", "tr", function (e) {
+        var data = t.row(this).data();
+        alert("you clicked on " + data[1] + "'s row");
+      });
 
       const imgInputCouncil = document.querySelector("#imgInputCouncil");
       imgInputCouncil.addEventListener("change", (e) => {
-        console.log("hello oct 31!");
         var image = document.querySelector("#outputCouncil");
         image.src = URL.createObjectURL(e.target.files[0]);
       });
@@ -120,6 +153,8 @@ loadCouncil.addEventListener("click", () => {
             .then(() => {
               alert("Admin Council Created: ", cred.user);
               addCouncilForm.reset();
+              var image = document.querySelector("#output");
+              image.src = "https://static.thenounproject.com/png/571343-200.png";
             });
           const storage = fire.storage;
           const storageRef = fire.myStorageRef(storage, `admin_council/${cred.user.uid}/profilepic.jpg`);
@@ -132,70 +167,58 @@ loadCouncil.addEventListener("click", () => {
             console.log("UPLOADED");
           });
         });
-
-        // fire
-        //   .myAddDoc(fire.councilColRef, {
-        //     firstname: addCouncilForm.fname.value,
-        //     lastname: addCouncilForm.lname.value,
-        //     middlename: addCouncilForm.mname.value,
-        //     email: addCouncilForm.email.value,
-        //     phone: addCouncilForm.phone.value,
-        //     idnum: addCouncilForm.idnum.value,
-        //   })
-        //   .then(() => {
-        //     addCouncilForm.reset();
-        //   });
-        //authenticate council
       }); //end adding data
       // creating table data for council
       let iD;
       const councilTable = document.querySelector(".tbody-council");
       const renderCouncil = (docu) => {
-        const tr = `<tr data-id='${docu.id}'>
-        <td>${docu.id}</td>
-        <td>${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}</td>
-        <td>${docu.data().idnum}</td>
-        <td>${docu.data().email}</td>
-        <td>${docu.data().phone}</td>
-        <td>
-        <div class="drop-container-council">
-          <button class="drop-btn-council">ACTIONS
-          <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
-          </button>
-          <div class="drop-content-council" id="dropCouncil">
-            <a href="#viewCouncil" rel="modal:open" class="view-council-button"><iconify-icon
-            class="view-icon"
-            icon="bi:eye-fill"
-            style="color: black"
-            width="16"
-            height="16"
-          ></iconify-icon>View</a>
-
-              <a href="#editmodal" rel="modal:open" class = 'edit-button'>
-              <iconify-icon
+        var tableTr = t.row
+          .add([
+            docu.id,
+            `${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}`,
+            docu.data().idnum,
+            docu.data().email,
+            docu.data().phone,
+            `<div class="drop-container-council">
+            <button class="drop-btn-council">ACTIONS
+            <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
+            </button>
+            <div class="drop-content-council" id="dropCouncil">
+              <a href="#viewCouncil" rel="modal:open" class="view-council-button"><iconify-icon
               class="view-icon"
-              icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
+              icon="bi:eye-fill"
+              style="color: black"
+              width="16"
+              height="16"
+            ></iconify-icon>View</a>
 
-            <a href="#editAccInfo" rel="modal:open" class = "editCouncilAccBtn">
-            <iconify-icon
-              class="view-icon"
-              icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
+                <a href="#editmodal" rel="modal:open" class = 'edit-button'>
+                <iconify-icon
+                class="view-icon"
+                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
 
-              <a href="#" class="delete-button">
+              <a href="#editAccInfo" rel="modal:open" class = "editCouncilAccBtn">
               <iconify-icon
                 class="view-icon"
-                icon="ep:delete-filled"
-                style="color: black"
-                width="16"
-                height="16"
-              ></iconify-icon>
-              Delete User</a>
+                icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
+
+                <a href="#" class="delete-button">
+                <iconify-icon
+                  class="view-icon"
+                  icon="ep:delete-filled"
+                  style="color: black"
+                  width="16"
+                  height="16"
+                ></iconify-icon>
+                Delete User</a>
+            </div>
           </div>
-        </div>
-      </td>
-      </tr>`;
-        councilTable.insertAdjacentHTML("beforeend", tr);
-        // deleting data
+        `,
+          ])
+          .draw(false)
+          .node();
+        $(tableTr).attr("data-id", `${docu.id}`);
+
         const councilDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         councilDelete.addEventListener("click", () => {
           const docRef = fire.myDoc(fire.db, "admin-council", docu.id);
@@ -225,19 +248,15 @@ loadCouncil.addEventListener("click", () => {
 
           fire
             .myUpdateDoc(docRef, {
-              firstname: editSecForm.secFname.value,
-              middlename: editSecForm.secMname.value,
-              lastname: editSecForm.secLname.value,
-              position: editSecForm.position.value,
-              // email: editSecForm.secEmail.value,
-              phone: editSecForm.secPhone.value,
-              province: editSecForm.secProvince.value,
-              street: editSecForm.secStreet.value,
-              municipality: editSecForm.secMunicip.value,
-              barangay: editSecForm.secBrgy.value,
-              // password: editSecForm.secPassword.value,
+              firstname: editCouncilForm.fname.value,
+              lastname: editCouncilForm.lname.value,
+              middlename: editCouncilForm.mname.value,
+              phone: editCouncilForm.phone.value,
+              idnum: editCouncilForm.idnum.value,
             })
-            .then(() => {});
+            .then(() => {
+              ajaxCouncil();
+            });
         });
 
         const dropCouncil = document.querySelector(`[data-id='${docu.id}'] .drop-btn-council`);
@@ -245,6 +264,19 @@ loadCouncil.addEventListener("click", () => {
         dropCouncil.addEventListener("click", () => {
           dropCouncilContent.classList.toggle("show");
         });
+        //dropdown - if user clicks outside of the dropdown
+        window.onclick = function (event) {
+          if (!event.target.matches(".drop-btn-council")) {
+            var dropdowns = document.getElementsByClassName("drop-content-council");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains("show")) {
+                openDropdown.classList.remove("show");
+              }
+            }
+          }
+        };
         // Edit Account -- email and password
         const editSecAccInfo = document.querySelector("#editCouncilAccForm");
         const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editCouncilAccBtn`);
@@ -285,12 +317,21 @@ loadCouncil.addEventListener("click", () => {
         });
         // end upate
         //viewing the council information
+        const councilViewPic = document.querySelector("#councilViewPic");
         const viewName = document.querySelector(".viewCouncilName");
         const viewPhone = document.querySelector(".viewCouncilPhone");
         const viewEmail = document.querySelector(".viewCouncilEmail");
         const viewCouncilButton = document.querySelector(`[data-id='${docu.id}'] .view-council-button`);
         const fullName = `${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}`;
         viewCouncilButton.addEventListener("click", () => {
+          //retrieving the photo
+          const storagePic = fire.storage;
+          const storageRef = fire.myStorageRef(storagePic, `admin_council/${docu.id}/profilepic.jpg`);
+          fire.myGetDownloadUrl(storageRef).then((url) => {
+            console.log(url);
+            councilViewPic.src = url;
+          });
+
           viewName.textContent = fullName;
           viewPhone.textContent = docu.data().phone;
           viewEmail.textContent = docu.data().email;
@@ -319,4 +360,4 @@ loadCouncil.addEventListener("click", () => {
   };
   xhttp.open("GET", "../sidebar/user-council.html", true);
   xhttp.send();
-});
+}

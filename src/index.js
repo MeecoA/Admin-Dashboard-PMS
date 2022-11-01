@@ -51,6 +51,7 @@ export const auth = getAuth();
 
 //exports
 // Firestore
+export const myGetDownloadUrl = getDownloadURL;
 export const myUploadBytes = uploadBytes;
 export const myStorageRef = ref;
 export const myGetFirestore = getFirestore;
@@ -97,6 +98,10 @@ onSnapshot(accQuery, (snapshot) => {
 
 //AJAX START FOR SECURITY
 loadSec.addEventListener("click", () => {
+  ajaxSec();
+});
+
+function ajaxSec() {
   headerTitle.textContent = "Users";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -106,6 +111,34 @@ loadSec.addEventListener("click", () => {
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      //data tables
+      var t = $("#sectable").DataTable({
+        dom: "Bfrtip",
+        buttons: [
+          {
+            extend: "copyHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "print",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "pdfHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          "colvis",
+        ],
+      });
+      const buttonsColvis = document.querySelector(".buttons-colvis");
+      buttonsColvis.textContent = "Filter By Category";
+
       //adding data
       const imgInput = document.querySelector("#imgInput");
       imgInput.addEventListener("change", (e) => {
@@ -136,7 +169,7 @@ loadSec.addEventListener("click", () => {
             street: addSecurity.secStreet.value,
             createdAt: serverTimestamp(),
           }).then(() => {
-            alert("Security Created: ", cred.user);
+            // alert("Security Created: ", cred.user);
             addSecurity.reset();
             var image = document.querySelector("#output");
             image.src = "https://static.thenounproject.com/png/571343-200.png";
@@ -156,19 +189,18 @@ loadSec.addEventListener("click", () => {
 
       //creating the table data
       let id;
-      const sectable = document.querySelector(".table-body");
+      const sectable = document.querySelector(".tbody-security");
       const renderSecurity = (docu) => {
         console.log(docu.id);
-
-        const tr = `<tr data-id='${docu.id}'>
-          <td>${docu.id}</td>
-          <td>${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}</td>
-          <td>${docu.data().position}</td>
-          <td>${docu.data().barangay}, ${docu.data().street}, ${docu.data().municipality}, ${docu.data().province}</td>
-          <td>${docu.data().email}</td>
-          <td>${docu.data().phone}</td>
-          <td>
-          <div class="drop-container">
+        var tableTr = t.row
+          .add([
+            docu.id,
+            `${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}`,
+            docu.data().position,
+            `${docu.data().barangay}, ${docu.data().street}, ${docu.data().municipality}, ${docu.data().province}`,
+            docu.data().email,
+            docu.data().phone,
+            `<div class="drop-container">
             <button class="drop-btn">ACTIONS
             <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
             </button>
@@ -205,8 +237,20 @@ loadSec.addEventListener("click", () => {
             </div>
           </div>
         </td>
-        </tr>`;
-        sectable.insertAdjacentHTML("beforeend", tr);
+        `,
+          ])
+          .draw(false)
+          .node();
+        $(tableTr).attr("data-id", `${docu.id}`);
+        // const tr = `<tr data-id='${docu.id}'>
+        //   <td>${docu.id}</td>
+        //   <td>${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}</td>
+        //   <td>${docu.data().position}</td>
+        //   <td>${docu.data().barangay}, ${docu.data().street}, ${docu.data().municipality}, ${docu.data().province}</td>
+        //   <td>${docu.data().email}</td>
+        //   <td>${docu.data().phone}</td>
+        //   <td>
+        // sectable.insertAdjacentHTML("beforeend", tr);
         //deleting data
         const secDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         secDelete.addEventListener("click", () => {
@@ -251,8 +295,10 @@ loadSec.addEventListener("click", () => {
             street: editSecForm.secStreet.value,
             municipality: editSecForm.secMunicip.value,
             barangay: editSecForm.secBrgy.value,
-            // password: editSecForm.secPassword.value,
-          }).then(() => {});
+            // password: editSecForm.secPassword.value,\
+          }).then(() => {
+            ajaxSec();
+          });
         });
 
         const dropSec = document.querySelector(`[data-id='${docu.id}'] .drop-btn`);
@@ -325,9 +371,7 @@ loadSec.addEventListener("click", () => {
         }`;
 
         viewButton.addEventListener("click", () => {
-          const auth = getAuth();
-          const user = auth.currentUser;
-          // const userSec = doc(collection(db, "security"), cred.user.uid);
+          //retrieivng the photo
           const storagePic = getStorage();
           const storageRef = ref(storagePic, `secruity/${docu.id}/profilepic.jpg`);
           getDownloadURL(storageRef).then((url) => {
@@ -348,8 +392,7 @@ loadSec.addEventListener("click", () => {
 
       //getting the collection data
       //real time collection of data
-      onSnapshot(secQuery, (snapshot) => {
-        let security = [];
+      onSnapshot(secColRef, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             renderSecurity(change.doc);
@@ -364,15 +407,13 @@ loadSec.addEventListener("click", () => {
             sectable.removeChild(row);
             renderSecurity(change.doc);
           }
-          security.push({ ...change.doc.data(), id: change.doc.id });
         });
-        console.log(security);
       });
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/user-security.html", true);
   xhttp.send();
-});
+}
 //AJAX END FOR SECURITY
 
 // AJAX START FOR ADMIN COUNCIL
@@ -393,16 +434,37 @@ loadFaculty.addEventListener("click", () => {
       // generateTable();
 
       // rendering the data
-      const facultyTbody = document.querySelector(".facultyTbody");
       var t = $("table.display").DataTable({
         dom: "Bfrtip",
-        buttons: ["copy", "csv", "excel", "pdf", "print"],
+        buttons: [
+          {
+            extend: "copyHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4],
+            },
+          },
+          {
+            extend: "print",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4],
+            },
+          },
+          {
+            extend: "pdfHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4],
+            },
+          },
+          "colvis",
+        ],
       });
+      const buttonsColvis = document.querySelector(".buttons-colvis");
+      buttonsColvis.textContent = "Filter By Category";
+
       $(".facultyTbody").on("click", "tr", function (e) {
         var data = t.row(this).data();
         alert("you clicked on " + data[1] + "'s row");
       });
-
       const renderFaculty = (doc) => {
         var temp = t.row
           .add([
@@ -411,77 +473,11 @@ loadFaculty.addEventListener("click", () => {
             doc.data().id_number,
             doc.data().is_active,
             doc.data().phone_num,
-            //   `<div class="actions-button">
-            //   <div class="view-btn">
-            //     <iconify-icon
-            //       class="view-icon"
-            //       icon="bi:eye-fill"
-            //       style="color: black"
-            //       width="16"
-            //       height="16"
-            //     ></iconify-icon>
-            //     <div>View</div>
-            //   </div>
-            //   <div class="delete-btn">
-            //     <iconify-icon
-            //       class="view-icon"
-            //       icon="ep:delete-filled"
-            //       style="color: white"
-            //       width="16"
-            //       height="16"
-            //     ></iconify-icon>
-            //     <div>Delete</div>
-            //   </div>
-            // </div>`,
           ])
           .draw(false)
           .node();
         $(temp).attr("data-id", `${doc.id}`);
-        // const tr = `
-        // <tr>
-        //         <td>${doc.id}</td>
-        //         <td>${doc.data().first_name}</td>
-        //         <td>0001</td>
-        //         <td>email@email.com</td>
-        //         <td>0923737392</td>
-        //         <td>
-        //           <div class="actions-button">
-        //             <div class="view-btn">
-        //               <iconify-icon
-        //                 class="view-icon"
-        //                 icon="bi:eye-fill"
-        //                 style="color: black"
-        //                 width="16"
-        //                 height="16"
-        //               ></iconify-icon>
-        //               <div>View</div>
-        //             </div>
-        //             <div class="delete-btn">
-        //               <iconify-icon
-        //                 class="view-icon"
-        //                 icon="ep:delete-filled"
-        //                 style="color: white"
-        //                 width="16"
-        //                 height="16"
-        //               ></iconify-icon>
-        //               <div>Delete</div>
-        //             </div>
-        //           </div>
-        //         </td>
-        //       </tr>`;
-        // facultyTbody.insertAdjacentHTML("beforeend", tr);
       }; //end of render sec
-
-      //getting the data
-      // getDocs(accColRef).then((snapshot) => {
-      //   let accs = [];
-      //   snapshot.docs.forEach((doc) => {
-      //     renderFaculty(doc);
-      //     accs.push({ ...doc.data(), id: doc.id });
-      //   });
-      //   console.log(accs);
-      // });
-      // end getting data
 
       onSnapshot(accQuery, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -614,16 +610,6 @@ announceLink.addEventListener("click", () => {
           if (change.type === "added") {
             renderAnnounce(change.doc);
           }
-          // if (change.type === "removed") {
-          //   let row = document.querySelector(`[data-id="${change.doc.id}"]`);
-          //   // let tbody = row.parentElement;
-          //   sectable.removeChild(row);
-          // }
-          // if (change.type === "modified") {
-          //   let row = document.querySelector(`[data-id="${change.doc.id}"]`);
-          //   sectable.removeChild(row);
-          //   renderSecurity(change.doc);
-          // }
           announcements.push({ ...change.doc.data(), id: change.doc.id });
         });
         console.log(announcements);

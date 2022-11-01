@@ -27,26 +27,26 @@
             <div class="add-new-box">
               <div class="entry-title"><p>ADD NEW ENTRY</p></div>
               <div class="sec-pic-holder">
-                <div class="sec-pic" id="CouncilUpload">
-                  <label for="imgInput">
+                <div class="sec-pic" id="councilUpload">
+                  <label for="imgInputCouncil">
                     <p>
                       <img
                         src="https://static.thenounproject.com/png/571343-200.png"
                         id="outputCouncil"
-                        width="160"
-                        height="160"
+                        width="180"
+                        height="180"
                         title="Upload image"
                       />
                     </p>
+                    <input type="file" id="imgInputCouncil" class="custom-file-input" accept="image/*" />
                   </label>
-                  <input type="file" id="imgInputCouncil" class="custom-file-input" accept="image/*" />
                 </div>
                 <div class="position-holder">
                   <div>ADD PROFILE PICTURE</div>
-                  <select name="position" id="secPosition">
+                  <!-- <select name="position" id="secPosition">
                     <option value="" disabled selected>USER TYPE</option>
                     <option value="Officer">Admin Council</option>
-                  </select>
+                  </select> -->
                 </div>
               </div>
 
@@ -57,7 +57,7 @@
                     <p>First Name:</p>
                   </div>
                   <div class="sec-input">
-                    <input type="text" name="fname" />
+                    <input type="text" name="fname" required />
                   </div>
                 </div>
 
@@ -77,7 +77,7 @@
                     <p>Last Name:</p>
                   </div>
                   <div class="sec-input">
-                    <input type="text" name="lname" />
+                    <input type="text" name="lname" required />
                   </div>
                 </div>
               </div>
@@ -88,7 +88,7 @@
                     <p>Phone Number:</p>
                   </div>
                   <div class="sec-input">
-                    <input type="text" name="phone" />
+                    <input type="text" name="phone" required />
                   </div>
                 </div>
 
@@ -113,7 +113,7 @@
                     <p>Email Address:</p>
                   </div>
                   <div class="sec-input">
-                    <input type="text" name="email" />
+                    <input type="text" name="email" required />
                   </div>
                 </div>
                 <div class="sec-input-box">
@@ -122,7 +122,7 @@
                     <p>Password:</p>
                   </div>
                   <div class="sec-input">
-                    <input type="password" name="password" />
+                    <input type="password" name="password" required />
                   </div>
                 </div>
 
@@ -132,14 +132,12 @@
                     <p>Confirm Password:</p>
                   </div>
                   <div class="sec-input">
-                    <input type="password" name="cpassword" />
+                    <input type="password" name="cpassword" required />
                   </div>
                 </div>
               </div>
               <div class="add-sec-buttons">
-                <button class="sec-buttons cancel">
-                  <a href="#" rel="modal:close"> CANCEL</a>
-                </button>
+                <a href="#" rel="modal:close"><button class="sec-buttons cancel">CANCEL</button></a>
                 <button class="sec-buttons add-entry" type="submit">ADD ENTRY</button>
               </div>
             </div>
@@ -151,7 +149,7 @@
         </a>
       </div>
       <!-- edit modal -->
-      <div id="editmodal" class="modal">
+      <div id="editmodal" class="modal" style="max-width: 972px">
         <form id="editCouncilForm">
           <div class="add-new-box">
             <div class="entry-title"><p>EDIT USER INFORMATION</p></div>
@@ -232,7 +230,7 @@
       <!-- end of edit modal -->
 
       <!-- edit account modal-->
-      <div id="editAccInfo" class="modal">
+      <div id="editAccInfo" class="modal" style="max-width: 972px">
         <form id="editCouncilAccForm">
           <div class="add-new-box">
             <div class="entry-title"><p>EDIT ACCOUNT INFORMATION</p></div>
@@ -349,12 +347,13 @@
         <div class="add-new-box">
           <div class="sec-pic-holder">
             <div class="sec-pic">
-              <iconify-icon
-                icon="healthicons:ui-user-profile-negative"
-                style="color: black"
+              <img
+                src="https://static.thenounproject.com/png/571343-200.png"
+                id="councilViewPic"
                 width="160"
-                height="147"
-              ></iconify-icon>
+                height="160"
+                title="Upload image"
+              />
             </div>
             <div class="position-holder">
               <div class="viewCouncilName">Juan Desla Cruz</div>
