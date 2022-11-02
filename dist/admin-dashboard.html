@@ -1,405 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.6.1.js"
-      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-      crossorigin="anonymous"
-      defer
-    ></script>
-    <script type="text/javascript" src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js" defer></script>
-    <script src="../scripts/admin.js" defer></script>
-    <script src="../scripts/secTable.js" defer></script>
-    <script src="bundle.js" defer></script>
-    <!-- jquery -->
-    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js" defer></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" defer></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js" defer></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js" defer></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+		<script
+			src="https://code.jquery.com/jquery-3.6.1.js"
+			integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+			crossorigin="anonymous"
+			defer
+		></script>
+		<script type="text/javascript" src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+		<script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js" defer></script>
+		<script src="../scripts/admin.js" defer></script>
+		<script src="../scripts/secTable.js" defer></script>
+		<script src="bundle.js" defer></script>
+		<!-- jquery -->
+		<script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js" defer></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js" defer></script>
+		<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+		<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" defer></script>
+		<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js" defer></script>
+		<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js" defer></script>
+		<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js" defer></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Lexend Deca" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bayon&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../styles/admin-dashboard.css" />
-    <title>Admin Dashboard</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="sidebar">
-        <div class="admin-details-box">
-          <div class="owner-icon">
-            <iconify-icon
-              icon="heroicons:command-line-solid"
-              style="color: black"
-              width="60"
-              height="60"
-            ></iconify-icon>
-          </div>
-          <div class="owner-box">
-            <div>
-              <div class="owner"><span class="at">@/</span>OWNER</div>
-              <div class="post">SUPERADMIN</div>
-            </div>
-          </div>
-        </div>
-        <div class="horizontal-box">
-          <hr />
-        </div>
-        <ul>
-          <a id="dashLink" href="admin-dashboard.html" class="menu">
-            <div class="sidebar-logo">
-              <iconify-icon icon="bxs:dashboard" style="color: #474747" width="36" height="36"></iconify-icon>
-            </div>
-            <div class="title">DASHBOARD</div>
-          </a>
-          <li>
-            <button class="menu menu-btn" id="usersDropdown">
-              <div class="sidebar-logo">
-                <iconify-icon icon="clarity:users-solid" style="color: #474747" width="36" height="36"></iconify-icon>
-              </div>
-              <div class="drop-box">
-                <div class="title">USERS</div>
-                <i class="fa fa-caret-down"></i>
-              </div>
-            </button>
-            <div class="dropdown-container">
-              <a id="secLink">Security Officers</a>
-              <a id="councilLink">Admin Council</a>
-              <a id="resiLink">Faculty/NAPA</a>
-              <a id="visiLink" onclick="loadVisitors()">Visitors</a>
-            </div>
-          </li>
-          <li>
-            <a onclick="loadVehicles()" class="menu vehi-link">
-              <div class="sidebar-logo">
-                <iconify-icon icon="bxs:car" style="color: #474747" width="36" height="36"></iconify-icon>
-              </div>
-              <div class="title">VEHICLES</div>
-            </a>
-          </li>
-          <li>
-            <a class="menu log-link" id="logsLink">
-              <div class="sidebar-logo">
-                <iconify-icon icon="mdi:script-text" style="color: #474747" width="36" height="36"></iconify-icon>
-              </div>
-              <div class="title" id="logs-id">LOGS</div>
-            </a>
-          </li>
-          <li>
-            <a id="announceLink" class="menu anno-link">
-              <div class="sidebar-logo">
-                <iconify-icon
-                  icon="zondicons:announcement"
-                  style="color: #474747"
-                  width="36"
-                  height="36"
-                ></iconify-icon>
-              </div>
-              <div class="title">ANNOUNCEMENTS</div>
-            </a>
-          </li>
-        </ul>
-        <div class="horizontal-box">
-          <hr />
-        </div>
-      </div>
+		<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+		<link href="https://fonts.googleapis.com/css?family=Lexend Deca" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Bayon&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="../styles/admin-dashboard.css" />
+		<title>Admin Dashboard</title>
+	</head>
 
-      <div class="right-container">
-        <div class="header">
-          <div class="logo-holder">
-            <div class="dashboard-logo">
-              <iconify-icon icon="bxs:dashboard" style="color: #474747" width="48" height="48"></iconify-icon>
-            </div>
-            <div class="title" id="headerTitle">DASHBOARD</div>
-          </div>
-          <!-- <div class="util-holder">
-            <div class="search-box">
-              <div class="sidebar-logo">
-                <iconify-icon icon="fa-solid:search" style="color: #474747" width="36" height="36"></iconify-icon>
-              </div>
-              <div class="input">
-                <input type="text" id="search" placeholder="Type here to see the magic!" />
-              </div>
-            </div>
-  
-            <div class="utils">
-              <div class="util-box">
-                <div class="util-icons sidebar-logo">
-                  <iconify-icon icon="gg:dark-mode" style="color: #474747" width="36" height="36"></iconify-icon>
-                </div>
-              </div>
-              <div class="util-box">
-                <div class="util-icons sidebar-logo">
-                  <iconify-icon icon="bx:message-alt-detail" style="color: #474747" width="36" height="36"></iconify-icon>
-                </div>
-              </div>
-              <div class="util-divider">
-                <div class="util-icons sidebar-logo">
-                  <iconify-icon
-                    icon="fluent:divider-short-16-filled"
-                    style="color: #474747; font-size: 36px"
-                  ></iconify-icon>
-                </div>
-              </div>
-              <div class="util-box">
-                <div class="util-icons sidebar-logo">
-                  <iconify-icon
-                    icon="octicon:screen-full-16"
-                    style="color: #474747"
-                    width="36"
-                    height="36"
-                  ></iconify-icon>
-                </div>
-              </div>
-              <div class="util-box">
-                <div class="util-icons sidebar-logo">
-                  <iconify-icon icon="ci:settings-filled" style="color: #474747" width="36" height="36"></iconify-icon>
-                </div>
-              </div>
-            </div>
-          </div> -->
-        </div>
-        <div class="content" id="content">
-          <div class="items act-box">
-            <div class="content-titles">RECENT ACTIVIES</div>
-            <div class="percent-flex">
-              <div class="percent-box">
-                <div class="up-icon">
-                  <iconify-icon
-                    icon="akar-icons:circle-chevron-up-fill"
-                    style="color: white"
-                    width="20"
-                    height="20"
-                  ></iconify-icon>
-                </div>
-                <div class="percent">13%</div>
-              </div>
-            </div>
-            <div class="numbers">125</div>
-            <div class="graphs-container">
-              <div class="line-graphs">
-                <canvas id="line-act"></canvas>
-              </div>
-              <script>
-                const labelsAct = ["January", "February", "March", "April", "May", "June"];
+	<style>
+		.modal {
+			max-width: max-content !important;
+		}
+	</style>
+	<body>
+		<div class="container">
+			<div class="sidebar">
+				<div class="admin-details-box">
+					<div class="owner-icon">
+						<iconify-icon
+							icon="heroicons:command-line-solid"
+							style="color: black"
+							width="60"
+							height="60"
+						></iconify-icon>
+					</div>
+					<div class="owner-box">
+						<div>
+							<div class="owner"><span class="at">@/</span>OWNER</div>
+							<div class="post">SUPERADMIN</div>
+						</div>
+					</div>
+				</div>
+				<div class="horizontal-box">
+					<hr />
+				</div>
+				<ul>
+					<a id="dashLink" href="admin-dashboard.html" class="menu">
+						<div class="sidebar-logo">
+							<iconify-icon icon="bxs:dashboard" style="color: #474747" width="36" height="36"></iconify-icon>
+						</div>
+						<div class="title">DASHBOARD</div>
+					</a>
+					<li>
+						<button class="menu menu-btn" id="usersDropdown">
+							<div class="sidebar-logo">
+								<iconify-icon icon="clarity:users-solid" style="color: #474747" width="36" height="36"></iconify-icon>
+							</div>
+							<div class="drop-box">
+								<div class="title">USERS</div>
+								<i class="fa fa-caret-down"></i>
+							</div>
+						</button>
+						<div class="dropdown-container">
+							<a id="secLink">Security Officers</a>
+							<a id="councilLink">Admin Council</a>
+							<a id="resiLink">Faculty/NAPA</a>
+							<a id="visiLink" onclick="loadVisitors()">Visitors</a>
+						</div>
+					</li>
+					<li>
+						<a onclick="loadVehicles()" class="menu vehi-link">
+							<div class="sidebar-logo">
+								<iconify-icon icon="bxs:car" style="color: #474747" width="36" height="36"></iconify-icon>
+							</div>
+							<div class="title">VEHICLES</div>
+						</a>
+					</li>
+					<li>
+						<a class="menu log-link" id="logsLink">
+							<div class="sidebar-logo">
+								<iconify-icon icon="mdi:script-text" style="color: #474747" width="36" height="36"></iconify-icon>
+							</div>
+							<div class="title" id="logs-id">LOGS</div>
+						</a>
+					</li>
+					<li>
+						<a id="announceLink" class="menu anno-link">
+							<div class="sidebar-logo">
+								<iconify-icon
+									icon="zondicons:announcement"
+									style="color: #474747"
+									width="36"
+									height="36"
+								></iconify-icon>
+							</div>
+							<div class="title">ANNOUNCEMENTS</div>
+						</a>
+					</li>
+				</ul>
+				<div class="horizontal-box">
+					<hr />
+				</div>
+			</div>
 
-                const dataLineAct = {
-                  labels: labelsAct,
-                  datasets: [
-                    {
-                      label: "My First dataset",
-                      backgroundColor: "#157A55",
-                      borderColor: "#157A55",
-                      data: [0, 0, 0, 0, 0, 0],
-                    },
-                  ],
-                };
+			<div class="right-container">
+				<div class="header">
+					<div class="logo-holder">
+						<div class="dashboard-logo">
+							<iconify-icon icon="bxs:dashboard" style="color: #474747" width="48" height="48"></iconify-icon>
+						</div>
+						<div class="title" id="headerTitle">DASHBOARD</div>
+					</div>
+					<!-- <div class="util-holder">
+						<div class="search-box">
+							<div class="sidebar-logo">
+								<iconify-icon icon="fa-solid:search" style="color: #474747" width="36" height="36"></iconify-icon>
+							</div>
+							<div class="input">
+								<input type="text" id="search" placeholder="Type here to see the magic!" />
+							</div>
+						</div>
+	
+						<div class="utils">
+							<div class="util-box">
+								<div class="util-icons sidebar-logo">
+									<iconify-icon icon="gg:dark-mode" style="color: #474747" width="36" height="36"></iconify-icon>
+								</div>
+							</div>
+							<div class="util-box">
+								<div class="util-icons sidebar-logo">
+									<iconify-icon icon="bx:message-alt-detail" style="color: #474747" width="36" height="36"></iconify-icon>
+								</div>
+							</div>
+							<div class="util-divider">
+								<div class="util-icons sidebar-logo">
+									<iconify-icon
+										icon="fluent:divider-short-16-filled"
+										style="color: #474747; font-size: 36px"
+									></iconify-icon>
+								</div>
+							</div>
+							<div class="util-box">
+								<div class="util-icons sidebar-logo">
+									<iconify-icon
+										icon="octicon:screen-full-16"
+										style="color: #474747"
+										width="36"
+										height="36"
+									></iconify-icon>
+								</div>
+							</div>
+							<div class="util-box">
+								<div class="util-icons sidebar-logo">
+									<iconify-icon icon="ci:settings-filled" style="color: #474747" width="36" height="36"></iconify-icon>
+								</div>
+							</div>
+						</div>
+					</div> -->
+				</div>
+				<div class="content" id="content">
+					<div class="items act-box">
+						<div class="content-titles">RECENT ACTIVIES</div>
+						<div class="percent-flex">
+							<div class="percent-box">
+								<div class="up-icon">
+									<iconify-icon
+										icon="akar-icons:circle-chevron-up-fill"
+										style="color: white"
+										width="20"
+										height="20"
+									></iconify-icon>
+								</div>
+								<div class="percent">13%</div>
+							</div>
+						</div>
+						<div class="numbers">125</div>
+						<div class="graphs-container">
+							<div class="line-graphs">
+								<canvas id="line-act"></canvas>
+							</div>
+							<script>
+								const labelsAct = ["January", "February", "March", "April", "May", "June"];
 
-                const configLineAct = {
-                  type: "line",
-                  data: dataLineAct,
-                  options: {},
-                };
-              </script>
-              <script>
-                const myChartLine1 = new Chart(document.getElementById("line-act"), configLineAct);
-              </script>
-            </div>
-          </div>
-          <div class="items no-user-box">
-            <div class="content-titles">NO. OF USERS</div>
-            <div class="percent-flex">
-              <div class="percent-box">
-                <div class="up-icon">
-                  <iconify-icon
-                    icon="akar-icons:circle-chevron-up-fill"
-                    style="color: white"
-                    width="20"
-                    height="20"
-                  ></iconify-icon>
-                </div>
-                <div class="percent">13%</div>
-              </div>
-            </div>
-            <div class="numbers" id="userCount">0</div>
-            <div class="graphs-container">
-              <div class="line-graphs">
-                <canvas id="line"></canvas>
-              </div>
-              <script>
-                const labels = ["January", "February", "March", "April", "May", "June"];
+								const dataLineAct = {
+									labels: labelsAct,
+									datasets: [
+										{
+											label: "My First dataset",
+											backgroundColor: "#157A55",
+											borderColor: "#157A55",
+											data: [0, 0, 0, 0, 0, 0],
+										},
+									],
+								};
 
-                const dataLine = {
-                  labels: labels,
-                  datasets: [
-                    {
-                      label: "My First dataset",
-                      backgroundColor: "#157A55",
-                      borderColor: "#157A55",
-                      data: [0, 10, 5, 2, 20, 30, 45],
-                    },
-                  ],
-                };
+								const configLineAct = {
+									type: "line",
+									data: dataLineAct,
+									options: {},
+								};
+							</script>
+							<script>
+								const myChartLine1 = new Chart(document.getElementById("line-act"), configLineAct);
+							</script>
+						</div>
+					</div>
+					<div class="items no-user-box">
+						<div class="content-titles">NO. OF USERS</div>
+						<div class="percent-flex">
+							<div class="percent-box">
+								<div class="up-icon">
+									<iconify-icon
+										icon="akar-icons:circle-chevron-up-fill"
+										style="color: white"
+										width="20"
+										height="20"
+									></iconify-icon>
+								</div>
+								<div class="percent">13%</div>
+							</div>
+						</div>
+						<div class="numbers" id="userCount">0</div>
+						<div class="graphs-container">
+							<div class="line-graphs">
+								<canvas id="line"></canvas>
+							</div>
+							<script>
+								const labels = ["January", "February", "March", "April", "May", "June"];
 
-                const configLine = {
-                  type: "line",
-                  data: dataLine,
-                  options: {},
-                };
-              </script>
-              <script>
-                const myChartLine = new Chart(document.getElementById("line"), configLine);
-              </script>
-            </div>
-          </div>
-          <div class="items no-vehicle-box">
-            <div class="content-titles">NO. OF REGISTERED VEHICLES</div>
-            <div class="percent-flex">
-              <div class="percent-box">
-                <div class="up-icon">
-                  <iconify-icon
-                    icon="akar-icons:circle-chevron-up-fill"
-                    style="color: white"
-                    width="20"
-                    height="20"
-                  ></iconify-icon>
-                </div>
-                <div class="percent">13%</div>
-              </div>
-            </div>
-            <div class="numbers">125</div>
-            <div class="graphs"></div>
-          </div>
-          <div class="items table-box">
-            <div class="content-titles distri-flex">
-              <div class="sidebar-logo">
-                <iconify-icon
-                  icon="icon-park-solid:table-report"
-                  style="color: #474747"
-                  width="36"
-                  height="36"
-                ></iconify-icon>
-              </div>
-              <div class="distri-title">Recent Activities</div>
-            </div>
-            <div class="">
-              <table id="dataTable" class="display">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>NAME</th>
-                    <th>COLLEGE</th>
-                    <th>VEHICLE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Meeco Arcilla</td>
-                    <td>CICT</td>
-                    <td>Porche</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Alexis Cantoria</td>
-                    <td>CICT</td>
-                    <td>Dodge</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Jamiel Villsenor</td>
-                    <td>CICT</td>
-                    <td>Lycan</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Jesus King Ambrocio</td>
-                    <td>CICT</td>
-                    <td>BMW</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>Mike Hernandez</td>
-                    <td>CICT</td>
-                    <td>Volkswagen</td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td>Marc Aguinaldo</td>
-                    <td>CICT</td>
-                    <td>McLaren</td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td>John Sanchez</td>
-                    <td>CICT</td>
-                    <td>Mazda</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <script></script>
-          </div>
-          <div class="items pie-chart-box">
-            <div class="content-titles distri-flex">
-              <div class="sidebar-logo">
-                <iconify-icon icon="bxs:car" style="color: white" width="36" height="36"></iconify-icon>
-              </div>
-              <div class="distri-title">DISTRIBUTION OF VEHICLES</div>
-            </div>
-            <div class="pie-flex">
-              <div class="pie-container">
-                <div>
-                  <canvas id="myChart"></canvas>
-                </div>
-                <script>
-                  const data = {
-                    labels: ["Recent", "Users", "Registered"],
-                    datasets: [
-                      {
-                        label: "My First Dataset",
-                        data: [125, 525, 125],
-                        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
-                        hoverOffset: 4,
-                      },
-                    ],
-                  };
+								const dataLine = {
+									labels: labels,
+									datasets: [
+										{
+											label: "My First dataset",
+											backgroundColor: "#157A55",
+											borderColor: "#157A55",
+											data: [0, 10, 5, 2, 20, 30, 45],
+										},
+									],
+								};
 
-                  const config = {
-                    type: "pie",
-                    data: data,
-                    options: {},
-                  };
-                </script>
-                <script>
-                  const myChart = new Chart(document.getElementById("myChart"), config);
-                </script>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
+								const configLine = {
+									type: "line",
+									data: dataLine,
+									options: {},
+								};
+							</script>
+							<script>
+								const myChartLine = new Chart(document.getElementById("line"), configLine);
+							</script>
+						</div>
+					</div>
+					<div class="items no-vehicle-box">
+						<div class="content-titles">NO. OF REGISTERED VEHICLES</div>
+						<div class="percent-flex">
+							<div class="percent-box">
+								<div class="up-icon">
+									<iconify-icon
+										icon="akar-icons:circle-chevron-up-fill"
+										style="color: white"
+										width="20"
+										height="20"
+									></iconify-icon>
+								</div>
+								<div class="percent">13%</div>
+							</div>
+						</div>
+						<div class="numbers">125</div>
+						<div class="graphs"></div>
+					</div>
+					<div class="items table-box">
+						<div class="content-titles distri-flex">
+							<div class="sidebar-logo">
+								<iconify-icon
+									icon="icon-park-solid:table-report"
+									style="color: #474747"
+									width="36"
+									height="36"
+								></iconify-icon>
+							</div>
+							<div class="distri-title">Recent Activities</div>
+						</div>
+						<div class="">
+							<table id="dataTable" class="display">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>NAME</th>
+										<th>COLLEGE</th>
+										<th>VEHICLE</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>Meeco Arcilla</td>
+										<td>CICT</td>
+										<td>Porche</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>Alexis Cantoria</td>
+										<td>CICT</td>
+										<td>Dodge</td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td>Jamiel Villsenor</td>
+										<td>CICT</td>
+										<td>Lycan</td>
+									</tr>
+									<tr>
+										<td>4</td>
+										<td>Jesus King Ambrocio</td>
+										<td>CICT</td>
+										<td>BMW</td>
+									</tr>
+									<tr>
+										<td>5</td>
+										<td>Mike Hernandez</td>
+										<td>CICT</td>
+										<td>Volkswagen</td>
+									</tr>
+									<tr>
+										<td>6</td>
+										<td>Marc Aguinaldo</td>
+										<td>CICT</td>
+										<td>McLaren</td>
+									</tr>
+									<tr>
+										<td>7</td>
+										<td>John Sanchez</td>
+										<td>CICT</td>
+										<td>Mazda</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<script></script>
+					</div>
+					<div class="items pie-chart-box">
+						<div class="content-titles distri-flex">
+							<div class="sidebar-logo">
+								<iconify-icon icon="bxs:car" style="color: white" width="36" height="36"></iconify-icon>
+							</div>
+							<div class="distri-title">DISTRIBUTION OF VEHICLES</div>
+						</div>
+						<div class="pie-flex">
+							<div class="pie-container">
+								<div>
+									<canvas id="myChart"></canvas>
+								</div>
+								<script>
+									const data = {
+										labels: ["Recent", "Users", "Registered"],
+										datasets: [
+											{
+												label: "My First Dataset",
+												data: [125, 525, 125],
+												backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+												hoverOffset: 4,
+											},
+										],
+									};
+
+									const config = {
+										type: "pie",
+										data: data,
+										options: {},
+									};
+								</script>
+								<script>
+									const myChart = new Chart(document.getElementById("myChart"), config);
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
