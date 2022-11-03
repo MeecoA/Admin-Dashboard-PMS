@@ -31,23 +31,41 @@
             <label for="title">Title:</label>
             <input type="text" name="announceTitle" />
           </div>
+          <div class="date-container announce-items">
+            <div class="start-date end-start-date">
+              <label for="startDate">Date: </label>
+              <input type="date" name="date" />
+            </div>
+          </div>
+          <div class="postedby-container announce-items">
+            <div class="posted by">
+              <label for="postedBy">Posted By: </label>
+              <select name="postedBy" id="postedBy">
+                <option value="" disabled selected>Select</option>
+                <option value="administrator">Administrator</option>
+                <option value="administrator">Security</option>
+              </select>
+            </div>
+          </div>
+          <div class="prio-container announce-items">
+            <label for="details">Priority:</label>
+            <input type="text" name="priority" />
+          </div>
           <div class="details-container announce-items">
-            <label for="details">Details: </label>
-            <textarea name="details" id="announceDetails" cols="30" rows="10"></textarea>
+            <label for="details">Message: </label>
+            <textarea name="message" id="announceDetails" cols="30" rows="5"></textarea>
+          </div>
+          <div class="sources-container announce-items">
+            <label for="sources">Sources:</label>
+            <input type="text" name="announceSources" />
+          </div>
+          <div class="files-container announce-items">
+            <label for="files"> Files:</label>
+            <input type="file" name="files" />
           </div>
           <div class="attach-container announce-items">
             <label for="attachment"> Attachment(Picture):</label>
-            <input type="file" name="announcePic" />
-          </div>
-          <div class="date-continer announce-items">
-            <div class="start-date end-start-date">
-              <label for="startDate">Start Date: </label>
-              <input type="date" name="startDate" />
-            </div>
-            <div class="end-date end-start-date">
-              <label for="endDate">End Date: </label>
-              <input type="date" name="endDate" />
-            </div>
+            <input type="file" name="thumbnail" accept="image/*" />
           </div>
           <div class="add-sec-buttons">
             <a href="#" rel="modal:close"><button class="sec-buttons cancel">CANCEL</button> </a>
@@ -63,6 +81,8 @@
                 <th>ID</th>
                 <th>Title</th>
                 <th>Date</th>
+                <th>Posted By</th>
+                <th>Priority</th>
                 <th>Actions</th>
               </tr>
             </thead>

@@ -126,6 +126,15 @@ function ajaxSec() {
             exportOptions: {
               columns: [0, 1, 2, 3, 4, 5],
             },
+            customize: function (win) {
+              $(win.document.body)
+                .css("font-size", "10pt")
+                .prepend(
+                  '<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
+                );
+
+              $(win.document.body).find("table").addClass("compact").css("font-size", "inherit");
+            },
           },
           {
             extend: "pdfHtml5",
@@ -514,62 +523,88 @@ announceLink.addEventListener("click", () => {
       vehiLink.classList.remove("active");
       logLink.classList.remove("active");
       annoLink.classList.add("active");
-      const announceTable = document.querySelector(".table-body");
+
+      var t = $("#announceTable").DataTable({
+        dom: "Bfrtip",
+        buttons: [
+          {
+            extend: "copyHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "print",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "pdfHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          "colvis",
+        ],
+      });
       const renderAnnounce = (docu) => {
-        const tr = `<tr data-id='${docu.id}'>
-      <td>${docu.id}</td>
-      <td>${docu.data().title}</td>
-      <td>${docu.data().startDate}</td>
-      <td>
-      <div class="drop-container">
-        <button class="drop-btn">ACTIONS
-        <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
-        </button>
-        <div class="drop-content" id="dropSec">
-
-          <a href="#viewSec" rel="modal:open" class="view-button"><iconify-icon
-          class="view-icon"
-          icon="bi:eye-fill"
-          style="color: black"
-          width="16"
-          height="16"
-        ></iconify-icon>View</a>
-
-            <a href="#editmodal" rel="modal:open" class = 'edit-button'>
-            <iconify-icon
-            class="view-icon"
-            icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
-
-          <a href="#editAccInfo" rel="modal:open" class = "editSecAccBtn">
-          <iconify-icon
-            class="view-icon"
-            icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
-
-            <a href="#" class="delete-button">
-            <iconify-icon
+        var tableTr = t.row
+          .add([
+            docu.id,
+            docu.data().title,
+            docu.data().posted_on,
+            docu.data().posted_by,
+            docu.data().priority,
+            `<div class="drop-container-announce">
+            <button class="drop-btn-announce">ACTIONS
+            <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
+            </button>
+            <div class="drop-content-announce" id="dropAnnounce">
+              <a href="#viewAnnounce" rel="modal:open" class="view-announce-button"><iconify-icon
               class="view-icon"
-              icon="ep:delete-filled"
+              icon="bi:eye-fill"
               style="color: black"
               width="16"
               height="16"
-            ></iconify-icon>
-            Delete User</a>
+            ></iconify-icon>View</a>
 
-        </div>
-      </div>
-    </td>
-    </tr>`;
-        announceTable.insertAdjacentHTML("beforeend", tr);
+                <a href="#editmodal" rel="modal:open" class = 'edit-button'>
+                <iconify-icon
+                class="view-icon"
+                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
 
-        let dropAnnounce = document.querySelector(`[data-id='${docu.id}'] .drop-btn`);
-        let dropContent = document.querySelector(`[data-id='${docu.id}'] #dropSec`);
+              <a href="#editAccInfo" rel="modal:open" class = "editAnnounceAccBtn">
+              <iconify-icon
+                class="view-icon"
+                icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
+
+                <a href="#" class="delete-button">
+                <iconify-icon
+                  class="view-icon"
+                  icon="ep:delete-filled"
+                  style="color: black"
+                  width="16"
+                  height="16"
+                ></iconify-icon>
+                Delete User</a>
+            </div>
+          </div>
+        `,
+          ])
+          .draw(false)
+          .node();
+        $(tableTr).attr("data-id", `${docu.id}`);
+
+        const dropAnnounce = document.querySelector(`[data-id='${docu.id}'] .drop-btn-announce`);
+        const dropContent = document.querySelector(`[data-id='${docu.id}'] #dropAnnounce`);
         dropAnnounce.addEventListener("click", () => {
           dropContent.classList.toggle("show");
         });
         //dropdown - if user clicks outside of the dropdown
         window.onclick = function (event) {
-          if (!event.target.matches(".drop-btn")) {
-            var dropdowns = document.getElementsByClassName("drop-content");
+          if (!event.target.matches(".drop-btn-announce")) {
+            var dropdowns = document.getElementsByClassName("drop-content-announce");
             var i;
             for (i = 0; i < dropdowns.length; i++) {
               var openDropdown = dropdowns[i];
@@ -594,25 +629,24 @@ announceLink.addEventListener("click", () => {
       addAnnounce.addEventListener("submit", (event) => {
         event.preventDefault();
         addDoc(announceColRef, {
-          attachment: addAnnounce.announcePic.value,
           title: addAnnounce.announceTitle.value,
-          details: addAnnounce.details.value,
-          endDate: addAnnounce.endDate.value,
-          startDate: addAnnounce.startDate.value,
+          posted_on: addAnnounce.details.value,
+          posted_by: addAnnounce.postedBy.value,
+          files: addAnnounce.files.value,
+          thumbnail: addAnnounce.thumbnail.value,
+          priority: addAnnounce.priority.value,
+          sources: addAnnounce.priority.value,
         }).then(() => {
           addAnnounce.reset();
         });
       }); //end adding data
 
       onSnapshot(announceColRef, (snapshot) => {
-        let announcements = [];
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             renderAnnounce(change.doc);
           }
-          announcements.push({ ...change.doc.data(), id: change.doc.id });
         });
-        console.log(announcements);
       });
     } //end if ready state
   };
