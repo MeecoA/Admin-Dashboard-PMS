@@ -12,113 +12,140 @@ console.log("database: ", fire.database);
 const loadLogs = document.querySelector("#logsLink");
 
 async function displayVisitorLogs() {
-  const myQuery = fire.doQuery(fire.myCollection(fire.db, 'visitor-logs'));
-  fire.myOnSnapshot(myQuery, (snapshot) => {     //based on the query, //change this back!
-      const unsubCollection = fire.myOnSnapshot(myQuery, (snapshot) => {     //based on the query
-          let logs = [];
-          let index = 0;
-          snapshot.docs.forEach((doc) => {
-              let unpackData = {...doc.data()};
-              let objSize = Object.keys(unpackData).length;
-              Object.entries(unpackData).map((element, index) => {
-                  if(objSize-1 !== index) {
+  const myQuery = fire.doQuery(fire.myCollection(fire.db, "visitor-logs"));
+  fire.myOnSnapshot(myQuery, (snapshot) => {
+    //based on the query, //change this back!
+    const unsubCollection = fire.myOnSnapshot(myQuery, (snapshot) => {
+      //based on the query
+      let logs = [];
+      let index = 0;
+      snapshot.docs.forEach((doc) => {
+        let unpackData = { ...doc.data() };
+        let objSize = Object.keys(unpackData).length;
+        Object.entries(unpackData).map((element, index) => {
+          if (objSize - 1 !== index) {
+            console.log("time_in", element[1]["time_in"]);
+            console.log("time_out", element[1]["time_out"]);
 
-                      console.log("time_in", element[1]["time_in"]);
-                      console.log("time_out", element[1]["time_out"]);
+            element[1]["time_in"]["timestamp"] =
+              element[1]["time_in"]["timestamp"] === ""
+                ? ""
+                : new Date(element[1]["time_in"]["timestamp"]).toLocaleString("en-GB", { timeZone: "UTC" });
+            element[1]["time_out"]["timestamp"] =
+              element[1]["time_out"]["timestamp"] === ""
+                ? ""
+                : new Date(element[1]["time_out"]["timestamp"]).toLocaleString("en-GB", { timeZone: "UTC" });
 
-                      element[1]['time_in']['timestamp'] = element[1]['time_in']['timestamp'] === '' ? '' : new Date(element[1]['time_in']['timestamp']).toLocaleString('en-GB',{timeZone:'UTC'})
-                      element[1]['time_out']['timestamp'] = element[1]['time_out']['timestamp'] === '' ? '' : new Date(element[1]['time_out']['timestamp']).toLocaleString('en-GB',{timeZone:'UTC'})
+            index += 1; //increment
+            logs.push(element[1]);
+          }
+        });
+      });
 
-                      index += 1; //increment
-                      logs.push(element[1]);
-                  }
-              });
-          });
-
-          jQuery((e) => {
-              console.log("DataTable");
-              $("#table_visitor").DataTable({
-                  scrollX: true,
-                  "pageLength": 10,
-                  "data": logs,
-                  "columns": [
-                      {"data": "time_in.timestamp"},
-                      {"data": "time_out.timestamp"},
-                      {"data": (data, type, dataToSet) => {
-                          return data.time_in.gate_number + ", " + data.time_out.gate_number}
-                      },
-                      // {"data": "time_out.officer_uid"},
-                      {"data": (data, type, dataToSet) => {
-                          return data.time_in.officer_uid + ", " + data.time_out.officer_uid}
-                      },
-                      {"data": "first_name"},
-                      {"data": "last_name"},
-                      {"data": "middle_name"},
-                      {"data": "plate_number"},
-                      {"data": "vehicle_model"},
-                  ],
-                  "columnDefs": [{
-                      "defaultContent": "-",
-                      "targets": "_all"
-                  }]
-              });
-          }); //jQuery
-      }); //end of function
+      jQuery((e) => {
+        console.log("DataTable");
+        $("#table_visitor").DataTable({
+          scrollX: true,
+          pageLength: 10,
+          data: logs,
+          columns: [
+            { data: "time_in.timestamp" },
+            { data: "time_out.timestamp" },
+            {
+              data: (data, type, dataToSet) => {
+                return data.time_in.gate_number + ", " + data.time_out.gate_number;
+              },
+            },
+            // {"data": "time_out.officer_uid"},
+            {
+              data: (data, type, dataToSet) => {
+                return data.time_in.officer_uid + ", " + data.time_out.officer_uid;
+              },
+            },
+            { data: "first_name" },
+            { data: "last_name" },
+            { data: "middle_name" },
+            { data: "plate_number" },
+            { data: "vehicle_model" },
+          ],
+          columnDefs: [
+            {
+              defaultContent: "-",
+              targets: "_all",
+            },
+          ],
+        });
+      }); //jQuery
+    }); //end of function
   }); //end of snapshot function
 }
 
 async function displayLogs() {
-  const myQuery = fire.doQuery(fire.myCollection(fire.db, 'logs'));
-  fire.myOnSnapshot(myQuery, (snapshot) => {     //based on the query, //change this back!
-      const unsubCollection = fire.myOnSnapshot(myQuery, (snapshot) => {     //based on the query
-          let logs = [];
-          let index = 0;
-          snapshot.docs.forEach((doc) => {
-              let unpackData = {...doc.data()};
-              let objSize = Object.keys(unpackData).length;
-              Object.entries(unpackData).map((element, index) => {
-                  if(objSize-1 !== index) {
-                      console.log("time_in", element[1]["time_in"]);
-                      console.log("time_out", element[1]["time_out"]);
+  const myQuery = fire.doQuery(fire.myCollection(fire.db, "logs"));
+  fire.myOnSnapshot(myQuery, (snapshot) => {
+    //based on the query, //change this back!
+    const unsubCollection = fire.myOnSnapshot(myQuery, (snapshot) => {
+      //based on the query
+      let logs = [];
+      let index = 0;
+      snapshot.docs.forEach((doc) => {
+        let unpackData = { ...doc.data() };
+        let objSize = Object.keys(unpackData).length;
+        Object.entries(unpackData).map((element, index) => {
+          if (objSize - 1 !== index) {
+            console.log("time_in", element[1]["time_in"]);
+            console.log("time_out", element[1]["time_out"]);
 
-                      element[1]['time_in']['timestamp'] = element[1]['time_in']['timestamp'] === '' ? '' : new Date(element[1]['time_in']['timestamp']).toLocaleString('en-GB',{timeZone:'UTC'})
-                      element[1]['time_out']['timestamp'] = element[1]['time_out']['timestamp'] === '' ? '' : new Date(element[1]['time_out']['timestamp']).toLocaleString('en-GB',{timeZone:'UTC'})
+            element[1]["time_in"]["timestamp"] =
+              element[1]["time_in"]["timestamp"] === ""
+                ? ""
+                : new Date(element[1]["time_in"]["timestamp"]).toLocaleString("en-GB", { timeZone: "UTC" });
+            element[1]["time_out"]["timestamp"] =
+              element[1]["time_out"]["timestamp"] === ""
+                ? ""
+                : new Date(element[1]["time_out"]["timestamp"]).toLocaleString("en-GB", { timeZone: "UTC" });
 
-                      index += 1; //increment
-                      logs.push(element[1]);
-                  }
-              });
-          });
+            index += 1; //increment
+            logs.push(element[1]);
+          }
+        });
+      });
 
-          jQuery((e) => {
-              console.log("DataTable");
-              $("#table_id").DataTable({
-                  scrollX: true,
-                  "pageLength": 10,
-                  "data": logs,
-                  "columns": [
-                      {"data": "time_in.timestamp"},
-                      {"data": "time_out.timestamp"},
-                      {"data": (data, type, dataToSet) => {
-                          return data.time_in.gate_number + ", " + data.time_out.gate_number}
-                      },
-                      // {"data": "time_out.officer_uid"},
-                      {"data": (data, type, dataToSet) => {
-                          return data.time_in.officer_uid + ", " + data.time_out.officer_uid}
-                      },
-                      {"data": "first_name"},
-                      {"data": "last_name"},
-                      {"data": "middle_name"},
-                      {"data": "plate_number"},
-                      {"data": "vehicle_model"},
-                  ],
-                  "columnDefs": [{
-                      "defaultContent": "-",
-                      "targets": "_all"
-                  }]
-              });
-          }); //jQuery
-      }); //end of function
+      jQuery((e) => {
+        console.log("DataTable");
+        $("#table_id").DataTable({
+          scrollX: true,
+          pageLength: 10,
+          data: logs,
+          columns: [
+            { data: "time_in.timestamp" },
+            { data: "time_out.timestamp" },
+            {
+              data: (data, type, dataToSet) => {
+                return data.time_in.gate_number + ", " + data.time_out.gate_number;
+              },
+            },
+            // {"data": "time_out.officer_uid"},
+            {
+              data: (data, type, dataToSet) => {
+                return data.time_in.officer_uid + ", " + data.time_out.officer_uid;
+              },
+            },
+            { data: "first_name" },
+            { data: "last_name" },
+            { data: "middle_name" },
+            { data: "plate_number" },
+            { data: "vehicle_model" },
+          ],
+          columnDefs: [
+            {
+              defaultContent: "-",
+              targets: "_all",
+            },
+          ],
+        });
+      }); //jQuery
+    }); //end of function
   }); //end of snapshot function
 }
 
@@ -190,10 +217,10 @@ function ajaxCouncil() {
       });
       const buttonsColvis = document.querySelector(".buttons-colvis");
       buttonsColvis.textContent = "Filter By Category";
-      $(".facultyTbody").on("click", "tr", function (e) {
-        var data = t.row(this).data();
-        alert("you clicked on " + data[1] + "'s row");
-      });
+      // $(".facultyTbody").on("click", "tr", function (e) {
+      //   var data = t.row(this).data();
+      //   alert("you clicked on " + data[1] + "'s row");
+      // });
 
       const imgInputCouncil = document.querySelector("#imgInputCouncil");
       imgInputCouncil.addEventListener("change", (e) => {
@@ -270,7 +297,7 @@ function ajaxCouncil() {
                 class="view-icon"
                 icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
 
-                <a href="#" class="delete-button">
+                <a href="#" class="delete-button-council">
                 <iconify-icon
                   class="view-icon"
                   icon="ep:delete-filled"
@@ -287,7 +314,7 @@ function ajaxCouncil() {
           .node();
         $(tableTr).attr("data-id", `${docu.id}`);
 
-        const councilDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
+        const councilDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button-council`);
         councilDelete.addEventListener("click", () => {
           const docRef = fire.myDoc(fire.db, "admin-council", docu.id);
           fire.myDeleteDoc(docRef).then(() => {

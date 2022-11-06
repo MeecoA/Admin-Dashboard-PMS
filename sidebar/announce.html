@@ -29,7 +29,7 @@
           <div class="title-form">ADD NEW ANNOUNCEMENT</div>
           <div class="title-container announce-items">
             <label for="title">Title:</label>
-            <input type="text" name="announceTitle" />
+            <input type="text" name="title" />
           </div>
           <div class="date-container announce-items">
             <div class="start-date end-start-date">
@@ -57,15 +57,15 @@
           </div>
           <div class="sources-container announce-items">
             <label for="sources">Sources:</label>
-            <input type="text" name="announceSources" />
+            <input type="text" name="sources" />
           </div>
           <div class="files-container announce-items">
             <label for="files"> Files:</label>
-            <input type="file" name="files" />
+            <input type="file" name="files" id="filesAttached" />
           </div>
           <div class="attach-container announce-items">
             <label for="attachment"> Attachment(Picture):</label>
-            <input type="file" name="thumbnail" accept="image/*" />
+            <input type="file" name="thumbnail" accept="image/*" id="thumbnail" />
           </div>
           <div class="add-sec-buttons">
             <a href="#" rel="modal:close"><button class="sec-buttons cancel">CANCEL</button> </a>
@@ -86,8 +86,36 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody class="table-body"></tbody>
+            <tbody class="table-body-announce"></tbody>
           </table>
+        </div>
+      </div>
+    </div>
+    <div id="viewAnnounce" class="modal modal-view">
+      <div class="announceContentHolder">
+        <div class="announceContent">
+          <div class="viewPrio">IMPORTANT</div>
+          <div class="viewAnnounceTitle">RE: TEMPORARY CLOSURE OF GATE 1</div>
+          <div class="postedbyContainer">
+            <div>Posted on:</div>
+            <div class="viewPostedOn">October 12</div>
+          </div>
+          <div class="postedbyContainer">
+            <div>Posted by:</div>
+            <div class="viewPostedBy">Administrator</div>
+          </div>
+          <div class="viewMessage">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, delectus?</div>
+          <div class="viewSources">sourceshere</div>
+          <div class="viewFiles">fileshere.jpg</div>
+        </div>
+        <div class="viewAnnouncePicHolder">
+          <img
+            src="https://static.thenounproject.com/png/571343-200.png"
+            id="announceViewPic"
+            width="300"
+            height="300"
+            title="Upload image"
+          />
         </div>
       </div>
     </div>

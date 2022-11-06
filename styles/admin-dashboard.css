@@ -1196,7 +1196,41 @@ border: 1px solid red;
 .modal {
   width: 1000px;
 }
+/* for viewing announcements */
 
+.viewPrio {
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 20px;
+  background-color: red;
+  color: white;
+  font-family: "Lexend Deca";
+}
+.viewAnnounceTitle {
+  font-size: 30px;
+  font-weight: bold;
+}
+.postedbyContainer {
+  display: flex;
+  font-family: "Lexend Deca";
+  font-style: italic;
+}
+.viewMessage,
+.viewSources,
+.viewFiles {
+  margin: 10px;
+  font-family: "Lexend Deca";
+}
+.announceContentHolder {
+  display: flex;
+}
+.announceContent {
+  width: fit-content;
+}
+#viewAnnounce {
+  max-width: 1000px !important;
+}
 @media print {
   h1 {
     display: none;

@@ -148,14 +148,14 @@ function ajaxSec() {
       const buttonsColvis = document.querySelector(".buttons-colvis");
       buttonsColvis.textContent = "Filter By Category";
 
-      //adding data
+      // preview of uploaded photo
       const imgInput = document.querySelector("#imgInput");
       imgInput.addEventListener("change", (e) => {
         var image = document.querySelector("#output");
         image.src = URL.createObjectURL(e.target.files[0]);
       });
-      // preview of uploaded photo
 
+      //adding data
       const addSecurity = document.querySelector("#addSecForm");
       addSecurity.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -179,6 +179,7 @@ function ajaxSec() {
             createdAt: serverTimestamp(),
           }).then(() => {
             // alert("Security Created: ", cred.user);
+            ajaxSec();
             addSecurity.reset();
             var image = document.querySelector("#output");
             image.src = "https://static.thenounproject.com/png/571343-200.png";
@@ -530,30 +531,65 @@ announceLink.addEventListener("click", () => {
           {
             extend: "copyHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [0, 1, 2, 3, 4],
             },
           },
           {
             extend: "print",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [0, 1, 2, 3, 4],
             },
           },
           {
             extend: "pdfHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [0, 1, 2, 3, 4],
             },
           },
           "colvis",
         ],
       });
+      const addAnnounceForm = document.querySelector("#announceForm");
+      addAnnounceForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        addDoc(announceColRef, {
+          id: addAnnounceForm.title.value,
+          title: addAnnounceForm.title.value,
+          date: addAnnounceForm.date.value,
+          posted_by: addAnnounceForm.postedBy.value,
+          priority: addAnnounceForm.priority.value,
+          message: addAnnounceForm.message.value,
+          sources: addAnnounceForm.sources.value,
+          files: addAnnounceForm.files.value,
+          thumbnail: addAnnounceForm.thumbnail.value,
+        }).then(() => {
+          console.log(addAnnounceForm.title.value);
+          const storage = getStorage();
+          const imageRef = ref(storage, `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`);
+          const fileRef = ref(storage, `announcements/files/${addAnnounceForm.title.value}/file`);
+          var thumbnail = document.querySelector("#thumbnail").files[0];
+          var file = document.querySelector("#filesAttached").files[0];
+
+          var metadata = {
+            contentType: file.type,
+          };
+          uploadBytes(imageRef, thumbnail).then((snapshot) => {
+            console.log("UPLOADED");
+          });
+          uploadBytes(fileRef, file, metadata).then((snapshot) => {
+            console.log("UPLOADED file2");
+          });
+          addAnnounceForm.reset();
+        });
+        //adding council
+      });
+      const announceTBody = document.querySelector(".table-body-announce");
       const renderAnnounce = (docu) => {
         var tableTr = t.row
           .add([
             docu.id,
             docu.data().title,
-            docu.data().posted_on,
+            docu.data().date,
             docu.data().posted_by,
             docu.data().priority,
             `<div class="drop-container-announce">
@@ -622,28 +658,53 @@ announceLink.addEventListener("click", () => {
             console.log("deleted successfully");
           });
         }); //end of deleting data
-      };
-      // adding data
-      const addAnnounce = document.querySelector("#announceForm");
-      console.log(addAnnounce);
-      addAnnounce.addEventListener("submit", (event) => {
-        event.preventDefault();
-        addDoc(announceColRef, {
-          title: addAnnounce.announceTitle.value,
-          posted_on: addAnnounce.details.value,
-          posted_by: addAnnounce.postedBy.value,
-          files: addAnnounce.files.value,
-          thumbnail: addAnnounce.thumbnail.value,
-          priority: addAnnounce.priority.value,
-          sources: addAnnounce.priority.value,
-        }).then(() => {
-          addAnnounce.reset();
+        //viewing announcement
+        const announceViewPic = document.querySelector("#announceViewPic");
+        const viewPrio = document.querySelector(".viewPrio");
+        const viewAnnounceTitle = document.querySelector(".viewAnnounceTitle");
+        const viewPostedOn = document.querySelector(".viewPostedOn");
+        const viewPostedBy = document.querySelector(".viewPostedBy");
+        const viewMessage = document.querySelector(".viewMessage");
+        const viewSources = document.querySelector(".viewSources");
+        const viewFiles = document.querySelector(".viewFiles");
+        const viewAnnounceBtn = document.querySelector(`[data-id='${docu.id}'] .view-announce-button`);
+
+        viewAnnounceBtn.addEventListener("click", () => {
+          viewAnnounceTitle.textContent = docu.data().title;
+          viewMessage.textContent = docu.data().message;
+          viewPrio.textContent = docu.data().priority;
+          viewPostedOn.textContent = docu.data().date;
+          viewPostedBy.textContent = docu.data().posted_by;
+          viewSources.textContent = "Source: " + docu.data().sources;
+          //retreiving files
+
+          const storage = getStorage();
+          const imageRef = ref(storage, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
+          const fileRef = ref(storage, `announcements/files/${docu.data().title}/file`);
+          getDownloadURL(imageRef).then((url) => {
+            console.log(url);
+            announceViewPic.src = url;
+          });
+          getDownloadURL(fileRef).then((url) => {
+            console.log(url);
+            viewFiles.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} file.</a>`;
+          });
         });
-      }); //end adding data
+      }; //end of rendering announcement
 
       onSnapshot(announceColRef, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
+            renderAnnounce(change.doc);
+          }
+          if (change.type === "removed") {
+            let row = document.querySelector(`[data-id="${change.doc.id}"]`);
+            // let tbody = row.parentElement;
+            announceTBody.removeChild(row);
+          }
+          if (change.type === "modified") {
+            let row = document.querySelector(`[data-id="${change.doc.id}"]`);
+            announceTBody.removeChild(row);
             renderAnnounce(change.doc);
           }
         });
