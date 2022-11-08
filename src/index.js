@@ -111,6 +111,7 @@ function ajaxSec() {
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      logsLink.classList.remove("active");
       //data tables
       var t = $("#sectable").DataTable({
         dom: "Bfrtip",
@@ -521,6 +522,8 @@ announceLink.addEventListener("click", () => {
 
       dropdownContent.style.display = "none";
       dropDown.classList.remove("active");
+      dropDownLogs.classList.remove("active");
+      dropdownContentLogs.style.display = "none";
       vehiLink.classList.remove("active");
       logLink.classList.remove("active");
       annoLink.classList.add("active");

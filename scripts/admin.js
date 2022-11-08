@@ -17,10 +17,15 @@ function generateTable() {
 }
 let dropDown = document.querySelector(".menu-btn");
 let dropdownContent = document.querySelector(".dropdown-container");
+let dropDownLogs = document.querySelector(".menu-btn-logs");
+let dropdownContentLogs = document.querySelector(".dropdown-container-logs");
 
 function generateDropdown() {
   dropDown.addEventListener("click", function () {
+    dropDownLogs.classList.remove("active");
+    dropdownContentLogs.style.display = "none";
     dropDown.classList.toggle("active");
+
     vehiLink.classList.remove("active");
     // logLink.classList.remove("active");
     annoLink.classList.remove("active");

@@ -117,13 +117,13 @@ body {
 }
 .menu:hover {
   background-color: #1d90ed;
-  border-radius: 20px;
+  border-radius: 10px;
   color: black;
   transition: 0.3s;
 }
 .menu:active {
   background-color: #1d90ed;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 .menu .title {
   margin-left: 20px;
@@ -169,10 +169,12 @@ body {
 .fa {
   font-size: 25px;
 }
-
+#usersDropdown {
+  width: 100%;
+}
 #usersDropdown:hover {
   background-color: #1d90ed;
-  border-radius: 20px;
+  border-radius: 10px;
   color: black;
   transition: 0.3s;
 }
@@ -206,8 +208,9 @@ button {
 .dropdown-container a:hover,
 .dropdown-container-logs a:hover {
   background-color: #1d90ed;
-  border-radius: 20px;
+  border-radius: 10px;
   transition: 0.3s;
+  color: black;
 }
 
 #usersDropdown {
@@ -231,12 +234,15 @@ button {
 
 /* dropdown classes */
 .active {
-  background-color: #1d90ed;
-  border-radius: 20px;
   color: black;
-  transition: 0.3s;
-}
+  background-color: #1d90ed;
+  border-radius: 10px;
 
+  transition: 0.3s ease;
+}
+.active > a {
+  color: black;
+}
 a {
   text-decoration: none;
   margin: 0;
@@ -975,6 +981,7 @@ border: 1px solid red;
 }
 
 /*table action drop downs*/
+
 .drop-content,
 .drop-content-council,
 .drop-content-announce {

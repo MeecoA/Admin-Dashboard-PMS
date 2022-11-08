@@ -195,9 +195,12 @@ async function displayLogs() {
 // dropdown function
 let dropDown = document.querySelector(".menu-btn-logs");
 let dropdownContent = document.querySelector(".dropdown-container-logs");
-
+let dropDownSec = document.querySelector(".menu-btn");
+let dropdownContentSec = document.querySelector(".dropdown-container");
 function generateDropdown() {
   dropDown.addEventListener("click", function () {
+    dropDownSec.classList.remove("active");
+    dropdownContentSec.style.display = "none";
     dropDown.classList.toggle("active");
     vehiLink.classList.remove("active");
     logLink.classList.remove("active");
