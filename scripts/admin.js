@@ -3,7 +3,7 @@ let persLink = document.querySelector("#councilLink");
 let resiLink = document.querySelector("#resiLink");
 let visiLink = document.querySelector("#visiLink");
 let vehiLink = document.querySelector(".vehi-link");
-let logLink = document.querySelector(".log-link");
+let logLink = document.querySelector("#logsLink");
 let annoLink = document.querySelector(".anno-link");
 generateTable();
 // //for the data table
@@ -22,12 +22,12 @@ function generateDropdown() {
   dropDown.addEventListener("click", function () {
     dropDown.classList.toggle("active");
     vehiLink.classList.remove("active");
-    logLink.classList.remove("active");
+    // logLink.classList.remove("active");
     annoLink.classList.remove("active");
 
     secLink.classList.remove("active");
     persLink.classList.remove("active");
-    resiLink.classList.remove("active");
+    // resiLink.classList.remove("active");
     visiLink.classList.remove("active");
 
     if (dropdownContent.style.display === "flex") {
@@ -110,28 +110,28 @@ function loadVisitors() {
   xhttp.send();
 }
 
-function loadVehicles() {
-  headerTitle.textContent = "Vehicles";
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("content").innerHTML = this.responseText;
-      secLink.classList.remove("active");
-      persLink.classList.remove("active");
-      resiLink.classList.remove("active");
-      visiLink.classList.add("active");
+// function loadVehicles() {
+//   headerTitle.textContent = "Vehicles";
+//   let xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function () {
+//     if (this.readyState == 4 && this.status == 200) {
+//       document.getElementById("content").innerHTML = this.responseText;
+//       secLink.classList.remove("active");
+//       persLink.classList.remove("active");
+//       resiLink.classList.remove("active");
+//       visiLink.classList.add("active");
 
-      dropdownContent.style.display = "none";
-      dropDown.classList.remove("active");
-      vehiLink.classList.add("active");
-      logLink.classList.remove("active");
-      annoLink.classList.remove("active");
-      generateTable();
-    }
-  };
-  xhttp.open("GET", "../sidebar/vehicles.html", true);
-  xhttp.send();
-}
+//       dropdownContent.style.display = "none";
+//       dropDown.classList.remove("active");
+//       vehiLink.classList.add("active");
+//       logLink.classList.remove("active");
+//       annoLink.classList.remove("active");
+//       generateTable();
+//     }
+//   };
+//   xhttp.open("GET", "../sidebar/vehicles.html", true);
+//   xhttp.send();
+// }
 
 // function loadLogs() {
 //   headerTitle.textContent = "Logs";

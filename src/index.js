@@ -517,7 +517,7 @@ announceLink.addEventListener("click", () => {
       secLink.classList.remove("active");
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
-      visiLink.classList.add("active");
+      visiLink.classList.remove("active");
 
       dropdownContent.style.display = "none";
       dropDown.classList.remove("active");
@@ -608,12 +608,9 @@ announceLink.addEventListener("click", () => {
                 <a href="#editmodal" rel="modal:open" class = 'edit-button'>
                 <iconify-icon
                 class="view-icon"
-                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
+                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit</a>
 
-              <a href="#editAccInfo" rel="modal:open" class = "editAnnounceAccBtn">
-              <iconify-icon
-                class="view-icon"
-                icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
+          
 
                 <a href="#" class="delete-button">
                 <iconify-icon
@@ -623,7 +620,7 @@ announceLink.addEventListener("click", () => {
                   width="16"
                   height="16"
                 ></iconify-icon>
-                Delete User</a>
+                Delete</a>
             </div>
           </div>
         `,

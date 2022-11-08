@@ -186,14 +186,16 @@ button {
   border: none;
 }
 
-.dropdown-container {
+.dropdown-container,
+.dropdown-container-logs {
   display: flex;
   flex-direction: column;
   display: none;
   padding-left: 1rem;
 }
 
-.dropdown-container a {
+.dropdown-container a,
+.dropdown-container-logs a {
   text-decoration: none;
   color: #474747;
   font-size: 20px;
@@ -201,7 +203,8 @@ button {
   width: 80%;
 }
 
-.dropdown-container a:hover {
+.dropdown-container a:hover,
+.dropdown-container-logs a:hover {
   background-color: #1d90ed;
   border-radius: 20px;
   transition: 0.3s;
@@ -218,7 +221,7 @@ button {
   border: 1px solid;
   padding: 10px;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .dt-button:hover {
@@ -760,7 +763,7 @@ border: 1px solid red;
 /* print buttons */
 .dt-buttons button {
   background-color: #99d4ff;
-  border-radius: 20px;
+  border-radius: 5px;
   font-family: "Lexend Deca";
   width: fit-content;
 }
@@ -1230,6 +1233,14 @@ border: 1px solid red;
 }
 #viewAnnounce {
   max-width: 1000px !important;
+}
+#preLoader {
+  background: #000 url(/images/bulsu-logo.png) no-repeat center center;
+  height: 100vh;
+  background-size: 50%;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
 }
 @media print {
   h1 {

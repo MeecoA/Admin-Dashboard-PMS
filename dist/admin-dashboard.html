@@ -56,6 +56,7 @@
     }
   </style>
   <body>
+    <!-- <div id="preLoader"></div> -->
     <div class="container">
       <div class="sidebar">
         <div class="admin-details-box">
@@ -97,8 +98,8 @@
             <div class="dropdown-container">
               <a id="secLink">Security Officers</a>
               <a id="councilLink">Admin Council</a>
-              <a id="resiLink">Faculty/NAPA</a>
-              <a id="visiLink" onclick="loadVisitors()">Visitors</a>
+              <a id="resiLink">Faculty</a>
+              <a id="napLink">NAP</a>
             </div>
           </li>
           <li>
@@ -110,12 +111,19 @@
             </a>
           </li>
           <li>
-            <a class="menu log-link" id="logsLink">
+            <button class="menu menu-btn-logs" id="usersDropdown">
               <div class="sidebar-logo">
                 <iconify-icon icon="mdi:script-text" style="color: #474747" width="36" height="36"></iconify-icon>
               </div>
-              <div class="title" id="logs-id">LOGS</div>
-            </a>
+              <div class="drop-box">
+                <div class="title" id="logs-id">LOGS</div>
+                <i class="fa fa-caret-down"></i>
+              </div>
+            </button>
+            <div class="dropdown-container-logs">
+              <a id="logsLink">Users</a>
+              <a id="visiLink">Visitors</a>
+            </div>
           </li>
           <li>
             <a id="announceLink" class="menu anno-link">
@@ -402,6 +410,10 @@
                     data: data,
                     options: {},
                   };
+                  // var loader = document.getElementById("preLoader");
+                  // window.addEventListener("load", () => {
+                  //   loader.style.display = "none";
+                  // });
                 </script>
                 <script>
                   const myChart = new Chart(document.getElementById("myChart"), config);

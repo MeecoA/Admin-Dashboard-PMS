@@ -7,6 +7,7 @@
     <title>ANNOUNCEMENTS</title>
   </head>
   <body>
+    <div id="preLoader1"></div>
     <div class="ajax-container items table-box">
       <div class="content-titles distri-flex">
         <div class="sidebar-logo">
@@ -120,4 +121,10 @@
       </div>
     </div>
   </body>
+  <script>
+    var loader = document.getElementById("preLoader1");
+    window.addEventListener("load", () => {
+      loader.style.display = "none";
+    });
+  </script>
 </html>

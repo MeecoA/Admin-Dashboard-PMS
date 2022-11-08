@@ -9,7 +9,6 @@ console.log("database: ", fire.database);
 
 //   });
 // });
-const loadLogs = document.querySelector("#logsLink");
 
 async function displayVisitorLogs() {
   const myQuery = fire.doQuery(fire.myCollection(fire.db, "visitor-logs"));
@@ -73,6 +72,28 @@ async function displayVisitorLogs() {
               defaultContent: "-",
               targets: "_all",
             },
+          ],
+          dom: "Bfrtip",
+          buttons: [
+            {
+              extend: "copyHtml5",
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+              },
+            },
+            {
+              extend: "print",
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+              },
+            },
+            {
+              extend: "pdfHtml5",
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+              },
+            },
+            "colvis",
           ],
         });
       }); //jQuery
@@ -143,13 +164,87 @@ async function displayLogs() {
               targets: "_all",
             },
           ],
+          dom: "Bfrtip",
+          buttons: [
+            {
+              extend: "copyHtml5",
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7],
+              },
+            },
+            {
+              extend: "print",
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7],
+              },
+            },
+            {
+              extend: "pdfHtml5",
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7],
+              },
+            },
+            "colvis",
+          ],
         });
       }); //jQuery
     }); //end of function
   }); //end of snapshot function
 }
 
+// dropdown function
+let dropDown = document.querySelector(".menu-btn-logs");
+let dropdownContent = document.querySelector(".dropdown-container-logs");
+
+function generateDropdown() {
+  dropDown.addEventListener("click", function () {
+    dropDown.classList.toggle("active");
+    vehiLink.classList.remove("active");
+    logLink.classList.remove("active");
+    annoLink.classList.remove("active");
+
+    secLink.classList.remove("active");
+    persLink.classList.remove("active");
+    // resiLink.classList.remove("active");
+    visiLink.classList.remove("active");
+
+    if (dropdownContent.style.display === "flex") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "flex";
+    }
+  });
+} //end of function
+generateDropdown();
+const loadLogs = document.querySelector("#logsLink");
 loadLogs.addEventListener("click", () => {
+  headerTitle.textContent = "Logs";
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("content").innerHTML = this.responseText;
+      secLink.classList.remove("active");
+      persLink.classList.remove("active");
+      resiLink.classList.remove("active");
+      visiLink.classList.remove("active");
+
+      // dropdownContent.style.display = "none";
+      // dropDown.classList.remove("active");
+      vehiLink.classList.remove("active");
+      logLink.classList.add("active");
+      annoLink.classList.remove("active");
+
+      displayLogs();
+      // end getting data
+    } //end if ready state
+  };
+  xhttp.open("GET", "../sidebar/logs.html", true);
+  xhttp.send();
+}); //ajax end for user logs
+
+// ajax start for visitor logs
+const loadVisitors = document.querySelector("#visiLink");
+loadVisitors.addEventListener("click", () => {
   headerTitle.textContent = "Logs";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -160,20 +255,19 @@ loadLogs.addEventListener("click", () => {
       resiLink.classList.remove("active");
       visiLink.classList.add("active");
 
-      dropdownContent.style.display = "none";
-      dropDown.classList.remove("active");
+      // dropdownContent.style.display = "none";
+      // dropDown.classList.remove("active");
       vehiLink.classList.remove("active");
-      logLink.classList.add("active");
+      logLink.classList.remove("active");
       annoLink.classList.remove("active");
 
-      displayLogs();
       displayVisitorLogs(); //display visitor log
       // end getting data
     } //end if ready state
   };
-  xhttp.open("GET", "../sidebar/logs.html", true);
+  xhttp.open("GET", "../sidebar/visitorlogs.html", true);
   xhttp.send();
-});
+}); //ajax end for visitor logs
 
 // AJAX Start for Admin Council
 const loadCouncil = document.querySelector("#councilLink");
