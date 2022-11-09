@@ -1249,6 +1249,20 @@ border: 1px solid red;
   position: fixed;
   z-index: 100;
 }
+
+/* for datatables  */
+tfoot input {
+  font-family: "Lexend Deca";
+  padding: 5px;
+}
+#sectable_filter label {
+  font-family: "Lexend Deca";
+}
+#sectable_filter input {
+  font-family: "Lexend Deca" !important;
+  padding: 5px;
+}
+/*  */
 @media print {
   h1 {
     display: none;
