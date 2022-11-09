@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Non Academic Personnel</title>
+  </head>
+  <body>
+    <div class="ajax-container items table-box">
+      <div class="content-titles distri-flex">
+        <div class="sidebar-logo">
+          <iconify-icon
+            icon="icon-park-solid:table-report"
+            style="color: #474747"
+            width="36"
+            #addmodal
+            height="36"
+          ></iconify-icon>
+        </div>
+        <div class="distri-title">Non-Academic Personnel</div>
+      </div>
+
+      <div class="button-holder">
+        <!-- modal for adding security -->
+        <div id="addmodal" class="modal">
+          <form id="addNapForm">
+            <div class="add-new-box">
+              <div class="entry-title"><p>ADD NEW ENTRY</p></div>
+              <div class="sec-pic-holder">
+                <div class="sec-pic" id="councilUpload">
+                  <label for="imgInputNap">
+                    <p>
+                      <img
+                        src="https://static.thenounproject.com/png/571343-200.png"
+                        id="outputNap"
+                        width="180"
+                        height="180"
+                        title="Upload image"
+                      />
+                    </p>
+                    <input type="file" id="imgInputNap" class="custom-file-input" accept="image/*" />
+                  </label>
+                </div>
+                <div class="position-holder">
+                  <div>ADD PROFILE PICTURE</div>
+                  <!-- <select name="position" id="secPosition">
+                    <option value="" disabled selected>USER TYPE</option>
+                    <option value="Officer">Admin Council</option>
+                  </select> -->
+                </div>
+              </div>
+
+              <div class="add-sec-inputs">
+                <div class="sec-input-box">
+                  <div class="labelbox">
+                    <iconify-icon icon="bi:person-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                    <p>First Name:</p>
+                  </div>
+                  <div class="sec-input">
+                    <input type="text" name="fname" required />
+                  </div>
+                </div>
+
+                <div class="sec-input-box">
+                  <div class="labelbox">
+                    <iconify-icon icon="bi:person-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                    <p>Middle Name:</p>
+                  </div>
+                  <div class="sec-input">
+                    <input type="text" name="mname" />
+                  </div>
+                </div>
+
+                <div class="sec-input-box">
+                  <div class="labelbox">
+                    <iconify-icon icon="bi:person-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                    <p>Last Name:</p>
+                  </div>
+                  <div class="sec-input">
+                    <input type="text" name="lname" required />
+                  </div>
+                </div>
+              </div>
+              <div class="add-sec-grid2">
+                <div class="sec-input-box">
+                  <div class="labelbox">
+                    <iconify-icon icon="bxs:phone" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                    <p>Phone Number:</p>
+                  </div>
+                  <div class="sec-input">
+                    <input type="text" name="phone" required />
+                  </div>
+                </div>
+
+                <div class="sec-input-box">
+                  <div class="labelbox">
+                    <iconify-icon
+                      icon="emojione-v1:classical-building"
+                      style="color: black"
+                      width="25.5"
+                      height="25.5"
+                    ></iconify-icon>
+                    <p>ID Number:</p>
+                  </div>
+                  <div class="sec-input">
+                    <input type="text" name="idnum" />
+                  </div>
+                </div>
+
+                <div class="sec-input-box">
+                  <div class="labelbox">
+                    <iconify-icon icon="eva:email-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                    <p>Email Address:</p>
+                  </div>
+                  <div class="sec-input">
+                    <input type="text" name="email" required />
+                  </div>
+                </div>
+                <div class="sec-input-box">
+                  <div class="labelbox">
+                    <iconify-icon icon="entypo:key" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                    <p>Password:</p>
+                  </div>
+                  <div class="sec-input">
+                    <input type="password" name="password" required />
+                  </div>
+                </div>
+
+                <div class="sec-input-box">
+                  <div class="labelbox">
+                    <iconify-icon icon="entypo:key" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                    <p>Confirm Password:</p>
+                  </div>
+                  <div class="sec-input">
+                    <input type="password" name="cpassword" required />
+                  </div>
+                </div>
+              </div>
+              <div class="add-sec-buttons">
+                <a href="#" rel="modal:close"><button class="sec-buttons cancel">CANCEL</button></a>
+                <button class="sec-buttons add-entry" type="submit">ADD ENTRY</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <a href="#addmodal" id="addSec" rel="modal:open">
+          <iconify-icon icon="akar-icons:person-add" style="color: black" width="16" height="16"></iconify-icon>
+          <div>ADD ENTRY</div>
+        </a>
+      </div>
+      <!-- edit modal -->
+      <div id="editmodal" class="modal" style="max-width: 972px">
+        <form id="editCouncilForm">
+          <div class="add-new-box">
+            <div class="entry-title"><p>EDIT USER INFORMATION</p></div>
+            <div class="sec-pic-holder">
+              <div class="sec-pic">
+                <iconify-icon
+                  icon="healthicons:ui-user-profile-negative"
+                  style="color: black"
+                  width="160"
+                  height="147"
+                ></iconify-icon>
+              </div>
+              <div class="position-holder">
+                <div>UPDATE PROFILE PICTURE</div>
+              </div>
+            </div>
+
+            <div class="add-sec-inputs">
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="bi:person-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>First Name:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="text" name="fname" />
+                </div>
+              </div>
+
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="bi:person-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>Middle Name:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="text" name="mname" />
+                </div>
+              </div>
+
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="bi:person-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>Last Name:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="text" name="lname" />
+                </div>
+              </div>
+            </div>
+            <div class="add-sec-grid2">
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="bxs:phone" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>Phone Number:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="text" name="phone" />
+                </div>
+              </div>
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="bxs:map" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>ID Number:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="text" name="idnum" />
+                </div>
+              </div>
+            </div>
+            <div class="add-sec-buttons">
+              <button class="sec-buttons cancel">
+                <a href="#" rel="modal:close"> CANCEL</a>
+              </button>
+              <button class="sec-buttons add-entry" type="submit">UPDATE ENTRY</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- end of edit modal -->
+
+      <!-- edit account modal-->
+      <div id="editAccInfo" class="modal" style="max-width: 972px">
+        <form id="editCouncilAccForm">
+          <div class="add-new-box">
+            <div class="entry-title"><p>EDIT ACCOUNT INFORMATION</p></div>
+
+            <!-- change email box -->
+            <div class="change-title-box">
+              <div class="change-title change-email-button">
+                <iconify-icon class="view-icon" icon="akar-icons:circle-fill" width="20" height="20"></iconify-icon>
+                <p>Change E-mail Address</p>
+              </div>
+              <div class="change-title change-password-button">
+                <iconify-icon class="view-icon" icon="akar-icons:circle-fill" width="20" height="20"></iconify-icon>
+                <p>Update Password</p>
+              </div>
+            </div>
+            <div class="change email-box">
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="eva:email-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>Email Address:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="text" name="secEmail" class="edit-info-input" />
+                </div>
+              </div>
+
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="eva:email-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>New Email Address:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="text" name="secEmailNew" class="edit-info-input" />
+                </div>
+              </div>
+
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="eva:email-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>Confirm New Email Address:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="text" name="secEmailCNew" class="edit-info-input" />
+                </div>
+              </div>
+            </div>
+            <!-- end change email box -->
+
+            <!-- change passsword box -->
+            <div class="change password-box">
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="entypo:key" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>Password:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="password" name="secPassword" class="edit-info-input" />
+                </div>
+              </div>
+
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="entypo:key" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>New Password:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="password" name="secNpassword" class="edit-info-input" />
+                </div>
+              </div>
+
+              <div class="sec-input-box">
+                <div class="labelbox">
+                  <iconify-icon icon="entypo:key" style="color: black" width="25.5" height="25.5"></iconify-icon>
+                  <p>Confirm Password:</p>
+                </div>
+                <div class="sec-input">
+                  <input type="password" name="secCpassword" class="edit-info-input" />
+                </div>
+              </div>
+            </div>
+
+            <!-- end change password box -->
+            <div class="add-sec-buttons">
+              <button class="sec-buttons cancel">
+                <a href="#" rel="modal:close"> CANCEL</a>
+              </button>
+              <button class="sec-buttons add-entry" type="submit">SAVE CHANGES</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- end edit account -->
+      <!-- end add modal -->
+
+      <div class="box-table">
+        <div class="ajax-container">
+          <table id="napTable" class="display">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>ID Number</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody class="tbody-nap"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- viewing council modal -->
+      <div id="viewNap" class="modal modal-view">
+        <div class="add-new-box">
+          <div class="sec-pic-holder">
+            <div class="sec-pic">
+              <img
+                src="https://static.thenounproject.com/png/571343-200.png"
+                id="napViewPic"
+                width="160"
+                height="160"
+                title="Upload image"
+              />
+            </div>
+            <div class="position-holder">
+              <div class="viewNapName">Juan Desla Cruz</div>
+            </div>
+          </div>
+
+          <div class="view-details-container">
+            <div class="view-details-box">
+              <p class="view-title">CONTACT NUMBER:</p>
+              <div class="viewNapPhone views">09282712312</div>
+            </div>
+            <div class="view-details-box">
+              <p class="view-title">EMAIL:</p>
+              <div class="viewNapEmail views">XXX@gmail.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end of viewing security -->
+    </div>
+  </body>
+</html>

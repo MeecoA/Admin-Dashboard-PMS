@@ -4,7 +4,13 @@ module.exports = {
   mode: "development",
   entry: [
     "./src/index.js",
-    "./dist/script.js"
+    "./src/announcement.js",
+    "./src/council.js",
+    "./src/faculty.js",
+    "./src/nap.js",
+    "./src/security.js",
+    "./src/userLogs.js",
+    "./src/visitorLogs.js",
   ],
   output: {
     path: path.resolve(__dirname, "dist"),
