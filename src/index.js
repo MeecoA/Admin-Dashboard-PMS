@@ -79,6 +79,7 @@ export const secColRef = collection(db, "security");
 export const accColRef = collection(db, "account-information");
 export const announceColRef = collection(db, "announcements");
 export const councilColRef = collection(db, "admin-council");
+export const napColRef = collection(db, "nonacademic");
 // for storage
 
 //queries

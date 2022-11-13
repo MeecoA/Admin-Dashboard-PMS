@@ -477,34 +477,22 @@ a {
   flex-direction: column;
 }
 
-#sectable {
-  font-family: "Lexend Deca";
-  text-align: center;
-  border-collapse: collapse;
-}
-#councilTable {
-  font-family: "Lexend Deca";
-  text-align: center;
-  border-collapse: collapse;
-}
+#sectable,
+#councilTable,
 #announceTable {
   font-family: "Lexend Deca";
-  text-align: center;
   border-collapse: collapse;
 }
 
-#sectable th {
-  text-align: center;
-}
 .table-body,
 .tbody-council {
   font-family: "Lexend Deca";
 }
-.table-body td,
+/* .table-body td,
 .tbody-council td {
   padding: 10px;
-}
-.table-body tr {
+} */
+/* .table-body tr {
   border-bottom: 1px solid;
 }
 .tbody-council tr {
@@ -512,7 +500,7 @@ a {
 }
 .tbody-council td {
   padding: 10px;
-}
+} */
 
 #announceTable {
   font-family: "Lexend Deca";
@@ -984,7 +972,8 @@ border: 1px solid red;
 
 .drop-content,
 .drop-content-council,
-.drop-content-announce {
+.drop-content-announce,
+.drop-content-nap {
   background-color: #99d4ff;
   display: flex;
   flex-direction: column;
@@ -1001,7 +990,8 @@ border: 1px solid red;
 
 .drop-content a,
 .drop-content-council a,
-.drop-content-announce a {
+.drop-content-announce a,
+.drop-content-nap a {
   color: black;
   border-radius: 20px;
   width: 97%;
@@ -1012,14 +1002,16 @@ border: 1px solid red;
 
 .drop-content a:hover,
 .drop-content-council a:hover,
-.drop-content-announce a:hover {
+.drop-content-announce a:hover,
+.drop-content-nap a:hover {
   background-color: #1d90ed;
   transition: 0.3s;
 }
 
 .drop-btn,
 .drop-btn-announce,
-.drop-btn-council {
+.drop-btn-council,
+.drop-btn-nap {
   background-color: #99d4ff;
   padding: 10px;
   border-radius: 20px;
@@ -1029,7 +1021,8 @@ border: 1px solid red;
 
 .drop-btn:hover,
 .drop-btn-council:hover,
-.drop-btn-announce:hover {
+.drop-btn-announce:hover,
+.drop-btn-nap:hover {
   background-color: #1d90ed;
   transition: 0.3s;
 }

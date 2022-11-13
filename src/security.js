@@ -20,14 +20,6 @@ function ajaxSec() {
       visiLink.classList.remove("active");
       logsLink.classList.remove("active");
       //data tables
-      // $("#sectable thead tr").clone(true).addClass("filters").appendTo("#sectable thead");
-
-      $("#sectable tfoot th").each(function (i) {
-        if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5) {
-          var title = $(this).text();
-          $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-        }
-      });
       var t = $("#sectable").DataTable({
         dom: "Bfrtip",
         buttons: [
@@ -60,21 +52,6 @@ function ajaxSec() {
           },
           "colvis",
         ],
-
-        // filter
-        initComplete: function () {
-          // Apply the search
-          this.api()
-            .columns()
-            .every(function () {
-              var that = this;
-              $("input", this.footer()).on("keyup change clear", function () {
-                if (that.search() !== this.value) {
-                  that.search(this.value).draw();
-                }
-              });
-            });
-        },
       });
 
       // });
@@ -95,7 +72,7 @@ function ajaxSec() {
         // authenticate
         const email = addSecurity.secEmail.value;
         const password = addSecurity.secPassword.value;
-        fire.doAuth(auth, email, password).then((cred) => {
+        fire.doAuth(fire.auth, email, password).then((cred) => {
           const userSec = fire.myDoc(fire.myCollection(fire.db, "security"), cred.user.uid);
           fire
             .doSetDoc(userSec, {
@@ -110,7 +87,6 @@ function ajaxSec() {
               phone: addSecurity.secPhone.value,
               province: addSecurity.secProvince.value,
               street: addSecurity.secStreet.value,
-              createdAt: serverTimestamp(),
             })
             .then(() => {
               // alert("Security Created: ", cred.user);
