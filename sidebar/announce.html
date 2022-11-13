@@ -30,18 +30,18 @@
           <div class="title-form">ADD NEW ANNOUNCEMENT</div>
           <div class="title-container announce-items">
             <label for="title">Title:</label>
-            <input type="text" name="title" />
+            <input type="text" name="title" required />
           </div>
           <div class="date-container announce-items">
             <div class="start-date end-start-date">
               <label for="startDate">Date: </label>
-              <input type="date" name="date" />
+              <input type="date" name="date" required />
             </div>
           </div>
           <div class="postedby-container announce-items">
             <div class="posted by">
               <label for="postedBy">Posted By: </label>
-              <select name="postedBy" id="postedBy">
+              <select name="postedBy" id="postedBy" required>
                 <option value="" disabled selected>Select</option>
                 <option value="administrator">Administrator</option>
                 <option value="administrator">Security</option>
@@ -50,15 +50,15 @@
           </div>
           <div class="prio-container announce-items">
             <label for="details">Priority:</label>
-            <input type="text" name="priority" />
+            <input type="text" name="priority" required />
           </div>
           <div class="details-container announce-items">
             <label for="details">Message: </label>
-            <textarea name="message" id="announceDetails" cols="30" rows="5"></textarea>
+            <textarea name="message" id="announceDetails" cols="30" rows="5" required></textarea>
           </div>
           <div class="sources-container announce-items">
             <label for="sources">Sources:</label>
-            <input type="text" name="sources" />
+            <input type="text" name="sources" required />
           </div>
           <div class="files-container announce-items">
             <label for="files"> Files:</label>
@@ -74,6 +74,59 @@
           </div>
         </form>
       </div>
+      <!-- end adding -->
+      <!-- edit modal -->
+      <div id="editmodal" class="modal" style="max-width: 972px">
+        <form id="editNapForm" class="napForm">
+          <div class="title-form">EDIT ANNOUNCEMENT</div>
+          <div class="title-container announce-items">
+            <label for="title">Title:</label>
+            <input type="text" name="title" required />
+          </div>
+          <div class="date-container announce-items">
+            <div class="start-date end-start-date">
+              <label for="startDate">Date: </label>
+              <input type="date" name="date" required />
+            </div>
+          </div>
+          <div class="postedby-container announce-items">
+            <div class="posted by">
+              <label for="postedBy">Posted By: </label>
+              <select name="postedBy" id="postedBy" required>
+                <option value="" disabled selected>Select</option>
+                <option value="administrator">Administrator</option>
+                <option value="administrator">Security</option>
+              </select>
+            </div>
+          </div>
+          <div class="prio-container announce-items">
+            <label for="details">Priority:</label>
+            <input type="text" name="priority" required />
+          </div>
+          <div class="details-container announce-items">
+            <label for="details">Message: </label>
+            <textarea name="message" id="announceDetails" cols="30" rows="5" required></textarea>
+          </div>
+          <div class="sources-container announce-items">
+            <label for="sources">Sources:</label>
+            <input type="text" name="sources" required />
+          </div>
+          <div class="files-container announce-items">
+            <label for="files"> Files:</label>
+            <input type="file" name="files" id="filesAttached" />
+          </div>
+          <div class="attach-container announce-items">
+            <label for="attachment"> Attachment(Picture):</label>
+            <input type="file" name="thumbnail" accept="image/*" id="thumbnail" />
+          </div>
+          <div class="add-sec-buttons">
+            <a href="#" rel="modal:close"><button class="sec-buttons cancel">CANCEL</button> </a>
+            <button class="sec-buttons add-entry" type="submit">ADD ENTRY</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- end edit modal -->
       <div class="box-table">
         <div class="ajax-container">
           <table id="announceTable" class="display">
@@ -107,7 +160,7 @@
           </div>
           <div class="viewMessage">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, delectus?</div>
           <div class="viewSources">sourceshere</div>
-          <div class="viewFiles">fileshere.jpg</div>
+          <div class="viewFiles">No files attached.</div>
         </div>
         <div class="viewAnnouncePicHolder">
           <img

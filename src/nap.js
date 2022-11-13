@@ -173,7 +173,7 @@ function ajaxNap() {
               idnum: editNapForm.idnum.value,
             })
             .then(() => {
-              ajaxCouncil();
+              ajaxNap();
             });
         });
 
@@ -235,19 +235,19 @@ function ajaxNap() {
         });
         // end upate
         //viewing the council information
-        const councilViewPic = document.querySelector("#councilViewPic");
-        const viewName = document.querySelector(".viewCouncilName");
-        const viewPhone = document.querySelector(".viewCouncilPhone");
-        const viewEmail = document.querySelector(".viewCouncilEmail");
-        const viewCouncilButton = document.querySelector(`[data-id='${docu.id}'] .view-council-button`);
+        const napViewPic = document.querySelector("#napViewPic");
+        const viewName = document.querySelector(".viewNapName");
+        const viewPhone = document.querySelector(".viewNapPhone");
+        const viewEmail = document.querySelector(".viewNapEmail");
+        const viewNapButton = document.querySelector(`[data-id='${docu.id}'] .view-nap-button`);
         const fullName = `${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}`;
-        viewCouncilButton.addEventListener("click", () => {
+        viewNapButton.addEventListener("click", () => {
           //retrieving the photo
           const storagePic = fire.storage;
-          const storageRef = fire.myStorageRef(storagePic, `admin_council/${docu.id}/profilepic.jpg`);
+          const storageRef = fire.myStorageRef(storagePic, `nonacademic/${docu.id}/profilepic.jpg`);
           fire.myGetDownloadUrl(storageRef).then((url) => {
             console.log(url);
-            councilViewPic.src = url;
+            napViewPic.src = url;
           });
 
           viewName.textContent = fullName;

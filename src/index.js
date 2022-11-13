@@ -18,6 +18,7 @@ import {
   arrayUnion,
   arrayRemove,
   increment,
+  limit,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
@@ -51,6 +52,7 @@ export const auth = getAuth();
 
 //exports
 // Firestore
+export const doLimit = limit;
 export const myGetDownloadUrl = getDownloadURL;
 export const myUploadBytes = uploadBytes;
 export const myStorageRef = ref;
