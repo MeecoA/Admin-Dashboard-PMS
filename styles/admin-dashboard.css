@@ -1028,7 +1028,7 @@ border: 1px solid red;
 }
 
 .show {
-  display: flex;
+  display: flex !important;
 }
 
 /*  */
@@ -1257,18 +1257,17 @@ tfoot input {
 }
 
 /* for form validation */
+.errorEmail,
+.errorPassword,
+.errorCpassword {
+  margin-left: 5px;
+  color: red;
+  font-size: 15px;
+}
 .validate {
-  border-color: red !important;
-  animation: fadeOut 2s forwards;
+  border: 2px solid red !important;
 }
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    border-color: green !important;
-  }
-}
+
 /*  */
 /*  */
 @media print {

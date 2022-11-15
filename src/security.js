@@ -71,68 +71,105 @@ function ajaxSec() {
       //adding data
       const addSecurity = document.querySelector("#addSecForm");
       addSecurity.addEventListener("submit", (e) => {
-        e.preventDefault();
-        // authenticate
-        const email = addSecurity.secEmail.value;
-        const password = addSecurity.secPassword.value;
-        fire
-          .doAuth(fire.auth, email, password)
-          .then((cred) => {
-            const userSec = fire.myDoc(fire.myCollection(fire.db, "security"), cred.user.uid);
-            fire
-              .doSetDoc(userSec, {
-                barangay: addSecurity.secBrgy.value,
-                position: addSecurity.position.value,
-                email: addSecurity.secEmail.value,
-                firstname: addSecurity.secFname.value,
-                lastname: addSecurity.secLname.value,
-                middlename: addSecurity.secMname.value,
-                municipality: addSecurity.secMunicip.value,
-                password: addSecurity.secPassword.value,
-                phone: addSecurity.secPhone.value,
-                province: addSecurity.secProvince.value,
-                street: addSecurity.secStreet.value,
-              })
-              .then(() => {
-                // alert("Security Created: ", cred.user);
-                ajaxSec();
-                addSecurity.reset();
-                var image = document.querySelector("#output");
-                image.src = "https://static.thenounproject.com/png/571343-200.png";
+        const secCpassword = document.querySelector("#secCpassword").value;
+        const secPassword = document.querySelector("#secPassword").value;
+        const errorPassword = document.querySelector(".errorPassword");
+        const passValidate = document.querySelectorAll(".passValidate");
+
+        if (secPassword != secCpassword) {
+          e.preventDefault();
+          errorPassword.textContent = "Passwords do not match!";
+          passValidate.forEach((input) => {
+            input.style.border = "2px solid red";
+          });
+        } else {
+          e.preventDefault();
+          // authenticate
+          const email = addSecurity.secEmail.value;
+          const password = addSecurity.secPassword.value;
+          fire
+            .doAuth(fire.auth, email, password)
+            .then((cred) => {
+              const userSec = fire.myDoc(fire.myCollection(fire.db, "security"), cred.user.uid);
+              fire
+                .doSetDoc(userSec, {
+                  barangay: addSecurity.secBrgy.value,
+                  position: addSecurity.position.value,
+                  email: addSecurity.secEmail.value,
+                  firstname: addSecurity.secFname.value,
+                  lastname: addSecurity.secLname.value,
+                  middlename: addSecurity.secMname.value,
+                  municipality: addSecurity.secMunicip.value,
+                  password: addSecurity.secPassword.value,
+                  phone: addSecurity.secPhone.value,
+                  province: addSecurity.secProvince.value,
+                  street: addSecurity.secStreet.value,
+                })
+                .then(() => {
+                  // alert("Security Created: ", cred.user);
+                  ajaxSec();
+                  addSecurity.reset();
+                  var image = document.querySelector("#output");
+                  image.src = "https://static.thenounproject.com/png/571343-200.png";
+                });
+              const storage = fire.storage;
+              const storageRef = fire.myStorageRef(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
+              var file = document.querySelector("#imgInput").files[0];
+              var name = file.name;
+              var metadata = {
+                contentType: file.type,
+              };
+              fire.myUploadBytes(storageRef, file).then((snapshot) => {
+                console.log("UPLOADED");
               });
-            const storage = fire.storage;
-            const storageRef = fire.myStorageRef(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
-            var file = document.querySelector("#imgInput").files[0];
-            var name = file.name;
-            var metadata = {
-              contentType: file.type,
-            };
-            fire.myUploadBytes(storageRef, file).then((snapshot) => {
-              console.log("UPLOADED");
-            });
-          })
-          .catch((error) => {
-            const secEmail = document.querySelector("#secEmailAdd");
+            })
+            .catch((error) => {
+              const errorEmail = document.querySelector(".errorEmail");
+              const errorPassword = document.querySelector(".errorPassword");
+              const secEmailAdd = document.querySelector("#secEmailAdd");
+              const errorPass = document.querySelector(".errorPass");
+              switch (error.code) {
+                case "auth/weak-password":
+                  errorEmail.textContent = "";
+                  errorPassword.textContent = "atleast 6 characters";
+                  secEmailAdd.style.border = "2px solid black";
+                  errorPass.style.border = "2px solid red";
+                  break;
+                case "auth/invalid-email":
+                  errorPassword.textContent = "";
+                  errorPass.style.border = "2px solid black";
+                  secEmailAdd.style.border = "2px solid red";
+                  errorEmail.textContent = "Invalid email!";
 
-            switch (error.code) {
-              case "auth/weak-password":
-                alert("Password must be at least 6 characters");
-                secEmail.classList.remove("validate");
-                break;
-              case "auth/invalid-email":
-                alert("Invalid email");
-                secEmail.classList.add("validate");
-                break;
-              case "auth/email-already-exists":
-                alert("Email already exists");
-                break;
+                  break;
+                case "auth/email-already-exists":
+                  secEmailAdd.style.border = "2px solid black";
+                  alert("Email already exists");
+                  break;
 
-              default:
-                break;
-            }
-          }); //end of createUserWithEmailAndPassword
+                default:
+                  errorEmail.textContent = "Invalid email!";
+                  break;
+              }
+            }); //end of createUserWithEmailAndPassword
+        }
       }); //end adding data
+      document.onkeyup = function () {
+        const errorEmail = document.querySelector(".errorEmail");
+        const errorPassword = document.querySelector(".errorPassword");
+        const secEmailAdd = document.querySelector("#secEmailAdd");
+        const errorPass = document.querySelector(".errorPass");
+        const passValidate = document.querySelectorAll(".passValidate");
 
+        secEmailAdd.style.border = "2px solid black";
+        errorEmail.textContent = "";
+        errorPassword.textContent = "";
+        errorPass.style.border = "2px solid black";
+        errorPassword.textContent = "";
+        passValidate.forEach((input) => {
+          input.style.border = "2px solid black";
+        });
+      };
       //creating the table data
       let id;
       const sectable = document.querySelector(".tbody-security");

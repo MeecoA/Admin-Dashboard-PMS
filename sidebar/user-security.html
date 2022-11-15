@@ -43,7 +43,7 @@
                   <p>First Name:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="text" name="secFname" required />
+                  <input type="text" name="secFname" required min="1" />
                 </div>
               </div>
 
@@ -74,27 +74,39 @@
                   <p>Phone Number:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="text" name="secPhone" required />
+                  <input type="number" name="secPhone" required />
                 </div>
               </div>
 
               <div class="sec-input-box">
                 <div class="labelbox">
                   <iconify-icon icon="eva:email-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
-                  <p>Email Address:</p>
+                  <p>Email Address:<span class="errorEmail"></span></p>
                 </div>
                 <div class="sec-input">
-                  <input type="text" name="secEmail" required id="secEmailAdd" />
+                  <input
+                    type="text"
+                    name="secEmail"
+                    id="secEmailAdd"
+                    oninvalid="this.setCustomValidity('Please enter a valid email address.')"
+                  />
                 </div>
               </div>
 
               <div class="sec-input-box">
                 <div class="labelbox">
                   <iconify-icon icon="entypo:key" style="color: black" width="25.5" height="25.5"></iconify-icon>
-                  <p>Password:</p>
+                  <p>Password: <span class="errorPassword"></span></p>
                 </div>
                 <div class="sec-input">
-                  <input type="password" name="secPassword" required />
+                  <input
+                    type="password"
+                    name="secPassword"
+                    required
+                    min="6"
+                    class="passValidate errorPass"
+                    id="secPassword"
+                  />
                 </div>
               </div>
 
@@ -104,7 +116,7 @@
                   <p>Confirm Password:</p>
                 </div>
                 <div class="sec-input">
-                  <input type="password" name="secCpassword" required />
+                  <input type="password" name="secCpassword" required min="6" class="passValidate" id="secCpassword" />
                 </div>
               </div>
 
