@@ -277,26 +277,6 @@ function ajaxCouncil() {
           }
         });
       });
-
-      const colRef = fire.myCollection(fire.db, "vehicle-information");
-      const vehicleQuery = fire.doQuery(colRef, fire.doLimit(10));
-
-      const docsSnap = await fire.myGetDocs(vehicleQuery);
-      docsSnap.forEach((doc) => {
-        let myData = doc.data();
-        // console.log("data", doc.id);
-
-        const vehicle = Object.keys(myData)
-          .filter((key) => key !== "vehicle_length")
-          // .filter((key) => key.includes("Name"))
-          .reduce((obj, key) => {
-            return Object.assign(obj, {
-              [key]: myData[key],
-            });
-          }, {});
-
-        console.log(doc.id, vehicle);
-      });
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/user-council.html", true);
