@@ -19,6 +19,9 @@ function ajaxSec() {
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
       logsLink.classList.remove("active");
+      napLink.classList.remove("active");
+      vehiLink.classList.remove("active");
+
       //data tables
       var t = $("#sectable").DataTable({
         dom: "Bfrtip",
@@ -72,40 +75,62 @@ function ajaxSec() {
         // authenticate
         const email = addSecurity.secEmail.value;
         const password = addSecurity.secPassword.value;
-        fire.doAuth(fire.auth, email, password).then((cred) => {
-          const userSec = fire.myDoc(fire.myCollection(fire.db, "security"), cred.user.uid);
-          fire
-            .doSetDoc(userSec, {
-              barangay: addSecurity.secBrgy.value,
-              position: addSecurity.position.value,
-              email: addSecurity.secEmail.value,
-              firstname: addSecurity.secFname.value,
-              lastname: addSecurity.secLname.value,
-              middlename: addSecurity.secMname.value,
-              municipality: addSecurity.secMunicip.value,
-              password: addSecurity.secPassword.value,
-              phone: addSecurity.secPhone.value,
-              province: addSecurity.secProvince.value,
-              street: addSecurity.secStreet.value,
-            })
-            .then(() => {
-              // alert("Security Created: ", cred.user);
-              ajaxSec();
-              addSecurity.reset();
-              var image = document.querySelector("#output");
-              image.src = "https://static.thenounproject.com/png/571343-200.png";
+        fire
+          .doAuth(fire.auth, email, password)
+          .then((cred) => {
+            const userSec = fire.myDoc(fire.myCollection(fire.db, "security"), cred.user.uid);
+            fire
+              .doSetDoc(userSec, {
+                barangay: addSecurity.secBrgy.value,
+                position: addSecurity.position.value,
+                email: addSecurity.secEmail.value,
+                firstname: addSecurity.secFname.value,
+                lastname: addSecurity.secLname.value,
+                middlename: addSecurity.secMname.value,
+                municipality: addSecurity.secMunicip.value,
+                password: addSecurity.secPassword.value,
+                phone: addSecurity.secPhone.value,
+                province: addSecurity.secProvince.value,
+                street: addSecurity.secStreet.value,
+              })
+              .then(() => {
+                // alert("Security Created: ", cred.user);
+                ajaxSec();
+                addSecurity.reset();
+                var image = document.querySelector("#output");
+                image.src = "https://static.thenounproject.com/png/571343-200.png";
+              });
+            const storage = fire.storage;
+            const storageRef = fire.myStorageRef(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
+            var file = document.querySelector("#imgInput").files[0];
+            var name = file.name;
+            var metadata = {
+              contentType: file.type,
+            };
+            fire.myUploadBytes(storageRef, file).then((snapshot) => {
+              console.log("UPLOADED");
             });
-          const storage = fire.storage;
-          const storageRef = fire.myStorageRef(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
-          var file = document.querySelector("#imgInput").files[0];
-          var name = file.name;
-          var metadata = {
-            contentType: file.type,
-          };
-          fire.myUploadBytes(storageRef, file).then((snapshot) => {
-            console.log("UPLOADED");
-          });
-        }); //end of createUserWithEmailAndPassword
+          })
+          .catch((error) => {
+            const secEmail = document.querySelector("#secEmailAdd");
+
+            switch (error.code) {
+              case "auth/weak-password":
+                alert("Password must be at least 6 characters");
+                secEmail.classList.remove("validate");
+                break;
+              case "auth/invalid-email":
+                alert("Invalid email");
+                secEmail.classList.add("validate");
+                break;
+              case "auth/email-already-exists":
+                alert("Email already exists");
+                break;
+
+              default:
+                break;
+            }
+          }); //end of createUserWithEmailAndPassword
       }); //end adding data
 
       //creating the table data

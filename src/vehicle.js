@@ -22,8 +22,15 @@ loadVehicles.addEventListener("click", () => {
       document.getElementById("content").innerHTML = this.responseText;
       secLink.classList.remove("active");
       persLink.classList.remove("active");
-      resiLink.classList.add("active");
+      resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      vehiLink.classList.add("active");
+      napLink.classList.remove("active");
+      dropdownContent.style.display = "none";
+      dropDown.classList.remove("active");
+      dropDownLogs.classList.remove("active");
+      dropdownContentLogs.style.display = "none";
+
       // generateTable();
 
       // rendering the data

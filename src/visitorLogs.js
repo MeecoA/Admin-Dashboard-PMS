@@ -103,6 +103,8 @@ loadVisitors.addEventListener("click", () => {
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.add("active");
+      napLink.classList.remove("active");
+      vehiLink.classList.remove("active");
 
       // dropdownContent.style.display = "none";
       // dropDown.classList.remove("active");

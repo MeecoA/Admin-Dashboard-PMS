@@ -105,12 +105,13 @@ function generateDropdown() {
     vehiLink.classList.remove("active");
     logLink.classList.remove("active");
     annoLink.classList.remove("active");
-
     secLink.classList.remove("active");
     persLink.classList.remove("active");
+    vehiLink.classList.remove("active");
+
     // resiLink.classList.remove("active");
     visiLink.classList.remove("active");
-
+    napLink.classList.remove("active");
     if (dropdownContent.style.display === "flex") {
       dropdownContent.style.display = "none";
     } else {

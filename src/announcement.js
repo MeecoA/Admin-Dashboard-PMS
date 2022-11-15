@@ -14,7 +14,6 @@ announceLink.addEventListener("click", () => {
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
-
       dropdownContent.style.display = "none";
       dropDown.classList.remove("active");
       dropDownLogs.classList.remove("active");
@@ -22,7 +21,7 @@ announceLink.addEventListener("click", () => {
       vehiLink.classList.remove("active");
       logLink.classList.remove("active");
       annoLink.classList.add("active");
-
+      napLink.classList.remove("active");
       var t = $("#announceTable").DataTable({
         dom: "Bfrtip",
         buttons: [
@@ -54,7 +53,7 @@ announceLink.addEventListener("click", () => {
           .myAddDoc(fire.announceColRef, {
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
-            date: addAnnounceForm.date.value,
+            posted_on: addAnnounceForm.postedOn.value,
             posted_by: addAnnounceForm.postedBy.value,
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
@@ -92,7 +91,7 @@ announceLink.addEventListener("click", () => {
           .add([
             docu.id,
             docu.data().title,
-            docu.data().date,
+            docu.data().posted_on,
             docu.data().posted_by,
             docu.data().priority,
             `<div class="drop-container-announce">
@@ -173,7 +172,7 @@ announceLink.addEventListener("click", () => {
           viewAnnounceTitle.textContent = docu.data().title;
           viewMessage.textContent = docu.data().message;
           viewPrio.textContent = docu.data().priority;
-          viewPostedOn.textContent = docu.data().date;
+          viewPostedOn.textContent = docu.data().posted_on;
           viewPostedBy.textContent = docu.data().posted_by;
           viewSources.textContent = "Source: " + docu.data().sources;
           //retreiving files

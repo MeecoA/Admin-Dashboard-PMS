@@ -17,6 +17,8 @@ function ajaxCouncil() {
       persLink.classList.add("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      napLink.classList.remove("active");
+      vehiLink.classList.remove("active");
       var t = $("#councilTable").DataTable({
         dom: "Bfrtip",
         buttons: [

@@ -17,6 +17,8 @@ function ajaxNap() {
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      vehiLink.classList.remove("active");
+
       loadNap.classList.add("active");
       var t = $("#napTable").DataTable({
         dom: "Bfrtip",

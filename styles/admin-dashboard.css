@@ -1255,6 +1255,21 @@ tfoot input {
   font-family: "Lexend Deca" !important;
   padding: 5px;
 }
+
+/* for form validation */
+.validate {
+  border-color: red !important;
+  animation: fadeOut 2s forwards;
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    border-color: green !important;
+  }
+}
+/*  */
 /*  */
 @media print {
   h1 {
