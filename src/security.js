@@ -68,6 +68,12 @@ function ajaxSec() {
         image.src = URL.createObjectURL(e.target.files[0]);
       });
 
+      const imgInputUpdate = document.querySelector("#imgInputUpdate");
+      imgInputUpdate.addEventListener("change", (e) => {
+        var image = document.querySelector("#outputUpdate");
+        image.src = URL.createObjectURL(e.target.files[0]);
+      });
+
       //adding data
       const addSecurity = document.querySelector("#addSecForm");
       addSecurity.addEventListener("submit", (e) => {
@@ -100,7 +106,7 @@ function ajaxSec() {
                   lastname: addSecurity.secLname.value,
                   middlename: addSecurity.secMname.value,
                   municipality: addSecurity.secMunicip.value,
-                  password: addSecurity.secPassword.value,
+                  // password: addSecurity.secPassword.value,
                   phone: addSecurity.secPhone.value,
                   province: addSecurity.secProvince.value,
                   street: addSecurity.secStreet.value,
@@ -111,6 +117,22 @@ function ajaxSec() {
                   addSecurity.reset();
                   var image = document.querySelector("#output");
                   image.src = "https://static.thenounproject.com/png/571343-200.png";
+
+                  // success modal
+                  var modal = document.getElementById("myModal");
+
+                  var span = document.getElementsByClassName("close-success")[0];
+
+                  modal.style.display = "block";
+
+                  span.onclick = function () {
+                    modal.style.display = "none";
+                  };
+                  window.onclick = function (event) {
+                    if (event.target == modal) {
+                      modal.style.display = "none";
+                    }
+                  };
                 });
               const storage = fire.storage;
               const storageRef = fire.myStorageRef(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
@@ -242,7 +264,7 @@ function ajaxSec() {
         //editing data -- edit useer information only
         const editSecForm = document.querySelector("#editSecForm");
         const editSecBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);
-
+        const secUpdateiew = document.querySelector("#outputUpdate");
         editSecBtn.addEventListener("click", () => {
           id = docu.id;
           editSecForm.secBrgy.value = docu.data().barangay;
@@ -256,6 +278,13 @@ function ajaxSec() {
           editSecForm.secPhone.value = docu.data().phone;
           editSecForm.secProvince.value = docu.data().province;
           editSecForm.secStreet.value = docu.data().street;
+
+          const storagePic = fire.storage;
+          const storageRef = fire.myStorageRef(storagePic, `secruity/${docu.id}/profilepic.jpg`);
+          fire.myGetDownloadUrl(storageRef).then((url) => {
+            console.log(url);
+            secUpdateiew.src = url;
+          });
         });
 
         //for edit submit
@@ -274,15 +303,37 @@ function ajaxSec() {
               street: editSecForm.secStreet.value,
               municipality: editSecForm.secMunicip.value,
               barangay: editSecForm.secBrgy.value,
-              email: editSecForm.secEmailNew.value,
+              // email: editSecForm.secEmailNew.value,
             })
             .then(() => {
-              fire.myUpdateEmail(fire.auth.currentUser, "user33@gmail.com");
+              fire.myUpdateEmail(fire.auth.currentUser, `${editSecForm.secEmailNew.value}`);
               ajaxSec();
+              // const storage = fire.storage;
+              // const storageRef = fire.myStorageRef(storage, `secruity/${docu.id}/profilepic.jpg`);
+              // var file = document.querySelector("#imgInputUpdate").files[0];
+              // fire.myUploadBytes(storageRef, file).then((snapshot) => {
+              //   console.log("UPLOADED-UPDATE");
+              // });
+
+              // success modal
+              var modal = document.getElementById("myModalUpdate");
+
+              var span = document.getElementsByClassName("close-success-update")[0];
+
+              modal.style.display = "block";
+
+              span.onclick = function () {
+                modal.style.display = "none";
+              };
+              window.onclick = function (event) {
+                if (event.target == modal) {
+                  modal.style.display = "none";
+                }
+              };
             });
         });
         // Edit Account -- email and password
-        const editSecAccInfo = document.querySelector("#editSecAccForm");
+        const editSecAccForm = document.querySelector("#editSecAccForm");
         const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editSecAccBtn`);
         const emailBox = document.querySelector(".email-box");
         const passBox = document.querySelector(".password-box");
@@ -305,17 +356,17 @@ function ajaxSec() {
         editSeccAccBtn.addEventListener("click", () => {
           passBox.classList.add("hide-change");
           changeEmailBtn.classList.add("title-bg");
-          editSecAccInfo.secEmail.value = docu.data().email;
-          editSecAccInfo.secPassword.value = docu.data().password;
+          editSecAccForm.secEmail.value = docu.data().email;
+          editSecAccForm.secPassword.value = docu.data().password;
         });
         //for updating edit
-        editSecAccInfo.addEventListener("submit", (e) => {
+        editSecAccForm.addEventListener("submit", (e) => {
           e.preventDefault();
-          let docRef = fire.myDoc(fire.db, "security", id);
+          const docRef = fire.myDoc(fire.db, "security", id);
           console.log("updated successfully");
           fire
             .myUpdateDoc(docRef, {
-              email: editSecAccInfo.secEmailNew.value,
+              email: editSecAccForm.secEmailNew.value,
             })
             .then(() => {
               ajaxSec();
@@ -387,8 +438,8 @@ function ajaxSec() {
             sectable.removeChild(row);
           }
           if (change.type === "modified") {
-            let row = document.querySelector(`[data-id="${change.doc.id}"]`);
-            sectable.removeChild(row);
+            // let row = document.querySelector(`[data-id="${change.doc.id}"]`);
+            // sectable.removeChild(row);
             renderSecurity(change.doc);
           }
         });

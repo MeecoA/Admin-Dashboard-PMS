@@ -74,10 +74,24 @@ function ajaxCouncil() {
               idnum: addCouncilForm.idnum.value,
             })
             .then(() => {
-              alert("Admin Council Created: ", cred.user);
               addCouncilForm.reset();
               var image = document.querySelector("#output");
               image.src = "https://static.thenounproject.com/png/571343-200.png";
+              // success modal
+              var modal = document.getElementById("myModal");
+
+              var span = document.getElementsByClassName("close-success")[0];
+
+              modal.style.display = "block";
+
+              span.onclick = function () {
+                modal.style.display = "none";
+              };
+              window.onclick = function (event) {
+                if (event.target == modal) {
+                  modal.style.display = "none";
+                }
+              };
             });
           const storage = fire.storage;
           const storageRef = fire.myStorageRef(storage, `admin_council/${cred.user.uid}/profilepic.jpg`);
