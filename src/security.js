@@ -11,7 +11,7 @@ loadSec.addEventListener("click", () => {
 function ajaxSec() {
   headerTitle.textContent = "Users";
   let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
+  xhttp.onreadystatechange = async function () {
     if (this.readyState == 4 && this.status == 200) {
       document.getElementById("content").innerHTML = this.responseText;
       secLink.classList.add("active");
@@ -107,7 +107,7 @@ function ajaxSec() {
                 })
                 .then(() => {
                   // alert("Security Created: ", cred.user);
-                  ajaxSec();
+                  // ajaxSec();
                   addSecurity.reset();
                   var image = document.querySelector("#output");
                   image.src = "https://static.thenounproject.com/png/571343-200.png";
@@ -115,10 +115,6 @@ function ajaxSec() {
               const storage = fire.storage;
               const storageRef = fire.myStorageRef(storage, `secruity/${cred.user.uid}/profilepic.jpg`);
               var file = document.querySelector("#imgInput").files[0];
-              var name = file.name;
-              var metadata = {
-                contentType: file.type,
-              };
               fire.myUploadBytes(storageRef, file).then((snapshot) => {
                 console.log("UPLOADED");
               });
@@ -278,31 +274,13 @@ function ajaxSec() {
               street: editSecForm.secStreet.value,
               municipality: editSecForm.secMunicip.value,
               barangay: editSecForm.secBrgy.value,
+              email: editSecForm.secEmailNew.value,
             })
             .then(() => {
+              fire.myUpdateEmail(fire.auth.currentUser, "user33@gmail.com");
               ajaxSec();
             });
         });
-
-        const dropSec = document.querySelector(`[data-id='${docu.id}'] .drop-btn`);
-        const dropSecContent = document.querySelector(`[data-id='${docu.id}'] #dropSec`);
-        dropSec.addEventListener("click", () => {
-          dropSecContent.classList.toggle("show");
-        });
-        //dropdown - if user clicks outside of the dropdown
-        window.onclick = function (event) {
-          if (!event.target.matches(".drop-btn")) {
-            var dropdowns = document.getElementsByClassName("drop-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-              var openDropdown = dropdowns[i];
-              if (openDropdown.classList.contains("show")) {
-                openDropdown.classList.remove("show");
-              }
-            }
-          }
-        };
-
         // Edit Account -- email and password
         const editSecAccInfo = document.querySelector("#editSecAccForm");
         const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editSecAccBtn`);
@@ -333,12 +311,35 @@ function ajaxSec() {
         //for updating edit
         editSecAccInfo.addEventListener("submit", (e) => {
           e.preventDefault();
-          const docRef2 = fire.myDoc(fire.db, "security", id);
-          updateDoc(docRef2, {
-            email: editSecAccInfo.secEmail.value,
-            password: editSecAccInfo.secPassword.value,
-          }).then(() => {});
+          let docRef = fire.myDoc(fire.db, "security", id);
+          console.log("updated successfully");
+          fire
+            .myUpdateDoc(docRef, {
+              email: editSecAccInfo.secEmailNew.value,
+            })
+            .then(() => {
+              ajaxSec();
+            });
         });
+
+        const dropSec = document.querySelector(`[data-id='${docu.id}'] .drop-btn`);
+        const dropSecContent = document.querySelector(`[data-id='${docu.id}'] #dropSec`);
+        dropSec.addEventListener("click", () => {
+          dropSecContent.classList.toggle("show");
+        });
+        //dropdown - if user clicks outside of the dropdown
+        window.onclick = function (event) {
+          if (!event.target.matches(".drop-btn")) {
+            var dropdowns = document.getElementsByClassName("drop-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains("show")) {
+                openDropdown.classList.remove("show");
+              }
+            }
+          }
+        };
 
         //viewing the security information
         const secViewPic = document.querySelector("#secViewPic");

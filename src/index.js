@@ -21,7 +21,7 @@ import {
   limit,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, updateEmail } from "firebase/auth";
 //this config connects the backend and frontend
 //after this, intall firebase in node.js
 const firebaseConfig = {
@@ -52,6 +52,7 @@ export const auth = getAuth();
 
 //exports
 // Firestore
+export const myUpdateEmail = updateEmail;
 export const doLimit = limit;
 export const myGetDownloadUrl = getDownloadURL;
 export const myUploadBytes = uploadBytes;

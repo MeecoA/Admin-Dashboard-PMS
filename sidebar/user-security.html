@@ -84,12 +84,7 @@
                   <p>Email Address:<span class="errorEmail"></span></p>
                 </div>
                 <div class="sec-input">
-                  <input
-                    type="text"
-                    name="secEmail"
-                    id="secEmailAdd"
-                    oninvalid="this.setCustomValidity('Please enter a valid email address.')"
-                  />
+                  <input type="text" name="secEmail" id="secEmailAdd" />
                 </div>
               </div>
 
@@ -323,6 +318,16 @@
             </div>
             <div class="sec-input">
               <input type="text" name="secStreet" />
+            </div>
+          </div>
+
+          <div class="sec-input-box">
+            <div class="labelbox">
+              <iconify-icon icon="eva:email-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+              <p>New Email Address:</p>
+            </div>
+            <div class="sec-input">
+              <input type="text" name="secEmailNew" class="edit-info-input" />
             </div>
           </div>
         </div>
