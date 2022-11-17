@@ -25,19 +25,38 @@ function ajaxCouncil() {
           {
             extend: "copyHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [0, 1, 2, 3, 4],
             },
           },
           {
             extend: "print",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [0, 1, 2, 3, 4],
+            },
+            customize: function (win) {
+              $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
+              <img
+                src="https://lh6.googleusercontent.com/ijbIEy2U5qlRSzF8bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
+                alt=""
+              />
+              <br />
+              <br />
+              <div class="print-type-holder">
+                <div class="title-print">ADMIN COUNCIL</div>
+                <br>
+                <br>
+              </div>
+            </div>
+            
+            `);
+
+              $(win.document.body).find("table").addClass("compact").css("font-size", "inherit");
             },
           },
           {
             extend: "pdfHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [0, 1, 2, 3, 4],
             },
           },
           "colvis",

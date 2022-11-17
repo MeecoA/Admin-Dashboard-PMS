@@ -1326,13 +1326,31 @@ tfoot input {
   cursor: pointer;
 }
 
-/*  */
-/*  */
+/* prints  */
 @media print {
+  * {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .header-container {
+  }
+  .title-print {
+    font-size: 30px;
+  }
   h1 {
     display: none;
   }
-  .titlePrint {
+  .print-type-holder {
+    width: 100%;
     display: flex;
+    justify-content: center;
+    font-weight: bolder;
+    background-color: #1a4567 !important;
+    print-color-adjust: exact;
+  }
+  .title-print {
+  }
+  table {
+    background-color: #1d90ed !important;
   }
 }
+/*  */
