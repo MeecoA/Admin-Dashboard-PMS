@@ -169,6 +169,7 @@ announceLink.addEventListener("click", () => {
         const viewAnnounceBtn = document.querySelector(`[data-id='${docu.id}'] .view-announce-button`);
 
         viewAnnounceBtn.addEventListener("click", () => {
+          $("#viewAnnounce").fadeIn();
           viewAnnounceTitle.textContent = docu.data().title;
           viewMessage.textContent = docu.data().message;
           viewPrio.textContent = docu.data().priority;

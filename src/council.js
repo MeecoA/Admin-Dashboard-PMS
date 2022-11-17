@@ -280,6 +280,7 @@ function ajaxCouncil() {
         const viewCouncilButton = document.querySelector(`[data-id='${docu.id}'] .view-council-button`);
         const fullName = `${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}`;
         viewCouncilButton.addEventListener("click", () => {
+          $("#viewCouncil").fadeIn();
           //retrieving the photo
           const storagePic = fire.storage;
           const storageRef = fire.myStorageRef(storagePic, `admin_council/${docu.id}/profilepic.jpg`);

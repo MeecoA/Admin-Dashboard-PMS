@@ -253,15 +253,7 @@ function ajaxSec() {
           .draw(false)
           .node();
         $(tableTr).attr("data-id", `${docu.id}`);
-        // const tr = `<tr data-id='${docu.id}'>
-        //   <td>${docu.id}</td>
-        //   <td>${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}</td>
-        //   <td>${docu.data().position}</td>
-        //   <td>${docu.data().barangay}, ${docu.data().street}, ${docu.data().municipality}, ${docu.data().province}</td>
-        //   <td>${docu.data().email}</td>
-        //   <td>${docu.data().phone}</td>
-        //   <td>
-        // sectable.insertAdjacentHTML("beforeend", tr);
+
         //deleting data
         const secDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         secDelete.addEventListener("click", () => {
@@ -279,12 +271,10 @@ function ajaxSec() {
           id = docu.id;
           editSecForm.secBrgy.value = docu.data().barangay;
           editSecForm.position.value = docu.data().position;
-          // editSecForm.secEmail.value = docu.data().email;
           editSecForm.secFname.value = docu.data().firstname;
           editSecForm.secLname.value = docu.data().lastname;
           editSecForm.secMname.value = docu.data().middlename;
           editSecForm.secMunicip.value = docu.data().municipality;
-          // editSecForm.secPassword.value = docu.data().password;
           editSecForm.secPhone.value = docu.data().phone;
           editSecForm.secProvince.value = docu.data().province;
           editSecForm.secStreet.value = docu.data().street;
@@ -317,16 +307,7 @@ function ajaxSec() {
             })
             .then(() => {
               fire.myUpdateEmail(fire.auth.currentUser, `${editSecForm.secEmailNew.value}`);
-              // ajaxSec();
-              // const storage = fire.storage;
-              // const storageRef = fire.myStorageRef(storage, `secruity/${docu.id}/profilepic.jpg`);
-              // var file = document.querySelector("#imgInputUpdate").files[0];
-              // fire.myUploadBytes(storageRef, file).then((snapshot) => {
-              //   console.log("UPLOADED-UPDATE");
-              // });
-
-              // success modal
-              // ajaxSec();
+              ajaxSec();
             });
         });
         // Edit Account -- email and password
