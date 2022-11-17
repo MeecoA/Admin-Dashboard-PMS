@@ -1013,6 +1013,17 @@ border: 1px solid red;
   width: 98%;
   cursor: pointer;
 }
+.view-vehicle-button {
+  background-color: #99d4ff;
+  padding: 5px;
+  border-radius: 15px;
+  text-decoration: none;
+  color: black;
+}
+.view-vehicle-button:hover {
+  background-color: #1d90ed;
+  transition: 0.3s;
+}
 
 .drop-btn:hover,
 .drop-btn-council:hover,

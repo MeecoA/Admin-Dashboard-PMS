@@ -60,12 +60,9 @@ loadVehicles.addEventListener("click", () => {
       });
       const buttonsColvis = document.querySelector(".buttons-colvis");
       buttonsColvis.textContent = "Filter By Category";
-
-      $(".table-body-vehicles").on("click", "tr", function (e) {
-        var data = t.row(this).data();
-        alert("you clicked on " + data[1] + "'s row");
-      });
-      const renderVehicles = (doc) => {}; //end of render sec
+      const viewVehicles = (doc, entry) => {
+        //viewing vehicles
+      }; //end of render sec
 
       const colRef = fire.myCollection(fire.db, "vehicle-information");
       const vehicleQuery = fire.doQuery(colRef, fire.doLimit(10));
@@ -98,8 +95,39 @@ loadVehicles.addEventListener("click", () => {
             console.table([doc.id, data, entry.images[1], entry.model[0], entry.qrCode, entry.use_types]);
 
             // table
-            var temp = t.row.add([doc.id, data, entry.model[0]]).draw(false).node();
+            var temp = t.row
+              .add([
+                doc.id,
+                data,
+                entry.model[0],
+                `
+                <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
+                class="view-icon"
+                icon="bi:eye-fill"
+                style="color: black"
+                width="16"
+                height="16"
+              ></iconify-icon>View</a>
+              </div>
+            </div>
+          `,
+              ])
+              .draw(false)
+              .node();
             $(temp).attr("data-id", `${doc.id}`);
+
+            viewVehicles(doc, entry);
+            const viewVehicle = document.querySelector(`[data-id='${doc.id}'] .view-vehicle-button`);
+
+            viewVehicle.addEventListener("click", () => {
+              $("#viewVehicle").fadeIn();
+              const viewPlate = document.querySelector(".viewPlate");
+              const viewModel = document.querySelector(".viewModel");
+              const vehicleViewPic = document.querySelector("#vehicleViewPic");
+              vehicleViewPic.src = entry.images[1];
+              viewPlate.textContent = data;
+              viewModel.textContent = entry.model[0];
+            });
           }
         });
 

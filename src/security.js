@@ -191,8 +191,8 @@ function ajaxSec() {
       //creating the table data
       let id;
       const sectable = document.querySelector(".tbody-security");
+      const secmainTable = document.querySelector(".secmainTable");
       const renderSecurity = (docu) => {
-        console.log(docu.id);
         var tableTr = t.row
           .add([
             docu.id,
@@ -307,7 +307,7 @@ function ajaxSec() {
             })
             .then(() => {
               fire.myUpdateEmail(fire.auth.currentUser, `${editSecForm.secEmailNew.value}`);
-              ajaxSec();
+              // ajaxSec();
               // const storage = fire.storage;
               // const storageRef = fire.myStorageRef(storage, `secruity/${docu.id}/profilepic.jpg`);
               // var file = document.querySelector("#imgInputUpdate").files[0];
@@ -316,20 +316,7 @@ function ajaxSec() {
               // });
 
               // success modal
-              var modal = document.getElementById("myModalUpdate");
-
-              var span = document.getElementsByClassName("close-success-update")[0];
-
-              modal.style.display = "block";
-
-              span.onclick = function () {
-                modal.style.display = "none";
-              };
-              window.onclick = function (event) {
-                if (event.target == modal) {
-                  modal.style.display = "none";
-                }
-              };
+              // ajaxSec();
             });
         });
         // Edit Account -- email and password
@@ -406,6 +393,7 @@ function ajaxSec() {
         }`;
 
         viewButton.addEventListener("click", () => {
+          $("#viewSec").fadeIn();
           //retrieivng the photo
           const storagePic = fire.storage;
           const storageRef = fire.myStorageRef(storagePic, `secruity/${docu.id}/profilepic.jpg`);
@@ -425,6 +413,23 @@ function ajaxSec() {
         // end edit account email and password
       }; //end of render sec
 
+      function updateSuccess() {
+        var modal = document.getElementById("myModalUpdate");
+
+        var span = document.getElementsByClassName("close-success-update")[0];
+
+        modal.style.display = "block";
+
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+      }
+
       //getting the collection data
       //real time collection of data
       fire.myOnSnapshot(fire.secColRef, (snapshot) => {
@@ -436,10 +441,13 @@ function ajaxSec() {
             let row = document.querySelector(`[data-id="${change.doc.id}"]`);
             // let tbody = row.parentElement;
             sectable.removeChild(row);
+            console.log(change.type);
           }
           if (change.type === "modified") {
-            // let row = document.querySelector(`[data-id="${change.doc.id}"]`);
-            // sectable.removeChild(row);
+            let row = document.querySelector(`[data-id="${change.doc.id}"]`);
+            // let tbody = row.parentElement;
+            sectable.removeChild(row);
+            updateSuccess();
             renderSecurity(change.doc);
           }
         });
