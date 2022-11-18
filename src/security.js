@@ -123,21 +123,25 @@ function ajaxSec() {
                 })
                 .then(() => {
                   // alert("Security Created: ", cred.user);
-                  // ajaxSec();
+
                   addSecurity.reset();
                   var image = document.querySelector("#output");
                   image.src = "https://static.thenounproject.com/png/571343-200.png";
+                  swal({
+                    title: "SECURITY",
+                    text: "SUCCESSFULLY CREATED!",
+                    icon: "success",
+                  });
+                  // // success modal
+                  // var modal = document.getElementById("myModal");
 
-                  // success modal
-                  var modal = document.getElementById("myModal");
+                  // var span = document.getElementsByClassName("close-success")[0];
 
-                  var span = document.getElementsByClassName("close-success")[0];
+                  // modal.style.display = "block";
 
-                  modal.style.display = "block";
-
-                  span.onclick = function () {
-                    modal.style.display = "none";
-                  };
+                  // span.onclick = function () {
+                  //   modal.style.display = "none";
+                  // };
                   window.onclick = function (event) {
                     if (event.target == modal) {
                       modal.style.display = "none";
@@ -307,7 +311,7 @@ function ajaxSec() {
             })
             .then(() => {
               fire.myUpdateEmail(fire.auth.currentUser, `${editSecForm.secEmailNew.value}`);
-              ajaxSec();
+              // ajaxSec();
             });
         });
         // Edit Account -- email and password
@@ -435,11 +439,14 @@ function ajaxSec() {
             console.log(change.type);
           }
           if (change.type === "modified") {
-            let row = document.querySelector(`[data-id="${change.doc.id}"]`);
-            // let tbody = row.parentElement;
-            sectable.removeChild(row);
-            updateSuccess();
+            let row2 = document.querySelector(`[data-id="${change.doc.id}"]`);
+            sectable.removeChild(row2);
+            swal({
+              text: "SUCCESSFULLY UPDATED!",
+              icon: "success",
+            });
             renderSecurity(change.doc);
+            ajaxSec();
           }
         });
       });

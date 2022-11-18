@@ -1,0 +1,16 @@
+.swal-text {
+  color: black;
+  font-size: 30px;
+  /* font-family: "Lexend Deca"; */
+}
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 2px;
+  background-color: #1d90ed;
+  font-size: 12px;
+  font-family: "Lexend Deca";
+  text-shadow: none !important;
+  border: none;
+  color: black;
+}
