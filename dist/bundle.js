@@ -36753,6 +36753,8 @@ const accQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accCo
 // const announceQuery = query(announceColRef, orderBy("createdAt"));
 // Side bar links
 
+// Prevent going on to the others
+// For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
 (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.onAuthStateChanged)(auth, (user) => {
   console.log('user: ' + user)
   if (user) {
