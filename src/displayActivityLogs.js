@@ -47,5 +47,4 @@ async function displayActivityLogs(currentLoggedUserId) {
     });
   }); //jQuery
 }
-
-displayActivityLogs(currentLoggedUserId);
+displayActivityLogs();
