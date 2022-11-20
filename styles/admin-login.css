@@ -34,7 +34,7 @@ body {
   justify-self: end;
 }
 .left-panel {
-  background: url("/images/adminpic.jpg");
+  background: url("../images/adminpic.jpg");
 
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
