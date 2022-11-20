@@ -37877,6 +37877,7 @@ loadVehicles.addEventListener("click", () => {
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      annoLink.classList.remove("active");
       vehiLink.classList.add("active");
       napLink.classList.remove("active");
       dropdownContent.style.display = "none";
