@@ -52,22 +52,21 @@ body {
 }
 
 .container {
-  height: 100%;
   background-color: #f3f3f3;
-  margin: 10px;
+  /* margin: 10px; */
   display: grid;
   /* grid-template-columns: 1fr 4fr; */
   grid-template-columns: 250px 1fr;
   /* grid-template-rows: 100px 1fr; */
-  border-radius: 20px;
+  /* border-radius: 20px; */
   grid-gap: 10px;
 }
 
 .right-container {
-  height: 98vh;
+  height: 100vh;
   /* background-color: gray; */
   /* padding: 0 1em; */
-  overflow: scroll;
+  /* overflow: scroll; */
   /* width: calc(98vw - 250px); */
   width: 100%;
   /* grid-row: 2/3; */
@@ -92,8 +91,9 @@ body {
 
 .sidebar {
   background-color: #99d4ff;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  /* border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px; */
+  overflow: hidden;
   /* width: max-content; */
 }
 .sidebar .title {
@@ -221,15 +221,21 @@ button {
 }
 
 .dt-button {
-  border: 1px solid;
+  border: none !important;
   padding: 10px;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 0px !important;
+  font-weight: bolder;
 }
 
 .dt-button:hover {
-  background-color: gray;
+  background-color: #1d90ed !important;
   transition: 0.3s;
+}
+.dt-button-info {
+  background-color: lightgreen !important;
+
+  font-family: "lexend Deca";
 }
 
 /* dropdown classes */
@@ -257,6 +263,16 @@ a {
   margin-right: 10px;
   display: grid;
   grid-template-columns: 1fr 2fr;
+}
+#adminLogout {
+  cursor: pointer;
+  align-self: center;
+  justify-self: end;
+  margin-right: 30px;
+}
+#adminLogout:hover {
+  color: grey;
+  transition: 0.3s;
 }
 
 .logo-holder {
