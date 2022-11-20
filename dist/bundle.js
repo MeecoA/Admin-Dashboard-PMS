@@ -36753,8 +36753,27 @@ const accQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accCo
 // const announceQuery = query(announceColRef, orderBy("createdAt"));
 // Side bar links
 
+(0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.onAuthStateChanged)(auth, (user) => {
+  console.log('user: ' + user)
+  if (user) {
+    if (windowLocation.indexOf("admin-login.html") > -1) {
+      if (auth.currentUser !== null) {
+        window.location = "admin-dashboard.html";
+      }
+    }
+    console.log('user logged in: ' + auth.currentUser);
+  } else {
+    // User is signed out
+    if (windowLocation.indexOf("admin-dashboard.html") > -1) {
+      window.location = "admin-login.html";
+    }
+    console.log('user logged out: ' + auth.currentUser);
+  }
+});
+
 // dashboard scripts
 const userCount = document.querySelector("#userCount");
+
 
 (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.onSnapshot)(accQuery, (snapshot) => {
   userCount.textContent = snapshot.size;
@@ -36763,22 +36782,27 @@ const userCount = document.querySelector("#userCount");
 // Administrator Login
 let windowLocation = window.location.pathname;
 window.addEventListener("DOMContentLoaded", () => {
+
+
+    
+
+
   // Prevent going back on login page.
-  if (windowLocation.indexOf("admin-login.html") > -1) {
-    (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.onAuthStateChanged)(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        console.log("admin-login.html");
-        console.log("currentUser: ", auth.currentUser);
-        if (auth.currentUser !== null) {
-          window.location = "admin-dashboard.html";
-        }
-      } else {
-        // User is signed out
-      }
-    });
-  }
+  // if (windowLocation.indexOf("admin-login.html") > -1) {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       // User is signed in, see docs for a list of available properties
+  //       // https://firebase.google.com/docs/reference/js/firebase.User
+  //       console.log("admin-login.html");
+  //       console.log("currentUser: ", auth.currentUser);
+  //       if (auth.currentUser !== null) {
+  //         window.location = "admin-dashboard.html";
+  //       }
+  //     } else {
+  //       // User is signed out
+  //     }
+  //   });
+  // }
 
   // checked signin
   if (windowLocation.indexOf("admin-login.html") > -1) {
@@ -36850,6 +36874,9 @@ adminLogout.addEventListener("click", () => {
     .catch(() => {});
   console.log("loggg");
 });
+
+
+
 
 
 /***/ }),
