@@ -90,7 +90,10 @@ function ajaxNap() {
               idnum: addNapForm.idnum.value,
             })
             .then(() => {
-              alert("Non Academic Personnel Created: ", cred.user);
+              swal({
+                text: "SUCCESSFULLY CREATED!",
+                icon: "success",
+              });
               addNapForm.reset();
               var image = document.querySelector("#output");
               image.src = "https://static.thenounproject.com/png/571343-200.png";
@@ -194,6 +197,10 @@ function ajaxNap() {
               idnum: editNapForm.idnum.value,
             })
             .then(() => {
+              swal({
+                text: "SUCCESSFULLY UPDATED!",
+                icon: "success",
+              });
               ajaxNap();
             });
         });

@@ -12,6 +12,8 @@ module.exports = {
     "./src/userLogs.js",
     "./src/visitorLogs.js",
     "./src/vehicle.js",
+    "./src/displayActivityLogs.js",
+    "./src/adminLogin.js",
   ],
   output: {
     path: path.resolve(__dirname, "dist"),

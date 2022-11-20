@@ -40,7 +40,7 @@ function ajaxSec() {
             customize: function (win) {
               $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
               <img
-                src="https://lh6.googleusercontent.com/ijbIEy2U5qlRSzF8bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
+                src="https://lh6.bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
                 alt=""
               />
               <br />
@@ -311,7 +311,11 @@ function ajaxSec() {
             })
             .then(() => {
               fire.myUpdateEmail(fire.auth.currentUser, `${editSecForm.secEmailNew.value}`);
-              // ajaxSec();
+              swal({
+                text: "SUCCESSFULLY UPDATED!",
+                icon: "success",
+              });
+              ajaxSec();
             });
         });
         // Edit Account -- email and password
@@ -408,23 +412,6 @@ function ajaxSec() {
         // end edit account email and password
       }; //end of render sec
 
-      function updateSuccess() {
-        var modal = document.getElementById("myModalUpdate");
-
-        var span = document.getElementsByClassName("close-success-update")[0];
-
-        modal.style.display = "block";
-
-        span.onclick = function () {
-          modal.style.display = "none";
-        };
-        window.onclick = function (event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        };
-      }
-
       //getting the collection data
       //real time collection of data
       fire.myOnSnapshot(fire.secColRef, (snapshot) => {
@@ -441,12 +428,7 @@ function ajaxSec() {
           if (change.type === "modified") {
             let row2 = document.querySelector(`[data-id="${change.doc.id}"]`);
             sectable.removeChild(row2);
-            swal({
-              text: "SUCCESSFULLY UPDATED!",
-              icon: "success",
-            });
             renderSecurity(change.doc);
-            ajaxSec();
           }
         });
       });

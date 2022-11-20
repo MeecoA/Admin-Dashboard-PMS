@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "lexend Deca";
+}
+body {
+  background-color: #cfd8dc;
+}
+.main-container {
+  display: flex;
+  justify-content: center;
+  height: 99vh;
+  align-items: center;
+}
+.grid-container {
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  width: 70%;
+  height: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 13fr 1fr;
+  padding: 20px;
+}
+.grid-item {
+  display: flex;
+  align-items: center;
+}
+.admin-time {
+  justify-self: end;
+}
+.admin-date {
+  justify-self: end;
+}
+.left-panel {
+  background: url("/images/adminpic.jpg");
+
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.right-panel {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.admin-title-showcase {
+  font-size: 40px;
+  font-weight: bolder;
+}
+.admin-loginform {
+  width: 80%;
+}
+.admin-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-form > input {
+  height: 30px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+.admin-form > button {
+  border-radius: 10px;
+  align-self: center;
+  width: 20%;
+  margin-top: 20px;
+  height: 30px;
+  border: none;
+  background-color: #1d90ed;
+  color: white;
+}
+.admin-form > button:hover {
+  color: black;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #99d4ff;
+}

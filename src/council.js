@@ -97,15 +97,10 @@ function ajaxCouncil() {
               var image = document.querySelector("#output");
               image.src = "https://static.thenounproject.com/png/571343-200.png";
               // success modal
-              var modal = document.getElementById("myModal");
-
-              var span = document.getElementsByClassName("close-success")[0];
-
-              modal.style.display = "block";
-
-              span.onclick = function () {
-                modal.style.display = "none";
-              };
+              swal({
+                text: "SUCCESSFULLY CREATED!",
+                icon: "success",
+              });
               window.onclick = function (event) {
                 if (event.target == modal) {
                   modal.style.display = "none";
@@ -211,6 +206,10 @@ function ajaxCouncil() {
               idnum: editCouncilForm.idnum.value,
             })
             .then(() => {
+              swal({
+                text: "SUCCESSFULLY UPDATED!",
+                icon: "success",
+              });
               ajaxCouncil();
             });
         });

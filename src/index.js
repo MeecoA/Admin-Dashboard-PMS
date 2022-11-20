@@ -21,7 +21,13 @@ import {
   limit,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, updateEmail } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  updateEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 //this config connects the backend and frontend
 //after this, intall firebase in node.js
 const firebaseConfig = {
@@ -32,15 +38,7 @@ const firebaseConfig = {
   messagingSenderId: "36091561292",
   appId: "1:36091561292:web:85d41dea4e7c7b80f8fbe9",
 };
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBY3hnXsQuXX_RIJ0VZSWbIYFmOxYe94SQ",
-//   authDomain: "sample-capstone-project-ba941.firebaseapp.com",
-//   projectId: "sample-capstone-project-ba941",
-//   storageBucket: "sample-capstone-project-ba941.appspot.com",
-//   messagingSenderId: "619482030443",
-//   appId: "1:619482030443:web:f0d4435fed137c16902c2e",
-//   measurementId: "G-VNRXHHQSRB",
-// };
+
 //for initializing app
 initializeApp(firebaseConfig);
 
@@ -97,3 +95,58 @@ const userCount = document.querySelector("#userCount");
 onSnapshot(accQuery, (snapshot) => {
   userCount.textContent = snapshot.size;
 });
+
+function getDateTime() {
+  var today = new Date();
+  var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes();
+  console.log(time);
+  const adminTime = document.querySelector(".admin-time");
+  adminTime.textContent = time;
+  const adminDate = document.querySelector(".admin-date");
+  adminDate.textContent = date;
+}
+getDateTime();
+
+function signInAdmin() {
+  const adminForm = document.querySelector(".admin-form");
+
+  const adminEmail = adminForm.adminemail.value;
+  const adminPassword = adminForm.adminpassword.value;
+
+  const auth = getAuth();
+  signInWithEmailAndPassword(auth, adminEmail, adminPassword).then((userCredential) => {
+    // Signed in
+    // window.location.href = "admin-dashboard.html";
+    const user = userCredential.user;
+    // ...
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      window.location = "admin-dashboard.html";
+      console.log(user.uid, "is signed in");
+    } else {
+      // User is signed out
+    }
+  });
+}
+const adminForm = document.querySelector(".admin-form");
+
+const adminEmail = adminForm.adminemail.value;
+console.log(adminEmail);
+function login() {
+  const adminForm = document.querySelector(".admin-form");
+
+  const adminEmail = adminForm.adminemail.value;
+  const adminPassword = adminForm.adminpassword.value;
+
+  adminForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    signInAdmin();
+  });
+}
+login();
