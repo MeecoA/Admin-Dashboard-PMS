@@ -1,3 +1,5 @@
+import * as fire from "./index";
+
 async function displayActivityLogs(currentLoggedUserId) {
   const colRef = fire.myCollection(fire.db, "system-activity");
   const activityQuery = fire.doQuery(colRef, fire.doLimit(10));
@@ -47,4 +49,5 @@ async function displayActivityLogs(currentLoggedUserId) {
     });
   }); //jQuery
 }
-displayActivityLogs();
+
+displayActivityLogs(currentLoggedUserId);
