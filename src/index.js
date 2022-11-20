@@ -27,6 +27,7 @@ import {
   onAuthStateChanged,
   updateEmail,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 //this config connects the backend and frontend
 //after this, intall firebase in node.js
@@ -96,65 +97,75 @@ onSnapshot(accQuery, (snapshot) => {
   userCount.textContent = snapshot.size;
 });
 
-
 // Administrator Login
 let windowLocation = window.location.pathname;
-window.addEventListener('DOMContentLoaded', () => {
-    if(windowLocation.indexOf("admin-login.html") > -1) {
-        function getDateTime() {
-            var today = new Date();
-            var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-            var time = today.getHours() + ":" + today.getMinutes();
-            console.log(time);
-            const adminTime = document.querySelector(".admin-time");
-            adminTime.textContent = time;
-            const adminDate = document.querySelector(".admin-date");
-            adminDate.textContent = date;
-          }
-          getDateTime();
-          
-          function signInAdmin() {
-            const adminForm = document.querySelector(".admin-form");
-          
-            const adminEmail = adminForm.adminemail.value;
-            const adminPassword = adminForm.adminpassword.value;
-          
-            const auth = getAuth();
-            signInWithEmailAndPassword(auth, adminEmail, adminPassword).then((userCredential) => {
-              // Signed in
-              // window.location.href = "admin-dashboard.html";
-              const user = userCredential.user;
-              // ...
-            });
-          
-            onAuthStateChanged(auth, (user) => {
-              if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                const uid = user.uid;
-                window.location = "admin-dashboard.html";
-                console.log(user.uid, "is signed in");
-              } else {
-                // User is signed out
-              }
-            });
-          }
-          const adminForm = document.querySelector(".admin-form");
-          
-          const adminEmail = adminForm.adminemail.value;
-          console.log(adminEmail);
-          function login() {
-            const adminForm = document.querySelector(".admin-form");
-          
-            const adminEmail = adminForm.adminemail.value;
-            const adminPassword = adminForm.adminpassword.value;
-          
-            adminForm.addEventListener("submit", (e) => {
-              e.preventDefault();
-              signInAdmin();
-            });
-          }
-          login();
-          
+window.addEventListener("DOMContentLoaded", () => {
+  if (windowLocation.indexOf("admin-login.html") > -1) {
+    function getDateTime() {
+      var today = new Date();
+      var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      console.log(time);
+      const adminTime = document.querySelector(".admin-time");
+      adminTime.textContent = time;
+      const adminDate = document.querySelector(".admin-date");
+      adminDate.textContent = date;
     }
+    getDateTime();
+
+    function signInAdmin() {
+      const adminForm = document.querySelector(".admin-form");
+
+      const adminEmail = adminForm.adminemail.value;
+      const adminPassword = adminForm.adminpassword.value;
+
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, adminEmail, adminPassword).then((userCredential) => {
+        // Signed in
+        // window.location.href = "admin-dashboard.html";
+        const user = userCredential.user;
+        // ...
+      });
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          const uid = user.uid;
+          window.location = "admin-dashboard.html";
+          console.log(user.uid, "is signed in");
+          const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "visible");
+        } else {
+          // User is signed out
+          const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "hidden");
+          alert("Please login first.");
+        }
+      });
+    }
+    const adminForm = document.querySelector(".admin-form");
+
+    const adminEmail = adminForm.adminemail.value;
+    console.log(adminEmail);
+    function login() {
+      const adminForm = document.querySelector(".admin-form");
+
+      const adminEmail = adminForm.adminemail.value;
+      const adminPassword = adminForm.adminpassword.value;
+
+      adminForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        signInAdmin();
+      });
+    }
+    login();
+  }
+});
+const adminLogout = document.querySelector("#adminLogout");
+adminLogout.addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      window.location = "admin-login.html";
+    })
+    .catch(() => {});
+  console.log("loggg");
 });

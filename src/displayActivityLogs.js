@@ -1,6 +1,6 @@
 import * as fire from "./index";
 
-async function displayActivityLogs(currentLoggedUserId) {
+async function displayActivityLogs() {
   const colRef = fire.myCollection(fire.db, "system-activity");
   const activityQuery = fire.doQuery(colRef, fire.doLimit(10));
   const docsSnap = await fire.myGetDocs(activityQuery);
@@ -50,4 +50,4 @@ async function displayActivityLogs(currentLoggedUserId) {
   }); //jQuery
 }
 
-displayActivityLogs(currentLoggedUserId);
+displayActivityLogs();
