@@ -36756,10 +36756,10 @@ const accQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accCo
 // Prevent going on to the others
 // For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
 (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.onAuthStateChanged)(auth, (user) => {
-  console.log('user: ' + user)
+  console.log('user: ', user)
   if (user) {
     if (windowLocation.indexOf("admin-login.html") > -1) {
-      if (auth.currentUser !== null) {
+      if (auth.currentUser !== null && user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
         window.location = "admin-dashboard.html";
       }
     }
@@ -36831,6 +36831,13 @@ window.addEventListener("DOMContentLoaded", () => {
         // Signed in
         // window.location.href = "admin-dashboard.html";
         const user = userCredential.user;
+        if(auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+          (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signOut)(auth)
+          .then((success) => {
+            console.log(success);
+          });
+          alert('Administrator only.')
+        }
         // ...
       });
 
@@ -36839,9 +36846,14 @@ window.addEventListener("DOMContentLoaded", () => {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
           const uid = user.uid;
-          window.location = "admin-dashboard.html";
-          console.log(user.uid, "is signed in");
-          const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "visible");
+
+          console.log(user.uid, "BHwQ87dDgaYla9IC2MhoLVWwEsC3")
+          // Check if the logged in user id matched on the Authentication
+          if(user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+            window.location = "admin-dashboard.html";
+            console.log(user.uid, "is signed in");
+            const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "visible");
+          }
         } else {
           // User is signed out
           const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "hidden");
