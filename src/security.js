@@ -127,7 +127,7 @@ function ajaxSec() {
                   addSecurity.reset();
                   var image = document.querySelector("#output");
                   image.src = "https://static.thenounproject.com/png/571343-200.png";
-                  swal({
+                  Swal.fire({
                     title: "SECURITY",
                     text: "SUCCESSFULLY CREATED!",
                     icon: "success",
@@ -272,6 +272,7 @@ function ajaxSec() {
         const editSecBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);
         const secUpdateiew = document.querySelector("#outputUpdate");
         editSecBtn.addEventListener("click", () => {
+          $("#editmodal").fadeIn();
           id = docu.id;
           editSecForm.secBrgy.value = docu.data().barangay;
           editSecForm.position.value = docu.data().position;
@@ -339,6 +340,7 @@ function ajaxSec() {
           changeEmailBtn.classList.remove("title-bg");
         });
         editSeccAccBtn.addEventListener("click", () => {
+          $("#editAccInfo").fadeIn();
           passBox.classList.add("hide-change");
           changeEmailBtn.classList.add("title-bg");
           editSecAccForm.secEmail.value = docu.data().email;

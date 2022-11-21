@@ -224,7 +224,7 @@ button {
   border: none !important;
   padding: 10px;
   cursor: pointer;
-  border-radius: 0px !important;
+  border-radius: 5px !important;
   font-weight: bolder;
 }
 
@@ -751,7 +751,7 @@ border: 1px solid red;
   align-items: center;
   width: 130px;
   background-color: #99d4ff;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 10px;
   font-weight: bolder;
   margin-bottom: 10px;
@@ -1031,10 +1031,12 @@ border: 1px solid red;
 }
 .view-vehicle-button {
   background-color: #99d4ff;
-  padding: 5px;
+  padding: 10px;
   border-radius: 15px;
   text-decoration: none;
   color: black;
+  display: flex;
+  font-weight: bold;
 }
 .view-vehicle-button:hover {
   background-color: #1d90ed;

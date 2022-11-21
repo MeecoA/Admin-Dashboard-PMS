@@ -36095,6 +36095,10 @@ announceLink.addEventListener("click", () => {
           "colvis",
         ],
       });
+
+      const filesToUpload = [];
+      const filesAttached = document.querySelector("#filesAttached");
+
       const addAnnounceForm = document.querySelector("#announceForm");
       addAnnounceForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -36106,10 +36110,22 @@ announceLink.addEventListener("click", () => {
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            files: [addAnnounceForm.files.value],
+            files: filesToUpload,
             thumbnail: addAnnounceForm.thumbnail.value,
           })
           .then(() => {
+            filesAttached.addEventListener("change", (e) => {
+              console.log("files: ", filesAttached.files);
+              const everyFile = filesAttached.files;
+
+              Array.from(everyFile).forEach((file) => {
+                // console.log("file: ", file);
+                filesToUpload.push(file);
+
+                console.log(filesToUpload);
+              });
+            });
+
             console.log(addAnnounceForm.title.value);
             const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
             const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(
@@ -36124,7 +36140,7 @@ announceLink.addEventListener("click", () => {
               contentType: file.type,
             };
 
-            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef, file, metadata).then((snapshot) => {
+            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef, file, filesToUpload).then((snapshot) => {
               console.log("UPLOADED file2");
             });
             _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
@@ -36134,6 +36150,7 @@ announceLink.addEventListener("click", () => {
             addAnnounceForm.reset();
           });
       });
+
       const announceTBody = document.querySelector(".table-body-announce");
       const renderAnnounce = (docu) => {
         var tableTr = t.row
@@ -36206,6 +36223,7 @@ announceLink.addEventListener("click", () => {
             console.log("deleted successfully");
           });
         }); //end of deleting data
+
         //viewing announcement
         const announceViewPic = document.querySelector("#announceViewPic");
         const viewPrio = document.querySelector(".viewPrio");
@@ -37507,7 +37525,7 @@ function ajaxSec() {
                   addSecurity.reset();
                   var image = document.querySelector("#output");
                   image.src = "https://static.thenounproject.com/png/571343-200.png";
-                  swal({
+                  Swal.fire({
                     title: "SECURITY",
                     text: "SUCCESSFULLY CREATED!",
                     icon: "success",
@@ -37652,6 +37670,7 @@ function ajaxSec() {
         const editSecBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);
         const secUpdateiew = document.querySelector("#outputUpdate");
         editSecBtn.addEventListener("click", () => {
+          $("#editmodal").fadeIn();
           id = docu.id;
           editSecForm.secBrgy.value = docu.data().barangay;
           editSecForm.position.value = docu.data().position;
@@ -37718,6 +37737,7 @@ function ajaxSec() {
           changeEmailBtn.classList.remove("title-bg");
         });
         editSeccAccBtn.addEventListener("click", () => {
+          $("#editAccInfo").fadeIn();
           passBox.classList.add("hide-change");
           changeEmailBtn.classList.add("title-bg");
           editSecAccForm.secEmail.value = docu.data().email;
@@ -38160,14 +38180,16 @@ loadVehicles.addEventListener("click", () => {
                 },
                 { data: "registration_date" },
                 {
-                  defaultContent: `<button>
+                  defaultContent: `<button class="button-vehicles">
                   <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
                   class="view-icon"
                   icon="bi:eye-fill"
                   style="color: black"
                   width="16"
                   height="16"
-                ></iconify-icon>View</a></button>
+                ></iconify-icon>
+                <div>View</div>
+                </a></button>
             `,
                 },
               ],
@@ -38176,6 +38198,25 @@ loadVehicles.addEventListener("click", () => {
               },
 
               dom: "Bfrtip",
+            });
+            // $("#vehictable").on("click", "tbody tr", function () {
+            //   var row = table.row($(this)).data();
+            //   console.log(row); //full row of array data
+            //   console.log(row.index); //EmployeeId
+            // });
+
+            $("#vehictable tbody").on("click", "button", function () {
+              var row = table.row($(this).parents("tr")).data();
+              console.log(row); //full row of array data
+              console.log(row.index); //EmployeeId
+              const viewPlate = document.querySelector(".viewPlate");
+              const viewModel = document.querySelector(".viewModel");
+              const viewOwner = document.querySelector(".viewOwner");
+              const vehicleViewPic = document.querySelector("#vehicleViewPic");
+              viewPlate.textContent = row.plate_number;
+              viewModel.textContent = row.model;
+              viewOwner.textContent = row.vehicle_owner;
+              vehicleViewPic.src = row.image;
             });
           });
         } else {
@@ -38203,7 +38244,7 @@ loadVehicles.addEventListener("click", () => {
         return vehicle;
       }
 
-      console.log("hetoo", dataVehicle);
+      console.log("hetoooooo", dataVehicle);
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/vehicles.html", true);

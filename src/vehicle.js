@@ -151,14 +151,16 @@ loadVehicles.addEventListener("click", () => {
                 },
                 { data: "registration_date" },
                 {
-                  defaultContent: `<button>
+                  defaultContent: `<button class="button-vehicles">
                   <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
                   class="view-icon"
                   icon="bi:eye-fill"
                   style="color: black"
                   width="16"
                   height="16"
-                ></iconify-icon>View</a></button>
+                ></iconify-icon>
+                <div>View</div>
+                </a></button>
             `,
                 },
               ],
@@ -167,6 +169,25 @@ loadVehicles.addEventListener("click", () => {
               },
 
               dom: "Bfrtip",
+            });
+            // $("#vehictable").on("click", "tbody tr", function () {
+            //   var row = table.row($(this)).data();
+            //   console.log(row); //full row of array data
+            //   console.log(row.index); //EmployeeId
+            // });
+
+            $("#vehictable tbody").on("click", "button", function () {
+              var row = table.row($(this).parents("tr")).data();
+              console.log(row); //full row of array data
+              console.log(row.index); //EmployeeId
+              const viewPlate = document.querySelector(".viewPlate");
+              const viewModel = document.querySelector(".viewModel");
+              const viewOwner = document.querySelector(".viewOwner");
+              const vehicleViewPic = document.querySelector("#vehicleViewPic");
+              viewPlate.textContent = row.plate_number;
+              viewModel.textContent = row.model;
+              viewOwner.textContent = row.vehicle_owner;
+              vehicleViewPic.src = row.image;
             });
           });
         } else {
@@ -194,7 +215,7 @@ loadVehicles.addEventListener("click", () => {
         return vehicle;
       }
 
-      console.log("hetoo", dataVehicle);
+      console.log("hetoooooo", dataVehicle);
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/vehicles.html", true);

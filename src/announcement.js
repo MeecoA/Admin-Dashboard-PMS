@@ -46,6 +46,10 @@ announceLink.addEventListener("click", () => {
           "colvis",
         ],
       });
+
+      const filesToUpload = [];
+      const filesAttached = document.querySelector("#filesAttached");
+
       const addAnnounceForm = document.querySelector("#announceForm");
       addAnnounceForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -58,10 +62,22 @@ announceLink.addEventListener("click", () => {
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            files: [addAnnounceForm.files.value],
+            files: filesToUpload,
             thumbnail: addAnnounceForm.thumbnail.value,
           })
           .then(() => {
+            filesAttached.addEventListener("change", (e) => {
+              console.log("files: ", filesAttached.files);
+              const everyFile = filesAttached.files;
+
+              Array.from(everyFile).forEach((file) => {
+                // console.log("file: ", file);
+                filesToUpload.push(file);
+
+                console.log(filesToUpload);
+              });
+            });
+
             console.log(addAnnounceForm.title.value);
             const storage = fire.storage;
             const imageRef = fire.myStorageRef(
@@ -76,7 +92,7 @@ announceLink.addEventListener("click", () => {
               contentType: file.type,
             };
 
-            fire.myUploadBytes(fileRef, file, metadata).then((snapshot) => {
+            fire.myUploadBytes(fileRef, file, filesToUpload).then((snapshot) => {
               console.log("UPLOADED file2");
             });
             fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
@@ -86,6 +102,7 @@ announceLink.addEventListener("click", () => {
             addAnnounceForm.reset();
           });
       });
+
       const announceTBody = document.querySelector(".table-body-announce");
       const renderAnnounce = (docu) => {
         var tableTr = t.row
@@ -158,6 +175,7 @@ announceLink.addEventListener("click", () => {
             console.log("deleted successfully");
           });
         }); //end of deleting data
+
         //viewing announcement
         const announceViewPic = document.querySelector("#announceViewPic");
         const viewPrio = document.querySelector(".viewPrio");
