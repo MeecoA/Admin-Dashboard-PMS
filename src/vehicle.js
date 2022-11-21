@@ -151,20 +151,21 @@ loadVehicles.addEventListener("click", () => {
                 },
                 { data: "registration_date" },
                 {
-                  defaultContent: `<div class="drop-container">
-                  <a href="#viewSec" rel="modal:open" class="view-button"><iconify-icon
+                  defaultContent: `<button>
+                  <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
                   class="view-icon"
                   icon="bi:eye-fill"
                   style="color: black"
                   width="16"
                   height="16"
-                ></iconify-icon>View</a>
+                ></iconify-icon>View</a></button>
             `,
                 },
               ],
               createdRow: function (row, data, dataIndex) {
                 $(row).attr("data-id", `${data.uid}`);
               },
+
               dom: "Bfrtip",
             });
           });
@@ -172,6 +173,7 @@ loadVehicles.addEventListener("click", () => {
           // console.log('currentIndex: ' + currentIndex)
           // console.log('currentIndex: ' + currentIndex)
         }
+
         // console.log(doc.id, Object.keys(vehicleData).toString(), vehicle);
       }); //end of docSnap
 
@@ -192,7 +194,7 @@ loadVehicles.addEventListener("click", () => {
         return vehicle;
       }
 
-      console.log(dataVehicle);
+      console.log("hetoo", dataVehicle);
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/vehicles.html", true);

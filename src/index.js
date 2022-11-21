@@ -28,6 +28,7 @@ import {
   updateEmail,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword,
 } from "firebase/auth";
 //this config connects the backend and frontend
 //after this, intall firebase in node.js
@@ -51,6 +52,7 @@ export const auth = getAuth();
 
 //exports
 // Firestore
+export const myUpdatePassowrd = updatePassword;
 export const myUpdateEmail = updateEmail;
 export const doLimit = limit;
 export const myGetDownloadUrl = getDownloadURL;
@@ -90,8 +92,9 @@ const accQuery = query(accColRef, orderBy("createdAt"));
 // const announceQuery = query(announceColRef, orderBy("createdAt"));
 // Side bar links
 
-// Prevent going on to the others
-// For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
+// // Prevent going on to the others
+// // For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
+
 onAuthStateChanged(auth, (user) => {
   console.log("user: ", user);
   if (user) {
@@ -158,25 +161,39 @@ window.addEventListener("DOMContentLoaded", () => {
       const adminPassword = adminForm.adminpassword.value;
 
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, adminEmail, adminPassword).then((userCredential) => {
-        // Signed in
-        // window.location.href = "admin-dashboard.html";
-        const user = userCredential.user;
-        if (auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
-          signOut(auth).then((success) => {
-            console.log(success);
-          });
-          // alert("Administrator onlys.");
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Administrator Account Only!",
-          });
-        }
-        // ...
-      });
-      // .catch((e) => {});
-
+      signInWithEmailAndPassword(auth, adminEmail, adminPassword)
+        .then((userCredential) => {
+          // Signed in
+          // window.location.href = "admin-dashboard.html";
+          const user = userCredential.user;
+          if (auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+            signOut(auth).then((success) => {
+              console.log(success);
+            });
+            // alert("Administrator onlys.");
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Administrator Account Only!",
+            });
+          }
+          // ...
+        })
+        .catch((error) => {
+          const adminPassError = document.querySelector(".admin-pass-error");
+          const adminPassword = document.querySelector("#adminPassword");
+          switch (error.code) {
+            case "auth/wrong-password":
+              adminPassError.textContent = "Wrong Password!";
+              adminPassword.style.border = "2px solid red";
+              break;
+            case "auth/too-many-requests":
+              Swal.fire("Too many attempts, try again later");
+              break;
+            default:
+              break;
+          }
+        });
       onAuthStateChanged(auth, (user) => {
         if (user) {
           // User is signed in, see docs for a list of available properties

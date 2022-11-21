@@ -36106,7 +36106,7 @@ announceLink.addEventListener("click", () => {
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            files: addAnnounceForm.files.value,
+            files: [addAnnounceForm.files.value],
             thumbnail: addAnnounceForm.thumbnail.value,
           })
           .then(() => {
@@ -36117,21 +36117,22 @@ announceLink.addEventListener("click", () => {
               `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
             );
             const fileRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file`);
-            var thumbnail = document.querySelector("#thumbnail").files[0];
-            var file = document.querySelector("#filesAttached").files[0];
-
+            const thumbnail = document.querySelector("#thumbnail").files[0];
+            const file = document.querySelector("#filesAttached").files[0];
+            console.log(file.type);
             var metadata = {
               contentType: file.type,
             };
-            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
-              console.log("UPLOADED");
-            });
+
             _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef, file, metadata).then((snapshot) => {
               console.log("UPLOADED file2");
             });
+            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
+              console.log("UPLOADED");
+            });
+
             addAnnounceForm.reset();
           });
-        //adding council
       });
       const announceTBody = document.querySelector(".table-body-announce");
       const renderAnnounce = (docu) => {
@@ -36200,8 +36201,8 @@ announceLink.addEventListener("click", () => {
         //deleting data
         const AnnounceDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         AnnounceDelete.addEventListener("click", () => {
-          const docRef = doc(db, "announcements", docu.id);
-          deleteDoc(docRef).then(() => {
+          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "announcements", docu.id);
+          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDeleteDoc(docRef).then(() => {
             console.log("deleted successfully");
           });
         }); //end of deleting data
@@ -36811,6 +36812,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "myStorageRef": () => (/* binding */ myStorageRef),
 /* harmony export */   "myUpdateDoc": () => (/* binding */ myUpdateDoc),
 /* harmony export */   "myUpdateEmail": () => (/* binding */ myUpdateEmail),
+/* harmony export */   "myUpdatePassowrd": () => (/* binding */ myUpdatePassowrd),
 /* harmony export */   "myUploadBytes": () => (/* binding */ myUploadBytes),
 /* harmony export */   "napColRef": () => (/* binding */ napColRef),
 /* harmony export */   "secColRef": () => (/* binding */ secColRef),
@@ -36846,6 +36848,7 @@ const auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.getAuth)();
 
 //exports
 // Firestore
+const myUpdatePassowrd = firebase_auth__WEBPACK_IMPORTED_MODULE_3__.updatePassword;
 const myUpdateEmail = firebase_auth__WEBPACK_IMPORTED_MODULE_3__.updateEmail;
 const doLimit = firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.limit;
 const myGetDownloadUrl = firebase_storage__WEBPACK_IMPORTED_MODULE_2__.getDownloadURL;
@@ -36885,8 +36888,9 @@ const accQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accCo
 // const announceQuery = query(announceColRef, orderBy("createdAt"));
 // Side bar links
 
-// Prevent going on to the others
-// For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
+// // Prevent going on to the others
+// // For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
+
 (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.onAuthStateChanged)(auth, (user) => {
   console.log("user: ", user);
   if (user) {
@@ -36953,25 +36957,39 @@ window.addEventListener("DOMContentLoaded", () => {
       const adminPassword = adminForm.adminpassword.value;
 
       const auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.getAuth)();
-      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signInWithEmailAndPassword)(auth, adminEmail, adminPassword).then((userCredential) => {
-        // Signed in
-        // window.location.href = "admin-dashboard.html";
-        const user = userCredential.user;
-        if (auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
-          (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signOut)(auth).then((success) => {
-            console.log(success);
-          });
-          // alert("Administrator onlys.");
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Administrator Account Only!",
-          });
-        }
-        // ...
-      });
-      // .catch((e) => {});
-
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signInWithEmailAndPassword)(auth, adminEmail, adminPassword)
+        .then((userCredential) => {
+          // Signed in
+          // window.location.href = "admin-dashboard.html";
+          const user = userCredential.user;
+          if (auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+            (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signOut)(auth).then((success) => {
+              console.log(success);
+            });
+            // alert("Administrator onlys.");
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Administrator Account Only!",
+            });
+          }
+          // ...
+        })
+        .catch((error) => {
+          const adminPassError = document.querySelector(".admin-pass-error");
+          const adminPassword = document.querySelector("#adminPassword");
+          switch (error.code) {
+            case "auth/wrong-password":
+              adminPassError.textContent = "Wrong Password!";
+              adminPassword.style.border = "2px solid red";
+              break;
+            case "auth/too-many-requests":
+              Swal.fire("Too many attempts, try again later");
+              break;
+            default:
+              break;
+          }
+        });
       (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.onAuthStateChanged)(auth, (user) => {
         if (user) {
           // User is signed in, see docs for a list of available properties
@@ -37671,8 +37689,7 @@ function ajaxSec() {
               // email: editSecForm.secEmailNew.value,
             })
             .then(() => {
-              _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUpdateEmail(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.auth.currentUser, `${editSecForm.secEmailNew.value}`);
-              swal({
+              Swal.fire({
                 text: "SUCCESSFULLY UPDATED!",
                 icon: "success",
               });
@@ -38143,20 +38160,21 @@ loadVehicles.addEventListener("click", () => {
                 },
                 { data: "registration_date" },
                 {
-                  defaultContent: `<div class="drop-container">
-                  <a href="#viewSec" rel="modal:open" class="view-button"><iconify-icon
+                  defaultContent: `<button>
+                  <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
                   class="view-icon"
                   icon="bi:eye-fill"
                   style="color: black"
                   width="16"
                   height="16"
-                ></iconify-icon>View</a>
+                ></iconify-icon>View</a></button>
             `,
                 },
               ],
               createdRow: function (row, data, dataIndex) {
                 $(row).attr("data-id", `${data.uid}`);
               },
+
               dom: "Bfrtip",
             });
           });
@@ -38164,6 +38182,7 @@ loadVehicles.addEventListener("click", () => {
           // console.log('currentIndex: ' + currentIndex)
           // console.log('currentIndex: ' + currentIndex)
         }
+
         // console.log(doc.id, Object.keys(vehicleData).toString(), vehicle);
       }); //end of docSnap
 
@@ -38184,7 +38203,7 @@ loadVehicles.addEventListener("click", () => {
         return vehicle;
       }
 
-      console.log(dataVehicle);
+      console.log("hetoo", dataVehicle);
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/vehicles.html", true);

@@ -58,7 +58,7 @@ announceLink.addEventListener("click", () => {
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            files: addAnnounceForm.files.value,
+            files: [addAnnounceForm.files.value],
             thumbnail: addAnnounceForm.thumbnail.value,
           })
           .then(() => {
@@ -69,21 +69,22 @@ announceLink.addEventListener("click", () => {
               `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
             );
             const fileRef = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file`);
-            var thumbnail = document.querySelector("#thumbnail").files[0];
-            var file = document.querySelector("#filesAttached").files[0];
-
+            const thumbnail = document.querySelector("#thumbnail").files[0];
+            const file = document.querySelector("#filesAttached").files[0];
+            console.log(file.type);
             var metadata = {
               contentType: file.type,
             };
-            fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
-              console.log("UPLOADED");
-            });
+
             fire.myUploadBytes(fileRef, file, metadata).then((snapshot) => {
               console.log("UPLOADED file2");
             });
+            fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
+              console.log("UPLOADED");
+            });
+
             addAnnounceForm.reset();
           });
-        //adding council
       });
       const announceTBody = document.querySelector(".table-body-announce");
       const renderAnnounce = (docu) => {
@@ -152,8 +153,8 @@ announceLink.addEventListener("click", () => {
         //deleting data
         const AnnounceDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         AnnounceDelete.addEventListener("click", () => {
-          const docRef = doc(db, "announcements", docu.id);
-          deleteDoc(docRef).then(() => {
+          const docRef = fire.myDoc(fire.db, "announcements", docu.id);
+          fire.myDeleteDoc(docRef).then(() => {
             console.log("deleted successfully");
           });
         }); //end of deleting data

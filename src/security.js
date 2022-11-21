@@ -310,8 +310,7 @@ function ajaxSec() {
               // email: editSecForm.secEmailNew.value,
             })
             .then(() => {
-              fire.myUpdateEmail(fire.auth.currentUser, `${editSecForm.secEmailNew.value}`);
-              swal({
+              Swal.fire({
                 text: "SUCCESSFULLY UPDATED!",
                 icon: "success",
               });
