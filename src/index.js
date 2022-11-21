@@ -93,26 +93,25 @@ const accQuery = query(accColRef, orderBy("createdAt"));
 // Prevent going on to the others
 // For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
 onAuthStateChanged(auth, (user) => {
-  console.log('user: ', user)
+  console.log("user: ", user);
   if (user) {
     if (windowLocation.indexOf("admin-login.html") > -1) {
       if (auth.currentUser !== null && user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
         window.location = "admin-dashboard.html";
       }
     }
-    console.log('user logged in: ' + auth.currentUser);
+    console.log("user logged in: " + auth.currentUser);
   } else {
     // User is signed out
     if (windowLocation.indexOf("admin-dashboard.html") > -1) {
       window.location = "admin-login.html";
     }
-    console.log('user logged out: ' + auth.currentUser);
+    console.log("user logged out: " + auth.currentUser);
   }
 });
 
 // dashboard scripts
 const userCount = document.querySelector("#userCount");
-
 
 onSnapshot(accQuery, (snapshot) => {
   userCount.textContent = snapshot.size;
@@ -121,11 +120,6 @@ onSnapshot(accQuery, (snapshot) => {
 // Administrator Login
 let windowLocation = window.location.pathname;
 window.addEventListener("DOMContentLoaded", () => {
-
-
-    
-
-
   // Prevent going back on login page.
   // if (windowLocation.indexOf("admin-login.html") > -1) {
   //   onAuthStateChanged(auth, (user) => {
@@ -168,15 +162,20 @@ window.addEventListener("DOMContentLoaded", () => {
         // Signed in
         // window.location.href = "admin-dashboard.html";
         const user = userCredential.user;
-        if(auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
-          signOut(auth)
-          .then((success) => {
+        if (auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+          signOut(auth).then((success) => {
             console.log(success);
           });
-          alert('Administrator only.')
+          // alert("Administrator onlys.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Administrator Account Only!",
+          });
         }
         // ...
       });
+      // .catch((e) => {});
 
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -184,9 +183,9 @@ window.addEventListener("DOMContentLoaded", () => {
           // https://firebase.google.com/docs/reference/js/firebase.User
           const uid = user.uid;
 
-          console.log(user.uid, "BHwQ87dDgaYla9IC2MhoLVWwEsC3")
+          console.log(user.uid, "BHwQ87dDgaYla9IC2MhoLVWwEsC3");
           // Check if the logged in user id matched on the Authentication
-          if(user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+          if (user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
             window.location = "admin-dashboard.html";
             console.log(user.uid, "is signed in");
             const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "visible");
@@ -218,13 +217,21 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 const adminLogout = document.querySelector("#adminLogout");
 adminLogout.addEventListener("click", () => {
-  signOut(auth)
-    .then(() => {
-      window.location = "admin-login.html";
-    })
-    .catch(() => {});
-  console.log("loggg");
+  Swal.fire({
+    title: "Are you sure you want to log out?",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, log out.",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      signOut(auth)
+        .then(() => {
+          window.location = "admin-login.html";
+        })
+        .catch(() => {});
+      console.log("loggg");
+    }
+  });
 });
-
-
-

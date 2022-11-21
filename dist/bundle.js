@@ -35902,6 +35902,138 @@ function __classPrivateFieldIn(state, receiver) {
   \***************************/
 /***/ (() => {
 
+// import * as fire from "../src/index.js";
+// console.log("database: ", fire.database);
+
+// // Prevent going on to the others
+// // For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
+// fire.doAutState(fire.auth, (user) => {
+//   console.log("user: ", user);
+//   if (user) {
+//     if (windowLocation.indexOf("admin-login.html") > -1) {
+//       if (auth.currentUser !== null && user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+//         window.location = "admin-dashboard.html";
+//       }
+//     }
+//     console.log("user logged in: " + auth.currentUser);
+//   } else {
+//     // User is signed out
+//     if (windowLocation.indexOf("admin-dashboard.html") > -1) {
+//       window.location = "admin-login.html";
+//     }
+//     console.log("user logged out: " + auth.currentUser);
+//   }
+// });
+
+// // dashboard scripts
+// const userCount = document.querySelector("#userCount");
+
+// fire.myOnSnapshot(accQuery, (snapshot) => {
+//   userCount.textContent = snapshot.size;
+// });
+
+// // Administrator Login
+// let windowLocation = window.location.pathname;
+// window.addEventListener("DOMContentLoaded", () => {
+//   // Prevent going back on login page.
+//   // if (windowLocation.indexOf("admin-login.html") > -1) {
+//   //   onAuthStateChanged(auth, (user) => {
+//   //     if (user) {
+//   //       // User is signed in, see docs for a list of available properties
+//   //       // https://firebase.google.com/docs/reference/js/firebase.User
+//   //       console.log("admin-login.html");
+//   //       console.log("currentUser: ", auth.currentUser);
+//   //       if (auth.currentUser !== null) {
+//   //         window.location = "admin-dashboard.html";
+//   //       }
+//   //     } else {
+//   //       // User is signed out
+//   //     }
+//   //   });
+//   // }
+
+//   // checked signin
+//   if (windowLocation.indexOf("admin-login.html") > -1) {
+//     function getDateTime() {
+//       var today = new Date();
+//       var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+//       var time = today.getHours() + ":" + today.getMinutes();
+//       console.log(time);
+//       const adminTime = document.querySelector(".admin-time");
+//       adminTime.textContent = time;
+//       const adminDate = document.querySelector(".admin-date");
+//       adminDate.textContent = date;
+//     }
+//     getDateTime();
+
+//     function signInAdmin() {
+//       const adminForm = document.querySelector(".admin-form");
+
+//       const adminEmail = adminForm.adminemail.value;
+//       const adminPassword = adminForm.adminpassword.value;
+
+//       const auth = getAuth();
+//       fire.doSignIn(fire.auth, adminEmail, adminPassword).then((userCredential) => {
+//         // Signed in
+//         // window.location.href = "admin-dashboard.html";
+//         const user = userCredential.user;
+//         if (fire.auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+//           fire.doSignOut(fire.auth).then((success) => {
+//             console.log(success);
+//           });
+//           alert("Administrator only.");
+//         }
+//         // ...
+//       });
+
+//       fire.doAutState(fire.auth, (user) => {
+//         if (user) {
+//           // User is signed in, see docs for a list of available properties
+//           // https://firebase.google.com/docs/reference/js/firebase.User
+//           const uid = user.uid;
+
+//           console.log(user.uid, "BHwQ87dDgaYla9IC2MhoLVWwEsC3");
+//           // Check if the logged in user id matched on the Authentication
+//           if (user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+//             window.location = "admin-dashboard.html";
+//             console.log(user.uid, "is signed in");
+//             const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "visible");
+//           }
+//         } else {
+//           // User is signed out
+//           const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "hidden");
+//           alert("Please login first.");
+//         }
+//       });
+//     }
+//     const adminForm = document.querySelector(".admin-form");
+
+//     const adminEmail = adminForm.adminemail.value;
+//     console.log(adminEmail);
+//     function login() {
+//       const adminForm = document.querySelector(".admin-form");
+
+//       const adminEmail = adminForm.adminemail.value;
+//       const adminPassword = adminForm.adminpassword.value;
+
+//       adminForm.addEventListener("submit", (e) => {
+//         e.preventDefault();
+//         signInAdmin();
+//       });
+//     }
+//     login();
+//   }
+// });
+// const adminLogout = document.querySelector("#adminLogout");
+// adminLogout.addEventListener("click", () => {
+//   fire
+//     .doSignOut(fire.auth)
+//     .then(() => {
+//       window.location = "admin-login.html";
+//     })
+//     .catch(() => {});
+//   console.log("loggg");
+// });
 
 
 /***/ }),
@@ -36616,7 +36748,7 @@ loadFaculty.addEventListener("click", () => {
             doc.id,
             `${doc.data().first_name} ${doc.data().last_name}`,
             doc.data().id_number,
-            doc.data().is_active,
+            doc.data().is_activated,
             doc.data().phone_num,
           ])
           .draw(false)
@@ -36756,26 +36888,25 @@ const accQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accCo
 // Prevent going on to the others
 // For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
 (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.onAuthStateChanged)(auth, (user) => {
-  console.log('user: ', user)
+  console.log("user: ", user);
   if (user) {
     if (windowLocation.indexOf("admin-login.html") > -1) {
       if (auth.currentUser !== null && user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
         window.location = "admin-dashboard.html";
       }
     }
-    console.log('user logged in: ' + auth.currentUser);
+    console.log("user logged in: " + auth.currentUser);
   } else {
     // User is signed out
     if (windowLocation.indexOf("admin-dashboard.html") > -1) {
       window.location = "admin-login.html";
     }
-    console.log('user logged out: ' + auth.currentUser);
+    console.log("user logged out: " + auth.currentUser);
   }
 });
 
 // dashboard scripts
 const userCount = document.querySelector("#userCount");
-
 
 (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.onSnapshot)(accQuery, (snapshot) => {
   userCount.textContent = snapshot.size;
@@ -36784,11 +36915,6 @@ const userCount = document.querySelector("#userCount");
 // Administrator Login
 let windowLocation = window.location.pathname;
 window.addEventListener("DOMContentLoaded", () => {
-
-
-    
-
-
   // Prevent going back on login page.
   // if (windowLocation.indexOf("admin-login.html") > -1) {
   //   onAuthStateChanged(auth, (user) => {
@@ -36831,15 +36957,20 @@ window.addEventListener("DOMContentLoaded", () => {
         // Signed in
         // window.location.href = "admin-dashboard.html";
         const user = userCredential.user;
-        if(auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
-          (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signOut)(auth)
-          .then((success) => {
+        if (auth.currentUser.uid !== "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+          (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signOut)(auth).then((success) => {
             console.log(success);
           });
-          alert('Administrator only.')
+          // alert("Administrator onlys.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Administrator Account Only!",
+          });
         }
         // ...
       });
+      // .catch((e) => {});
 
       (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.onAuthStateChanged)(auth, (user) => {
         if (user) {
@@ -36847,9 +36978,9 @@ window.addEventListener("DOMContentLoaded", () => {
           // https://firebase.google.com/docs/reference/js/firebase.User
           const uid = user.uid;
 
-          console.log(user.uid, "BHwQ87dDgaYla9IC2MhoLVWwEsC3")
+          console.log(user.uid, "BHwQ87dDgaYla9IC2MhoLVWwEsC3");
           // Check if the logged in user id matched on the Authentication
-          if(user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
+          if (user.uid === "BHwQ87dDgaYla9IC2MhoLVWwEsC3") {
             window.location = "admin-dashboard.html";
             console.log(user.uid, "is signed in");
             const dashboardBody = (document.querySelector("#dashboardBody").style.visibility = "visible");
@@ -36881,16 +37012,24 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 const adminLogout = document.querySelector("#adminLogout");
 adminLogout.addEventListener("click", () => {
-  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signOut)(auth)
-    .then(() => {
-      window.location = "admin-login.html";
-    })
-    .catch(() => {});
-  console.log("loggg");
+  Swal.fire({
+    title: "Are you sure you want to log out?",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, log out.",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signOut)(auth)
+        .then(() => {
+          window.location = "admin-login.html";
+        })
+        .catch(() => {});
+      console.log("loggg");
+    }
+  });
 });
-
-
-
 
 
 /***/ }),
@@ -37885,127 +38024,167 @@ loadVehicles.addEventListener("click", () => {
       dropDownLogs.classList.remove("active");
       dropdownContentLogs.style.display = "none";
 
-      // generateTable();
-
-      // rendering the data
-      var t = $("#vehictable").DataTable({
-        dom: "Bfrtip",
-        buttons: [
-          {
-            extend: "copyHtml5",
-            exportOptions: {
-              columns: [0, 1, 2],
-            },
-          },
-          {
-            extend: "print",
-            exportOptions: {
-              columns: [0, 1, 2],
-            },
-            customize: function (win) {
-              $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
-              <img
-                src="https://lh6.googleusercontent.com/ijbIEy2U5qlRSzF8bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
-                alt=""
-              />
-              <br />
-              <br />
-              <div class="print-type-holder">
-                <div class="title-print">VEHICLE INFORMATION</div>
-                <br>
-                <br>
-              </div>
-            </div>
-            
-            `);
-
-              $(win.document.body).find("table").css("font-size", "inherit");
-            },
-          },
-          {
-            extend: "pdfHtml5",
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4],
-            },
-          },
-          "colvis",
-        ],
-      });
-      const buttonsColvis = document.querySelector(".buttons-colvis");
-      buttonsColvis.textContent = "Filter By Category";
-      const viewVehicles = (doc, entry) => {
-        //viewing vehicles
-      }; //end of render sec
-
+      let dataVehicle = [];
       const colRef = _src_index__WEBPACK_IMPORTED_MODULE_0__.myCollection(_src_index__WEBPACK_IMPORTED_MODULE_0__.db, "vehicle-information");
-      const vehicleQuery = _src_index__WEBPACK_IMPORTED_MODULE_0__.doQuery(colRef, _src_index__WEBPACK_IMPORTED_MODULE_0__.doLimit(10));
+      const vehicleQuery = _src_index__WEBPACK_IMPORTED_MODULE_0__.doQuery(colRef);
+
+      let currentIndex = 0;
+      let countVehicle = 1;
 
       const docsSnap = await _src_index__WEBPACK_IMPORTED_MODULE_0__.myGetDocs(vehicleQuery);
-      docsSnap.forEach((doc) => {
-        let myData = doc.data();
-        // console.log("data", doc.id);
+      docsSnap.forEach(async (doc) => {
+        let vehicleData = { ...doc.data() };
+        let appendData = { a: "" };
 
-        const vehicle = Object.keys(myData)
+        const vehicle = Object.keys(vehicleData)
           .filter((key) => key !== "vehicle_length")
           // .filter((key) => key.includes("Name"))
           .reduce((obj, key) => {
             return Object.assign(obj, {
-              [key]: myData[key],
+              [key]: vehicleData[key],
             });
           }, {});
 
-        // Mag-rurun kapag walang laman
+        let ownerFullName = "";
+        let ownerProfilePic = "";
 
-        const vehicleKeys = Object.keys(myData);
+        await getAccountInformationOwner(doc.id).then((evt) => {
+          // console.log('event: ', evt)
+          // If middle name is undefined
+          if (typeof evt["middle_name"] === "undefined" || evt["middle_name"].trim() === "") {
+            console.log(true);
+            evt["middle_name"] = " ";
+          }
+
+          // appendData['vehicle_owner'] = `${evt['last_name']} ${evt['first_name']} ${evt['middle_name'][0]}`;
+          ownerFullName = `${evt["last_name"]} ${evt["first_name"]} ${evt["middle_name"][0]}`;
+
+          // Check the profile picture.
+          if (typeof evt["profile_pic"] === "undefined" || evt["profile_pic"] === null) {
+            // appendData['profile_pic'] = 'https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fprofile-circled.svg?alt=media&token=5d172c80-6cc4-4ddd-841b-8877a6813010';
+            ownerProfilePic =
+              "https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fprofile-circled.svg?alt=media&token=5d172c80-6cc4-4ddd-841b-8877a6813010";
+          } else {
+            // appendData['profile_pic'] = evt['profile_pic'];
+            ownerProfilePic = evt["profile_pic"];
+          }
+        });
+
+        const vehicleKeys = Object.keys(vehicleData);
+        console.log("vehicleKeys", vehicleKeys);
         vehicleKeys.forEach((data, index) => {
           if (data !== "vehicle_length") {
             const entry = vehicle[data];
+            // console.log('current entry: ', entry, ownerFullName);
+            console.log("current entry: ", ownerFullName);
             // Id, Plate, Vehicle Owner, Vehicle(Images), Model, QR Code, Use Types
 
             if (typeof entry.qrCode === "object") {
               entry.qrCode = entry.qrCode.toString();
             }
-            console.table([doc.id, data, entry.images[1], entry.model[0], entry.qrCode, entry.use_types]);
 
-            // table
-            var temp = t.row
-              .add([
-                doc.id,
-                data,
-                entry.model[0],
-                `
-                <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
-                class="view-icon"
-                icon="bi:eye-fill"
-                style="color: black"
-                width="16"
-                height="16"
-              ></iconify-icon>View</a>
-              </div>
-            </div>
-          `,
-              ])
-              .draw(false)
-              .node();
-            $(temp).attr("data-id", `${doc.id}`);
+            appendData = {
+              index: index,
+              uid: doc.id,
+              vehicle_owner: ownerFullName,
+              profile_pic: ownerProfilePic,
+              plate_number: data,
+              model: entry.model[0],
+              qrCode: entry.qrCode,
+              entry: entry.use_types,
+              registration_date: entry.createdAt.toDate(),
+            };
 
-            viewVehicles(doc, entry);
-            const viewVehicle = document.querySelector(`[data-id='${doc.id}'] .view-vehicle-button`);
+            // Check the vehicle image
+            if (typeof entry.images[1] === "undefined" || entry.images[1] === null) {
+              appendData["image"] =
+                "https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fvehicle-car-16-filled.svg?alt=media&token=8bb41423-816c-4de8-8a4c-22f597fd2b04";
+            } else {
+              appendData["image"] = entry.images[1];
+            }
+            console.log("appendData", appendData);
 
-            viewVehicle.addEventListener("click", () => {
-              $("#viewVehicle").fadeIn();
-              const viewPlate = document.querySelector(".viewPlate");
-              const viewModel = document.querySelector(".viewModel");
-              const vehicleViewPic = document.querySelector("#vehicleViewPic");
-              vehicleViewPic.src = entry.images[1];
-              viewPlate.textContent = data;
-              viewModel.textContent = entry.model[0];
-            });
+            appendData["action"] = "";
+            appendData["index"] = countVehicle;
+            countVehicle += 1;
+            dataVehicle.push(appendData);
           }
         });
+        appendData = null; //delete from memory
 
-        // console.log(doc.id, Object.keys(myData).toString(), vehicle);
-      });
+        // Display the table after all the neccessary are ready.
+        currentIndex = currentIndex + 1;
+        // console.log('::', currentIndex, docsSnap.docs);
+        if (currentIndex === docsSnap.docs.length) {
+          // console.log('HAHAHA');
+          // console.log('final vehicleInformation: ', dataVehicle);
+          const hello = "jello";
+          jQuery((e) => {
+            console.log("DataTable");
+            var table = $("#vehictable").DataTable({
+              scrollX: true,
+              data: dataVehicle,
+
+              columns: [
+                { data: "index" },
+                { data: "uid" },
+                {
+                  data: (data, type, dataToSet) => {
+                    return `<img src="${data.profile_pic}" alt="profile picture" width="20" height="20">
+							${data.vehicle_owner}`;
+                  },
+                },
+                { data: "plate_number" },
+                {
+                  data: (data, type, dataToSet) => {
+                    return `<img src="${data.image}" alt="profile picture" width="20" height="20">
+							${data.model}`;
+                  },
+                },
+                { data: "registration_date" },
+                {
+                  defaultContent: `<div class="drop-container">
+                  <a href="#viewSec" rel="modal:open" class="view-button"><iconify-icon
+                  class="view-icon"
+                  icon="bi:eye-fill"
+                  style="color: black"
+                  width="16"
+                  height="16"
+                ></iconify-icon>View</a>
+            `,
+                },
+              ],
+              createdRow: function (row, data, dataIndex) {
+                $(row).attr("data-id", `${data.uid}`);
+              },
+              dom: "Bfrtip",
+            });
+          });
+        } else {
+          // console.log('currentIndex: ' + currentIndex)
+          // console.log('currentIndex: ' + currentIndex)
+        }
+        // console.log(doc.id, Object.keys(vehicleData).toString(), vehicle);
+      }); //end of docSnap
+
+      async function getAccountInformationOwner(userUID) {
+        let vehicle = undefined;
+        const docVehicleActivity = _src_index__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index__WEBPACK_IMPORTED_MODULE_0__.db, "account-information", userUID);
+        const docVSnap = await _src_index__WEBPACK_IMPORTED_MODULE_0__.myGetDoc(docVehicleActivity);
+        if (docVSnap.exists()) {
+          // vehicle = Object.keys(docVSnap.data()).filter((e) => {
+          //     if(e !== 'vehicle_length') {
+          //         return e;
+          //     }
+          // }).toString();
+          return { ...docVSnap.data() };
+        } else {
+          vehicle = "N/A";
+        }
+        return vehicle;
+      }
+
+      console.log(dataVehicle);
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/vehicles.html", true);

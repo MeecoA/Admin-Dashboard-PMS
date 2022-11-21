@@ -76,7 +76,7 @@ loadFaculty.addEventListener("click", () => {
             doc.id,
             `${doc.data().first_name} ${doc.data().last_name}`,
             doc.data().id_number,
-            doc.data().is_active,
+            doc.data().is_activated,
             doc.data().phone_num,
           ])
           .draw(false)

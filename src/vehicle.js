@@ -32,127 +32,167 @@ loadVehicles.addEventListener("click", () => {
       dropDownLogs.classList.remove("active");
       dropdownContentLogs.style.display = "none";
 
-      // generateTable();
-
-      // rendering the data
-      var t = $("#vehictable").DataTable({
-        dom: "Bfrtip",
-        buttons: [
-          {
-            extend: "copyHtml5",
-            exportOptions: {
-              columns: [0, 1, 2],
-            },
-          },
-          {
-            extend: "print",
-            exportOptions: {
-              columns: [0, 1, 2],
-            },
-            customize: function (win) {
-              $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
-              <img
-                src="https://lh6.googleusercontent.com/ijbIEy2U5qlRSzF8bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
-                alt=""
-              />
-              <br />
-              <br />
-              <div class="print-type-holder">
-                <div class="title-print">VEHICLE INFORMATION</div>
-                <br>
-                <br>
-              </div>
-            </div>
-            
-            `);
-
-              $(win.document.body).find("table").css("font-size", "inherit");
-            },
-          },
-          {
-            extend: "pdfHtml5",
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4],
-            },
-          },
-          "colvis",
-        ],
-      });
-      const buttonsColvis = document.querySelector(".buttons-colvis");
-      buttonsColvis.textContent = "Filter By Category";
-      const viewVehicles = (doc, entry) => {
-        //viewing vehicles
-      }; //end of render sec
-
+      let dataVehicle = [];
       const colRef = fire.myCollection(fire.db, "vehicle-information");
-      const vehicleQuery = fire.doQuery(colRef, fire.doLimit(10));
+      const vehicleQuery = fire.doQuery(colRef);
+
+      let currentIndex = 0;
+      let countVehicle = 1;
 
       const docsSnap = await fire.myGetDocs(vehicleQuery);
-      docsSnap.forEach((doc) => {
-        let myData = doc.data();
-        // console.log("data", doc.id);
+      docsSnap.forEach(async (doc) => {
+        let vehicleData = { ...doc.data() };
+        let appendData = { a: "" };
 
-        const vehicle = Object.keys(myData)
+        const vehicle = Object.keys(vehicleData)
           .filter((key) => key !== "vehicle_length")
           // .filter((key) => key.includes("Name"))
           .reduce((obj, key) => {
             return Object.assign(obj, {
-              [key]: myData[key],
+              [key]: vehicleData[key],
             });
           }, {});
 
-        // Mag-rurun kapag walang laman
+        let ownerFullName = "";
+        let ownerProfilePic = "";
 
-        const vehicleKeys = Object.keys(myData);
+        await getAccountInformationOwner(doc.id).then((evt) => {
+          // console.log('event: ', evt)
+          // If middle name is undefined
+          if (typeof evt["middle_name"] === "undefined" || evt["middle_name"].trim() === "") {
+            console.log(true);
+            evt["middle_name"] = " ";
+          }
+
+          // appendData['vehicle_owner'] = `${evt['last_name']} ${evt['first_name']} ${evt['middle_name'][0]}`;
+          ownerFullName = `${evt["last_name"]} ${evt["first_name"]} ${evt["middle_name"][0]}`;
+
+          // Check the profile picture.
+          if (typeof evt["profile_pic"] === "undefined" || evt["profile_pic"] === null) {
+            // appendData['profile_pic'] = 'https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fprofile-circled.svg?alt=media&token=5d172c80-6cc4-4ddd-841b-8877a6813010';
+            ownerProfilePic =
+              "https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fprofile-circled.svg?alt=media&token=5d172c80-6cc4-4ddd-841b-8877a6813010";
+          } else {
+            // appendData['profile_pic'] = evt['profile_pic'];
+            ownerProfilePic = evt["profile_pic"];
+          }
+        });
+
+        const vehicleKeys = Object.keys(vehicleData);
+        console.log("vehicleKeys", vehicleKeys);
         vehicleKeys.forEach((data, index) => {
           if (data !== "vehicle_length") {
             const entry = vehicle[data];
+            // console.log('current entry: ', entry, ownerFullName);
+            console.log("current entry: ", ownerFullName);
             // Id, Plate, Vehicle Owner, Vehicle(Images), Model, QR Code, Use Types
 
             if (typeof entry.qrCode === "object") {
               entry.qrCode = entry.qrCode.toString();
             }
-            console.table([doc.id, data, entry.images[1], entry.model[0], entry.qrCode, entry.use_types]);
 
-            // table
-            var temp = t.row
-              .add([
-                doc.id,
-                data,
-                entry.model[0],
-                `
-                <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
-                class="view-icon"
-                icon="bi:eye-fill"
-                style="color: black"
-                width="16"
-                height="16"
-              ></iconify-icon>View</a>
-              </div>
-            </div>
-          `,
-              ])
-              .draw(false)
-              .node();
-            $(temp).attr("data-id", `${doc.id}`);
+            appendData = {
+              index: index,
+              uid: doc.id,
+              vehicle_owner: ownerFullName,
+              profile_pic: ownerProfilePic,
+              plate_number: data,
+              model: entry.model[0],
+              qrCode: entry.qrCode,
+              entry: entry.use_types,
+              registration_date: entry.createdAt.toDate(),
+            };
 
-            viewVehicles(doc, entry);
-            const viewVehicle = document.querySelector(`[data-id='${doc.id}'] .view-vehicle-button`);
+            // Check the vehicle image
+            if (typeof entry.images[1] === "undefined" || entry.images[1] === null) {
+              appendData["image"] =
+                "https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fvehicle-car-16-filled.svg?alt=media&token=8bb41423-816c-4de8-8a4c-22f597fd2b04";
+            } else {
+              appendData["image"] = entry.images[1];
+            }
+            console.log("appendData", appendData);
 
-            viewVehicle.addEventListener("click", () => {
-              $("#viewVehicle").fadeIn();
-              const viewPlate = document.querySelector(".viewPlate");
-              const viewModel = document.querySelector(".viewModel");
-              const vehicleViewPic = document.querySelector("#vehicleViewPic");
-              vehicleViewPic.src = entry.images[1];
-              viewPlate.textContent = data;
-              viewModel.textContent = entry.model[0];
-            });
+            appendData["action"] = "";
+            appendData["index"] = countVehicle;
+            countVehicle += 1;
+            dataVehicle.push(appendData);
           }
         });
+        appendData = null; //delete from memory
 
-        // console.log(doc.id, Object.keys(myData).toString(), vehicle);
-      });
+        // Display the table after all the neccessary are ready.
+        currentIndex = currentIndex + 1;
+        // console.log('::', currentIndex, docsSnap.docs);
+        if (currentIndex === docsSnap.docs.length) {
+          // console.log('HAHAHA');
+          // console.log('final vehicleInformation: ', dataVehicle);
+          const hello = "jello";
+          jQuery((e) => {
+            console.log("DataTable");
+            var table = $("#vehictable").DataTable({
+              scrollX: true,
+              data: dataVehicle,
+
+              columns: [
+                { data: "index" },
+                { data: "uid" },
+                {
+                  data: (data, type, dataToSet) => {
+                    return `<img src="${data.profile_pic}" alt="profile picture" width="20" height="20">
+							${data.vehicle_owner}`;
+                  },
+                },
+                { data: "plate_number" },
+                {
+                  data: (data, type, dataToSet) => {
+                    return `<img src="${data.image}" alt="profile picture" width="20" height="20">
+							${data.model}`;
+                  },
+                },
+                { data: "registration_date" },
+                {
+                  defaultContent: `<div class="drop-container">
+                  <a href="#viewSec" rel="modal:open" class="view-button"><iconify-icon
+                  class="view-icon"
+                  icon="bi:eye-fill"
+                  style="color: black"
+                  width="16"
+                  height="16"
+                ></iconify-icon>View</a>
+            `,
+                },
+              ],
+              createdRow: function (row, data, dataIndex) {
+                $(row).attr("data-id", `${data.uid}`);
+              },
+              dom: "Bfrtip",
+            });
+          });
+        } else {
+          // console.log('currentIndex: ' + currentIndex)
+          // console.log('currentIndex: ' + currentIndex)
+        }
+        // console.log(doc.id, Object.keys(vehicleData).toString(), vehicle);
+      }); //end of docSnap
+
+      async function getAccountInformationOwner(userUID) {
+        let vehicle = undefined;
+        const docVehicleActivity = fire.myDoc(fire.db, "account-information", userUID);
+        const docVSnap = await fire.myGetDoc(docVehicleActivity);
+        if (docVSnap.exists()) {
+          // vehicle = Object.keys(docVSnap.data()).filter((e) => {
+          //     if(e !== 'vehicle_length') {
+          //         return e;
+          //     }
+          // }).toString();
+          return { ...docVSnap.data() };
+        } else {
+          vehicle = "N/A";
+        }
+        return vehicle;
+      }
+
+      console.log(dataVehicle);
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/vehicles.html", true);

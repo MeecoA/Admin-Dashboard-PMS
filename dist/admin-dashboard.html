@@ -32,8 +32,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js" defer></script>
     <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" defer></script>
+    <!-- <script src="sweetalert2.min.js" defer></script> -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 
+    <!-- <link rel="stylesheet" href="sweetalert2.min.css" /> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
@@ -229,7 +231,7 @@
                 <canvas id="line"></canvas>
               </div>
               <script>
-                const labels = ["January", "February", "March", "April", "May", "June"];
+                const labels = ["", "", "", "", "", ""];
 
                 const dataLine = {
                   labels: labels,
