@@ -35,3 +35,14 @@ function generateDropdown() {
   });
 }
 generateDropdown();
+const themeBtn = document.querySelector(".theme-btn");
+
+themeBtn.onclick = function () {
+  const moon = document.querySelector(".moon");
+  document.body.classList.toggle("dark-theme");
+  if (document.body.classList.contains("dark-theme")) {
+    moon.src = "../images/sun.png";
+  } else {
+    moon.src = "../images/moon.png";
+  }
+};

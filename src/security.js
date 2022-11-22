@@ -235,12 +235,12 @@ function ajaxSec() {
                   <a href="#" class="delete-button">
                   <iconify-icon
                     class="view-icon"
-                    icon="ep:delete-filled"
+                    icon="material-symbols:archive"
                     style="color: black"
                     width="16"
                     height="16"
                   ></iconify-icon>
-                  Delete User</a>
+                  Archive</a>
   
               </div>
             </div>
@@ -254,26 +254,37 @@ function ajaxSec() {
         //deleting data
         const secDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         secDelete.addEventListener("click", () => {
-          const docRef = fire.myDoc(fire.db, "security", docu.id);
-          fire.myDeleteDoc(docRef).then(() => {
-            console.log("deleted successfully");
-            fire
-              .myAddDoc(fire.archivesColRef, {
-                barangay: docu.data().barangay,
-                position: docu.data().position,
-                email: docu.data().email,
-                firstname: docu.data().firstname,
-                lastname: docu.data().lastname,
-                middlename: docu.data().middlename,
-                municipality: docu.data().municipality,
-                phone: docu.data().phone,
-                province: docu.data().province,
-                street: docu.data().street,
-              })
-              .then(() => {});
-          });
-        }); //end of deleting data
-
+          Swal.fire({
+            title: "Are you sure you want to archive?",
+            text: `Security: ${docu.data().firstname} ${docu.data().lastname}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Archived!", "Security Officer has been archived.", "success");
+              const docRef = fire.myDoc(fire.db, "security", docu.id);
+              fire.myDeleteDoc(docRef).then(() => {
+                fire
+                  .myAddDoc(fire.archivesColRef, {
+                    barangay: docu.data().barangay,
+                    position: docu.data().position,
+                    email: docu.data().email,
+                    firstname: docu.data().firstname,
+                    lastname: docu.data().lastname,
+                    middlename: docu.data().middlename,
+                    municipality: docu.data().municipality,
+                    phone: docu.data().phone,
+                    province: docu.data().province,
+                    street: docu.data().street,
+                  })
+                  .then(() => {});
+              });
+            }
+          }); //end of deleting data
+        });
         //editing data -- edit useer information only
         const editSecForm = document.querySelector("#editSecForm");
         const editSecBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);

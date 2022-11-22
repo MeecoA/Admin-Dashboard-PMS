@@ -36310,7 +36310,9 @@ announceLink.addEventListener("click", () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index */ "./src/index.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
+/* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/index */ "./src/index.js");
+
 
 
 //AJAX START FOR FACULTY
@@ -36334,6 +36336,132 @@ loadArchives.addEventListener("click", () => {
       dropDown.classList.remove("active");
       dropDownLogs.classList.remove("active");
       dropdownContentLogs.style.display = "none";
+
+      var t = $("#archtable").DataTable({
+        dom: "Bfrtip",
+        buttons: [
+          {
+            extend: "copyHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "print",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+            customize: function (win) {
+              $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
+              <img
+                src="https://lh6.bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
+                alt=""
+              />
+              <br />
+              <br />
+              <div class="print-type-holder">
+                <div class="title-print">SECURITY OFFICERS</div>
+                <br>
+                <br>
+              </div>
+            </div>
+            
+            `);
+
+              $(win.document.body).find("table").addClass("compact").css("font-size", "inherit");
+            },
+          },
+          {
+            extend: "pdfHtml5",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5],
+            },
+          },
+          "colvis",
+        ],
+      });
+
+      let id;
+      const archtable = document.querySelector(".tbody-arch");
+      const secmainTable = document.querySelector(".secmainTable");
+      const renderArchive = (docu) => {
+        var tableTr = t.row
+          .add([
+            docu.id,
+            `${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}`,
+            docu.data().position,
+            `${docu.data().barangay}, ${docu.data().street}, ${docu.data().municipality}, ${docu.data().province}`,
+            docu.data().email,
+            docu.data().phone,
+            `<a href="#" rel="modal:open">
+            <div class="drop-container">
+              <button class="drop-btn retrieve-btn">
+              <iconify-icon icon="material-symbols:unarchive" style="color: black;" width="20" height="20" class="unarchive-icon"></iconify-icon>
+              <div>RECOVER</div>
+              </button>
+              </a>
+              </div>
+            </div>
+          </td>
+          `,
+          ])
+          .draw(false)
+          .node();
+        $(tableTr).attr("data-id", `${docu.id}`);
+
+        const retrieveBtn = document.querySelector(`[data-id='${docu.id}'] .retrieve-btn`);
+        retrieveBtn.addEventListener("click", () => {
+          Swal.fire({
+            title: "Recover?",
+            text: `Security: ${docu.data().firstname} ${docu.data().lastname}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Recovered!", "Security Officer has been recovered.", "success");
+              const docRef = _src_index__WEBPACK_IMPORTED_MODULE_1__.myDoc(_src_index__WEBPACK_IMPORTED_MODULE_1__.db, "archives", docu.id);
+              _src_index__WEBPACK_IMPORTED_MODULE_1__.myDeleteDoc(docRef).then(() => {
+                console.log("deleted successfully");
+                _src_index__WEBPACK_IMPORTED_MODULE_1__.myAddDoc(_src_index__WEBPACK_IMPORTED_MODULE_1__.secColRef, {
+                    barangay: docu.data().barangay,
+                    position: docu.data().position,
+                    email: docu.data().email,
+                    firstname: docu.data().firstname,
+                    lastname: docu.data().lastname,
+                    middlename: docu.data().middlename,
+                    municipality: docu.data().municipality,
+                    phone: docu.data().phone,
+                    province: docu.data().province,
+                    street: docu.data().street,
+                  })
+                  .then(() => {});
+              });
+            }
+          });
+        });
+      }; //end of render archive
+
+      _src_index__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index__WEBPACK_IMPORTED_MODULE_1__.archivesColRef, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            renderArchive(change.doc);
+          }
+          if (change.type === "removed") {
+            let row = document.querySelector(`[data-id="${change.doc.id}"]`);
+            // let tbody = row.parentElement;
+            archtable.removeChild(row);
+            console.log(change.type);
+          }
+          if (change.type === "modified") {
+            let row2 = document.querySelector(`[data-id="${change.doc.id}"]`);
+            archtable.removeChild(row2);
+            renderArchive(change.doc);
+          }
+        });
+      });
     } //end if ready state
   };
   xhttp.open("GET", "../sidebar/archives.html", true);
@@ -37695,12 +37823,12 @@ function ajaxSec() {
                   <a href="#" class="delete-button">
                   <iconify-icon
                     class="view-icon"
-                    icon="ep:delete-filled"
+                    icon="material-symbols:archive"
                     style="color: black"
                     width="16"
                     height="16"
                   ></iconify-icon>
-                  Delete User</a>
+                  Archive</a>
   
               </div>
             </div>
@@ -37714,25 +37842,36 @@ function ajaxSec() {
         //deleting data
         const secDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         secDelete.addEventListener("click", () => {
-          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "security", docu.id);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDeleteDoc(docRef).then(() => {
-            console.log("deleted successfully");
-            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.archivesColRef, {
-                barangay: docu.data().barangay,
-                position: docu.data().position,
-                email: docu.data().email,
-                firstname: docu.data().firstname,
-                lastname: docu.data().lastname,
-                middlename: docu.data().middlename,
-                municipality: docu.data().municipality,
-                phone: docu.data().phone,
-                province: docu.data().province,
-                street: docu.data().street,
-              })
-              .then(() => {});
-          });
-        }); //end of deleting data
-
+          Swal.fire({
+            title: "Are you sure you want to archive?",
+            text: `Security: ${docu.data().firstname} ${docu.data().lastname}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Archived!", "Security Officer has been archived.", "success");
+              const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "security", docu.id);
+              _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDeleteDoc(docRef).then(() => {
+                _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.archivesColRef, {
+                    barangay: docu.data().barangay,
+                    position: docu.data().position,
+                    email: docu.data().email,
+                    firstname: docu.data().firstname,
+                    lastname: docu.data().lastname,
+                    middlename: docu.data().middlename,
+                    municipality: docu.data().municipality,
+                    phone: docu.data().phone,
+                    province: docu.data().province,
+                    street: docu.data().street,
+                  })
+                  .then(() => {});
+              });
+            }
+          }); //end of deleting data
+        });
         //editing data -- edit useer information only
         const editSecForm = document.querySelector("#editSecForm");
         const editSecBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);

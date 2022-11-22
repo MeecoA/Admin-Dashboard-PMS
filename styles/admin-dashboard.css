@@ -16,12 +16,39 @@
   --icon-dimensions: 30px;
   --sidebar-width: 280px;
   --right-container-width: calc(95vw - var(--sidebar-width));
-  --primary-color: #11101d;
-  --secondary-color: #272442;
-  --secondary-color-opaque: rgba(39, 36, 66, 0.35);
+  --primary-color: #99d4ff;
+  --secondary-color: #f3f3f3;
+  --text-color: black;
+  --items-color: white;
   --tertiary-color: #191925;
   --bradius: 100vmax;
   --icon-size: 40px;
+}
+.dark-theme {
+  /* transition: 0.3s; */
+  --primary-color: #11101d;
+  --secondary-color: #1b192e;
+  --text-color: white;
+  --items-color: #11101d;
+}
+#headerTitle {
+  color: var(--text-color);
+}
+.top-box {
+  display: flex;
+  flex-direction: column;
+}
+.moon {
+  width: 32px;
+  cursor: pointer;
+  margin-top: 5px;
+  align-self: center;
+  border-radius: 20px;
+}
+.moon:hover {
+  transition: 0.5s;
+  background-color: #1d90ed;
+  border-radius: 20px;
 }
 
 body {
@@ -30,9 +57,11 @@ body {
   font-family: "Bayon", sans-serif;
   font-style: normal;
   font-weight: 400px;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
-
+.iconifys {
+  color: var(--text-color);
+}
 /* Horizontal line */
 .horizontal-box {
   margin: 2em 0;
@@ -48,11 +77,11 @@ body {
   margin: 0 auto;
   border: none;
   height: 5px;
-  background-color: black;
+  background-color: var(--text-color);
 }
 
 .container {
-  background-color: #f3f3f3;
+  background-color: var(--secondary-color);
   /* margin: 10px; */
   display: grid;
   /* grid-template-columns: 1fr 4fr; */
@@ -74,7 +103,7 @@ body {
 
 /* sidebar */
 .at {
-  color: gray;
+  color: var(--text-color);
 }
 
 .horizontal-box {
@@ -90,7 +119,7 @@ body {
 }
 
 .sidebar {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   /* border-top-left-radius: 20px;
   border-bottom-left-radius: 20px; */
   overflow: hidden;
@@ -112,13 +141,13 @@ body {
   align-items: center;
   margin: 0.5em;
   padding: 10px;
-  color: #474747;
+  color: var(--text-color);
   transition: 0.3s;
 }
 .menu:hover {
   background-color: #1d90ed;
   border-radius: 10px;
-  color: black;
+  color: var(--text-color);
   transition: 0.3s;
 }
 .menu:active {
@@ -144,7 +173,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: var(--text-color);
 }
 
 .owner-box,
@@ -158,7 +187,7 @@ body {
   height: fit-content;
   padding-left: 10px;
   margin-left: 5px;
-  border-left: 3px solid black;
+  border-left: 3px solid var(--text-color);
 }
 
 .owner {
@@ -175,7 +204,7 @@ body {
 #usersDropdown:hover {
   background-color: #1d90ed;
   border-radius: 10px;
-  color: black;
+  color: var(--text-color);
   transition: 0.3s;
 }
 
@@ -210,7 +239,7 @@ button {
   background-color: #1d90ed;
   border-radius: 10px;
   transition: 0.3s;
-  color: black;
+  color: var(--text-color);
 }
 
 #usersDropdown {
@@ -240,14 +269,14 @@ button {
 
 /* dropdown classes */
 .active {
-  color: black;
+  color: var(--text-color);
   background-color: #1d90ed;
   border-radius: 10px;
 
   transition: 0.3s ease;
 }
 .active > a {
-  color: black;
+  color: var(--text-color);
 }
 a {
   text-decoration: none;
@@ -257,7 +286,7 @@ a {
 
 /* header */
 .header {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   border-radius: 20px;
   margin-top: 10px;
   margin-right: 10px;
@@ -300,7 +329,7 @@ a {
   align-items: center;
   padding: 10px;
   grid-template-columns: 1fr 8fr;
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   border-radius: 20px;
   border: 3px solid #474747;
 }
@@ -363,10 +392,10 @@ a {
 }
 
 .items {
-  background-color: white;
+  background-color: var(--items-color);
   border-radius: 20px;
   box-shadow: 0px 8px 15px 5px rgba(0, 0, 0, 0.25);
-  color: black;
+  color: var(--text-color);
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 10px 10px;
@@ -411,19 +440,19 @@ a {
 
 .box-table {
   border-radius: 20px;
-  color: black;
+  color: var(--text-color);
   padding: 20px;
   background-color: #f3f3f3;
 }
 
 .no-footer {
-  color: black;
+  color: var(--text-color);
   border-radius: 20px;
   font-family: "Lexend Deca";
 }
 
 .view-btn {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   padding: 8px;
   border-radius: 20px;
   width: 80px;
@@ -441,11 +470,11 @@ a {
 }
 
 .view-btn:active {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
 }
 
 .view-btn a {
-  color: black;
+  color: var(--text-color);
 }
 
 .delete-btn {
@@ -467,7 +496,7 @@ a {
 }
 
 .delete-btn:active {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
 }
 
 .actions-button {
@@ -487,8 +516,8 @@ a {
 
 .table-box {
   grid-column: 1/3;
-  color: black;
-  background-color: white;
+  color: var(--text-color);
+  background-color: var(--items-color);
   display: flex;
   flex-direction: column;
 }
@@ -750,7 +779,7 @@ border: 1px solid red;
   justify-content: space-evenly;
   align-items: center;
   width: 130px;
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   border-radius: 10px;
   padding: 10px;
   font-weight: bolder;
@@ -758,7 +787,7 @@ border: 1px solid red;
   cursor: pointer;
   font-family: "Lexend Deca";
   text-decoration: none;
-  color: black;
+  color: var(--text-color);
 }
 
 #addSec:hover {
@@ -767,12 +796,12 @@ border: 1px solid red;
 }
 
 #addSec:active {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
 }
 
 /* print buttons */
 .dt-buttons button {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   border-radius: 5px;
   font-family: "Lexend Deca";
   width: fit-content;
@@ -784,7 +813,7 @@ border: 1px solid red;
 }
 
 .dt-buttons button:active {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
 }
 
 /* edit security css*/
@@ -828,7 +857,7 @@ border: 1px solid red;
   padding: 5px;
   cursor: pointer;
   border-radius: 20px;
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
 }
 
 #uploaBtn:hover {
@@ -954,7 +983,7 @@ border: 1px solid red;
   width: 222px;
   height: 56px;
   cursor: pointer;
-  background: #99d4ff;
+  background: var(--primary-color);
   border-radius: 50px;
   font-family: "Lexend Deca";
   font-style: normal;
@@ -985,12 +1014,12 @@ border: 1px solid red;
 .drop-content-council,
 .drop-content-announce,
 .drop-content-nap {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 15px;
-  color: black;
+  color: var(--text-color);
   border-radius: 20px;
   position: absolute;
   z-index: 1;
@@ -1003,7 +1032,7 @@ border: 1px solid red;
 .drop-content-council a,
 .drop-content-announce a,
 .drop-content-nap a {
-  color: black;
+  color: var(--text-color);
   border-radius: 20px;
   width: 97%;
   margin-bottom: 3px;
@@ -1023,18 +1052,27 @@ border: 1px solid red;
 .drop-btn-announce,
 .drop-btn-council,
 .drop-btn-nap {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   padding: 10px;
   border-radius: 20px;
   width: 98%;
   cursor: pointer;
 }
+.retrieve-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+}
+.unarchive-icon {
+  margin-right: 5px;
+}
 .view-vehicle-button {
-  background-color: #99d4ff;
+  background-color: var(--primary-color);
   padding: 10px;
   border-radius: 15px;
   text-decoration: none;
-  color: black;
+  color: var(--text-color);
   display: flex;
   font-weight: bold;
 }
@@ -1176,7 +1214,7 @@ border: 1px solid red;
   border-radius: 20px;
   padding: 5px;
   font-size: 30px;
-  border: 2px solid black;
+  border: 2px solid var(--text-color);
 }
 .date-continer {
   display: grid;
@@ -1201,13 +1239,13 @@ border: 1px solid red;
   flex-direction: column;
 }
 .attach-container input {
-  border: 2px solid black;
+  border: 2px solid var(--text-color);
   height: 35px;
   font-size: 25px;
   border-radius: 20px;
 }
 .files-container input {
-  border: 2px solid black;
+  border: 2px solid var(--text-color);
   height: 35px;
   font-size: 25px;
   border-radius: 20px;
@@ -1340,7 +1378,7 @@ tfoot input {
 .close-success:focus,
 .close-success-update:hover,
 .close-success-update:focus {
-  color: black;
+  color: var(--text-color);
   text-decoration: none;
   cursor: pointer;
 }
