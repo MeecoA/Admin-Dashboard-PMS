@@ -15,6 +15,7 @@ function ajaxCouncil() {
       document.getElementById("content").innerHTML = this.responseText;
       secLink.classList.remove("active");
       persLink.classList.add("active");
+      archiveLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
       napLink.classList.remove("active");

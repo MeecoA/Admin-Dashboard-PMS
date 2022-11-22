@@ -25,6 +25,7 @@ loadVehicles.addEventListener("click", () => {
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
       annoLink.classList.remove("active");
+      archiveLink.classList.remove("active");
       vehiLink.classList.add("active");
       napLink.classList.remove("active");
       dropdownContent.style.display = "none";

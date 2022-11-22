@@ -36063,6 +36063,7 @@ announceLink.addEventListener("click", () => {
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      archiveLink.classList.remove("active");
       dropdownContent.style.display = "none";
       dropDown.classList.remove("active");
       dropDownLogs.classList.remove("active");
@@ -36301,6 +36302,48 @@ announceLink.addEventListener("click", () => {
 
 /***/ }),
 
+/***/ "./src/archives.js":
+/*!*************************!*\
+  !*** ./src/archives.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index */ "./src/index.js");
+
+
+//AJAX START FOR FACULTY
+const loadArchives = document.querySelector("#archiveLink");
+
+loadArchives.addEventListener("click", () => {
+  headerTitle.textContent = "Users";
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = async function () {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("content").innerHTML = this.responseText;
+      secLink.classList.remove("active");
+      persLink.classList.remove("active");
+      resiLink.classList.remove("active");
+      visiLink.classList.remove("active");
+      annoLink.classList.remove("active");
+      vehiLink.classList.remove("active");
+      archiveLink.classList.add("active");
+      napLink.classList.remove("active");
+      dropdownContent.style.display = "none";
+      dropDown.classList.remove("active");
+      dropDownLogs.classList.remove("active");
+      dropdownContentLogs.style.display = "none";
+    } //end if ready state
+  };
+  xhttp.open("GET", "../sidebar/archives.html", true);
+  xhttp.send();
+});
+//AJAX END FOR FACULTY
+
+
+/***/ }),
+
 /***/ "./src/council.js":
 /*!************************!*\
   !*** ./src/council.js ***!
@@ -36327,6 +36370,7 @@ function ajaxCouncil() {
       document.getElementById("content").innerHTML = this.responseText;
       secLink.classList.remove("active");
       persLink.classList.add("active");
+      archiveLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
       napLink.classList.remove("active");
@@ -36722,6 +36766,7 @@ loadFaculty.addEventListener("click", () => {
       visiLink.classList.remove("active");
       napLink.classList.remove("active");
       vehiLink.classList.remove("active");
+      archiveLink.classList.remove("active");
 
       // generateTable();
 
@@ -36820,6 +36865,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "accColRef": () => (/* binding */ accColRef),
 /* harmony export */   "announceColRef": () => (/* binding */ announceColRef),
+/* harmony export */   "archivesColRef": () => (/* binding */ archivesColRef),
 /* harmony export */   "auth": () => (/* binding */ auth),
 /* harmony export */   "councilColRef": () => (/* binding */ councilColRef),
 /* harmony export */   "database": () => (/* binding */ database),
@@ -36913,6 +36959,7 @@ const accColRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)
 const announceColRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "announcements");
 const councilColRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "admin-council");
 const napColRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "nonacademic");
+const archivesColRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "archives");
 // for storage
 
 //queries
@@ -37114,6 +37161,7 @@ function ajaxNap() {
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
       vehiLink.classList.remove("active");
+      archiveLink.classList.remove("active");
 
       loadNap.classList.add("active");
       var t = $("#napTable").DataTable({
@@ -37429,6 +37477,7 @@ function ajaxSec() {
     if (this.readyState == 4 && this.status == 200) {
       document.getElementById("content").innerHTML = this.responseText;
       secLink.classList.add("active");
+      archiveLink.classList.remove("active");
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
@@ -37545,16 +37594,7 @@ function ajaxSec() {
                     text: "SUCCESSFULLY CREATED!",
                     icon: "success",
                   });
-                  // // success modal
-                  // var modal = document.getElementById("myModal");
-
-                  // var span = document.getElementsByClassName("close-success")[0];
-
-                  // modal.style.display = "block";
-
-                  // span.onclick = function () {
-                  //   modal.style.display = "none";
-                  // };
+                  // end
                   window.onclick = function (event) {
                     if (event.target == modal) {
                       modal.style.display = "none";
@@ -37677,6 +37717,19 @@ function ajaxSec() {
           const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "security", docu.id);
           _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDeleteDoc(docRef).then(() => {
             console.log("deleted successfully");
+            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.archivesColRef, {
+                barangay: docu.data().barangay,
+                position: docu.data().position,
+                email: docu.data().email,
+                firstname: docu.data().firstname,
+                lastname: docu.data().lastname,
+                middlename: docu.data().middlename,
+                municipality: docu.data().municipality,
+                phone: docu.data().phone,
+                province: docu.data().province,
+                street: docu.data().street,
+              })
+              .then(() => {});
           });
         }); //end of deleting data
 
@@ -38069,6 +38122,7 @@ loadVehicles.addEventListener("click", () => {
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
       annoLink.classList.remove("active");
+      archiveLink.classList.remove("active");
       vehiLink.classList.add("active");
       napLink.classList.remove("active");
       dropdownContent.style.display = "none";
@@ -40442,7 +40496,8 @@ const unwrap = (value) => reverseTransformCache.get(value);
 /******/ 	__webpack_require__("./src/visitorLogs.js");
 /******/ 	__webpack_require__("./src/vehicle.js");
 /******/ 	__webpack_require__("./src/displayActivityLogs.js");
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/adminLogin.js");
+/******/ 	__webpack_require__("./src/adminLogin.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/archives.js");
 /******/ 	
 /******/ })()
 ;

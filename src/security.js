@@ -15,6 +15,7 @@ function ajaxSec() {
     if (this.readyState == 4 && this.status == 200) {
       document.getElementById("content").innerHTML = this.responseText;
       secLink.classList.add("active");
+      archiveLink.classList.remove("active");
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
@@ -133,16 +134,7 @@ function ajaxSec() {
                     text: "SUCCESSFULLY CREATED!",
                     icon: "success",
                   });
-                  // // success modal
-                  // var modal = document.getElementById("myModal");
-
-                  // var span = document.getElementsByClassName("close-success")[0];
-
-                  // modal.style.display = "block";
-
-                  // span.onclick = function () {
-                  //   modal.style.display = "none";
-                  // };
+                  // end
                   window.onclick = function (event) {
                     if (event.target == modal) {
                       modal.style.display = "none";
@@ -265,6 +257,20 @@ function ajaxSec() {
           const docRef = fire.myDoc(fire.db, "security", docu.id);
           fire.myDeleteDoc(docRef).then(() => {
             console.log("deleted successfully");
+            fire
+              .myAddDoc(fire.archivesColRef, {
+                barangay: docu.data().barangay,
+                position: docu.data().position,
+                email: docu.data().email,
+                firstname: docu.data().firstname,
+                lastname: docu.data().lastname,
+                middlename: docu.data().middlename,
+                municipality: docu.data().municipality,
+                phone: docu.data().phone,
+                province: docu.data().province,
+                street: docu.data().street,
+              })
+              .then(() => {});
           });
         }); //end of deleting data
 

@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  devtool: 'source-map',
+  devtool: "source-map",
   entry: [
     "./src/index.js",
     "./src/announcement.js",
@@ -15,6 +15,7 @@ module.exports = {
     "./src/vehicle.js",
     "./src/displayActivityLogs.js",
     "./src/adminLogin.js",
+    "./src/archives.js",
   ],
   output: {
     path: path.resolve(__dirname, "dist"),

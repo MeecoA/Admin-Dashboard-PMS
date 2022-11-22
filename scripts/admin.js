@@ -4,6 +4,7 @@ let resiLink = document.querySelector("#resiLink");
 let visiLink = document.querySelector("#visiLink");
 let vehiLink = document.querySelector("#vehicLink");
 let logLink = document.querySelector("#logsLink");
+let archiveLink = document.querySelector("#archiveLink");
 let annoLink = document.querySelector(".anno-link");
 let napLink = document.querySelector("#napLink");
 let dropDown = document.querySelector(".menu-btn");

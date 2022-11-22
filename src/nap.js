@@ -18,6 +18,7 @@ function ajaxNap() {
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
       vehiLink.classList.remove("active");
+      archiveLink.classList.remove("active");
 
       loadNap.classList.add("active");
       var t = $("#napTable").DataTable({

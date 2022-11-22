@@ -14,6 +14,7 @@ announceLink.addEventListener("click", () => {
       persLink.classList.remove("active");
       resiLink.classList.remove("active");
       visiLink.classList.remove("active");
+      archiveLink.classList.remove("active");
       dropdownContent.style.display = "none";
       dropDown.classList.remove("active");
       dropDownLogs.classList.remove("active");
