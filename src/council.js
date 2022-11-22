@@ -233,8 +233,8 @@ function ajaxCouncil() {
           }
         };
         // Edit Account -- email and password
-        const editSecAccInfo = document.querySelector("#editCouncilAccForm");
-        const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editCouncilAccBtn`);
+        const editCouncilAccInfo = document.querySelector("#editCouncilAccForm");
+        const editCouncilAccBtn = document.querySelector(`[data-id='${docu.id}'] .editCouncilAccBtn`);
         const emailBox = document.querySelector(".email-box");
         const passBox = document.querySelector(".password-box");
 
@@ -253,20 +253,19 @@ function ajaxCouncil() {
           changePassBtn.classList.add("title-bg");
           changeEmailBtn.classList.remove("title-bg");
         });
-        editSeccAccBtn.addEventListener("click", () => {
+        editCouncilAccBtn.addEventListener("click", () => {
           passBox.classList.add("hide-change");
           changeEmailBtn.classList.add("title-bg");
-          editSecAccInfo.email.value = docu.data().email;
-          editSecAccInfo.password.value = docu.data().password;
+          editCouncilAccInfo.councilEmail.value = docu.data().email;
+          editCouncilAccInfo.councilPassword.value = docu.data().password;
         });
         //for updating edit
-        editSecAccInfo.addEventListener("submit", (e) => {
+        editCouncilAccInfo.addEventListener("submit", (e) => {
           e.preventDefault();
           const docRef2 = myDoc(fire.db, "admin-council", iD);
           fire
             .myUpdateDoc(docRef2, {
-              email: editSecAccInfo.secEmail.value,
-              password: editSecAccInfo.secPassword.value,
+              email: editCouncilAccInfo.councilEmailNew.value,
             })
             .then(() => {});
         });

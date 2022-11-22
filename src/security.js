@@ -85,6 +85,7 @@ function ajaxSec() {
       });
 
       //adding data
+
       const addSecurity = document.querySelector("#addSecForm");
       addSecurity.addEventListener("submit", (e) => {
         const secCpassword = document.querySelector("#secCpassword").value;

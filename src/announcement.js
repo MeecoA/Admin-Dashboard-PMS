@@ -46,13 +46,27 @@ announceLink.addEventListener("click", () => {
           "colvis",
         ],
       });
-
-      const filesToUpload = [];
-      const filesAttached = document.querySelector("#filesAttached");
-
       const addAnnounceForm = document.querySelector("#announceForm");
       addAnnounceForm.addEventListener("submit", (e) => {
         e.preventDefault();
+        const storage = fire.storage;
+        const imageRef = fire.myStorageRef(
+          storage,
+          `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
+        );
+        const fileRef1 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file1`);
+        const fileRef2 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file2`);
+        const fileRef3 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file3`);
+        const thumbnail = document.querySelector("#thumbnail").files[0];
+        const first_file = document.querySelector("#filesAttached1").files[0];
+        const second_file = document.querySelector("#filesAttached2").files[0];
+        const third_file = document.querySelector("#filesAttached3").files[0];
+
+        var fileUrl1 = "";
+        fire.myGetDownloadUrl(fileRef1).then((url) => {
+          fileUrl1 = url;
+        });
+        console.log("this is file url: " + fileUrl1);
         fire
           .myAddDoc(fire.announceColRef, {
             id: addAnnounceForm.title.value,
@@ -62,38 +76,28 @@ announceLink.addEventListener("click", () => {
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            files: filesToUpload,
+            files: [addAnnounceForm.file1.value, addAnnounceForm.file2.value, addAnnounceForm.file3.value],
             thumbnail: addAnnounceForm.thumbnail.value,
           })
           .then(() => {
-            filesAttached.addEventListener("change", (e) => {
-              console.log("files: ", filesAttached.files);
-              const everyFile = filesAttached.files;
-
-              Array.from(everyFile).forEach((file) => {
-                // console.log("file: ", file);
-                filesToUpload.push(file);
-
-                console.log(filesToUpload);
-              });
+            var metadata = {
+              contentType: first_file.type,
+            };
+            var metadata2 = {
+              contentType: second_file.type,
+            };
+            var metadata3 = {
+              contentType: third_file.type,
+            };
+            fire.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
+              console.log("UPLOADED file1");
+            });
+            fire.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
+              console.log("UPLOADED file2");
             });
 
-            console.log(addAnnounceForm.title.value);
-            const storage = fire.storage;
-            const imageRef = fire.myStorageRef(
-              storage,
-              `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
-            );
-            const fileRef = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file`);
-            const thumbnail = document.querySelector("#thumbnail").files[0];
-            const file = document.querySelector("#filesAttached").files[0];
-            console.log(file.type);
-            var metadata = {
-              contentType: file.type,
-            };
-
-            fire.myUploadBytes(fileRef, file, filesToUpload).then((snapshot) => {
-              console.log("UPLOADED file2");
+            fire.myUploadBytes(fileRef3, third_file, metadata3).then((snapshot) => {
+              console.log("UPLOADED file3");
             });
             fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
@@ -184,7 +188,9 @@ announceLink.addEventListener("click", () => {
         const viewPostedBy = document.querySelector(".viewPostedBy");
         const viewMessage = document.querySelector(".viewMessage");
         const viewSources = document.querySelector(".viewSources");
-        const viewFiles = document.querySelector(".viewFiles");
+        const viewFiles1 = document.querySelector(".viewFiles1");
+        const viewFiles2 = document.querySelector(".viewFiles2");
+        const viewFiles3 = document.querySelector(".viewFiles3");
         const viewAnnounceBtn = document.querySelector(`[data-id='${docu.id}'] .view-announce-button`);
 
         viewAnnounceBtn.addEventListener("click", () => {
@@ -199,14 +205,24 @@ announceLink.addEventListener("click", () => {
 
           const storage = fire.storage;
           const imageRef = fire.myStorageRef(storage, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
-          const fileRef = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file`);
+          const fileRef1 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file1`);
+          const fileRef2 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file2`);
+          const fileRef3 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file3`);
           fire.myGetDownloadUrl(imageRef).then((url) => {
             console.log(url);
             announceViewPic.src = url;
           });
-          fire.myGetDownloadUrl(fileRef).then((url) => {
+          fire.myGetDownloadUrl(fileRef1).then((url) => {
             console.log(url);
-            viewFiles.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} file.</a>`;
+            viewFiles1.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} first file.</a>`;
+          });
+          fire.myGetDownloadUrl(fileRef2).then((url) => {
+            console.log(url);
+            viewFiles2.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} second file.</a>`;
+          });
+          fire.myGetDownloadUrl(fileRef3).then((url) => {
+            console.log(url);
+            viewFiles3.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} third file.</a>`;
           });
         });
       }; //end of rendering announcement

@@ -247,8 +247,8 @@ function ajaxNap() {
         editNapAccBtn.addEventListener("click", () => {
           passBox.classList.add("hide-change");
           changeEmailBtn.classList.add("title-bg");
-          editNapAccInfo.email.value = docu.data().email;
-          editNapAccInfo.password.value = docu.data().password;
+          editNapAccInfo.napEmail.value = docu.data().email;
+          editNapAccInfo.napPassword.value = docu.data().password;
         });
         //for updating edit
         editNapAccInfo.addEventListener("submit", (e) => {
@@ -256,8 +256,7 @@ function ajaxNap() {
           const docRef2 = myDoc(fire.db, "admin-council", iD);
           fire
             .myUpdateDoc(docRef2, {
-              email: editNapAccInfo.secEmail.value,
-              password: editNapAccInfo.secPassword.value,
+              email: editNapAccInfo.napEmailNew.value,
             })
             .then(() => {});
         });

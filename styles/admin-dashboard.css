@@ -1250,6 +1250,7 @@ border: 1px solid red;
 }
 .announceContentHolder {
   display: flex;
+  justify-content: space-between;
 }
 .announceContent {
   width: fit-content;

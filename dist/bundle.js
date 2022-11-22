@@ -36095,13 +36095,27 @@ announceLink.addEventListener("click", () => {
           "colvis",
         ],
       });
-
-      const filesToUpload = [];
-      const filesAttached = document.querySelector("#filesAttached");
-
       const addAnnounceForm = document.querySelector("#announceForm");
       addAnnounceForm.addEventListener("submit", (e) => {
         e.preventDefault();
+        const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
+        const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(
+          storage,
+          `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
+        );
+        const fileRef1 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file1`);
+        const fileRef2 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file2`);
+        const fileRef3 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file3`);
+        const thumbnail = document.querySelector("#thumbnail").files[0];
+        const first_file = document.querySelector("#filesAttached1").files[0];
+        const second_file = document.querySelector("#filesAttached2").files[0];
+        const third_file = document.querySelector("#filesAttached3").files[0];
+
+        var fileUrl1 = "";
+        _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef1).then((url) => {
+          fileUrl1 = url;
+        });
+        console.log("this is file url: " + fileUrl1);
         _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.announceColRef, {
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
@@ -36110,38 +36124,28 @@ announceLink.addEventListener("click", () => {
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            files: filesToUpload,
+            files: [addAnnounceForm.file1.value, addAnnounceForm.file2.value, addAnnounceForm.file3.value],
             thumbnail: addAnnounceForm.thumbnail.value,
           })
           .then(() => {
-            filesAttached.addEventListener("change", (e) => {
-              console.log("files: ", filesAttached.files);
-              const everyFile = filesAttached.files;
-
-              Array.from(everyFile).forEach((file) => {
-                // console.log("file: ", file);
-                filesToUpload.push(file);
-
-                console.log(filesToUpload);
-              });
+            var metadata = {
+              contentType: first_file.type,
+            };
+            var metadata2 = {
+              contentType: second_file.type,
+            };
+            var metadata3 = {
+              contentType: third_file.type,
+            };
+            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
+              console.log("UPLOADED file1");
+            });
+            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
+              console.log("UPLOADED file2");
             });
 
-            console.log(addAnnounceForm.title.value);
-            const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
-            const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(
-              storage,
-              `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
-            );
-            const fileRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file`);
-            const thumbnail = document.querySelector("#thumbnail").files[0];
-            const file = document.querySelector("#filesAttached").files[0];
-            console.log(file.type);
-            var metadata = {
-              contentType: file.type,
-            };
-
-            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef, file, filesToUpload).then((snapshot) => {
-              console.log("UPLOADED file2");
+            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef3, third_file, metadata3).then((snapshot) => {
+              console.log("UPLOADED file3");
             });
             _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
@@ -36232,7 +36236,9 @@ announceLink.addEventListener("click", () => {
         const viewPostedBy = document.querySelector(".viewPostedBy");
         const viewMessage = document.querySelector(".viewMessage");
         const viewSources = document.querySelector(".viewSources");
-        const viewFiles = document.querySelector(".viewFiles");
+        const viewFiles1 = document.querySelector(".viewFiles1");
+        const viewFiles2 = document.querySelector(".viewFiles2");
+        const viewFiles3 = document.querySelector(".viewFiles3");
         const viewAnnounceBtn = document.querySelector(`[data-id='${docu.id}'] .view-announce-button`);
 
         viewAnnounceBtn.addEventListener("click", () => {
@@ -36247,14 +36253,24 @@ announceLink.addEventListener("click", () => {
 
           const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
           const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
-          const fileRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${docu.data().title}/file`);
+          const fileRef1 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${docu.data().title}/file1`);
+          const fileRef2 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${docu.data().title}/file2`);
+          const fileRef3 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${docu.data().title}/file3`);
           _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(imageRef).then((url) => {
             console.log(url);
             announceViewPic.src = url;
           });
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef).then((url) => {
+          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef1).then((url) => {
             console.log(url);
-            viewFiles.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} file.</a>`;
+            viewFiles1.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} first file.</a>`;
+          });
+          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef2).then((url) => {
+            console.log(url);
+            viewFiles2.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} second file.</a>`;
+          });
+          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef3).then((url) => {
+            console.log(url);
+            viewFiles3.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} third file.</a>`;
           });
         });
       }; //end of rendering announcement
@@ -36527,8 +36543,8 @@ function ajaxCouncil() {
           }
         };
         // Edit Account -- email and password
-        const editSecAccInfo = document.querySelector("#editCouncilAccForm");
-        const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editCouncilAccBtn`);
+        const editCouncilAccInfo = document.querySelector("#editCouncilAccForm");
+        const editCouncilAccBtn = document.querySelector(`[data-id='${docu.id}'] .editCouncilAccBtn`);
         const emailBox = document.querySelector(".email-box");
         const passBox = document.querySelector(".password-box");
 
@@ -36547,19 +36563,18 @@ function ajaxCouncil() {
           changePassBtn.classList.add("title-bg");
           changeEmailBtn.classList.remove("title-bg");
         });
-        editSeccAccBtn.addEventListener("click", () => {
+        editCouncilAccBtn.addEventListener("click", () => {
           passBox.classList.add("hide-change");
           changeEmailBtn.classList.add("title-bg");
-          editSecAccInfo.email.value = docu.data().email;
-          editSecAccInfo.password.value = docu.data().password;
+          editCouncilAccInfo.councilEmail.value = docu.data().email;
+          editCouncilAccInfo.councilPassword.value = docu.data().password;
         });
         //for updating edit
-        editSecAccInfo.addEventListener("submit", (e) => {
+        editCouncilAccInfo.addEventListener("submit", (e) => {
           e.preventDefault();
           const docRef2 = myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "admin-council", iD);
           _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUpdateDoc(docRef2, {
-              email: editSecAccInfo.secEmail.value,
-              password: editSecAccInfo.secPassword.value,
+              email: editCouncilAccInfo.councilEmailNew.value,
             })
             .then(() => {});
         });
@@ -37326,16 +37341,15 @@ function ajaxNap() {
         editNapAccBtn.addEventListener("click", () => {
           passBox.classList.add("hide-change");
           changeEmailBtn.classList.add("title-bg");
-          editNapAccInfo.email.value = docu.data().email;
-          editNapAccInfo.password.value = docu.data().password;
+          editNapAccInfo.napEmail.value = docu.data().email;
+          editNapAccInfo.napPassword.value = docu.data().password;
         });
         //for updating edit
         editNapAccInfo.addEventListener("submit", (e) => {
           e.preventDefault();
           const docRef2 = myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "admin-council", iD);
           _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUpdateDoc(docRef2, {
-              email: editNapAccInfo.secEmail.value,
-              password: editNapAccInfo.secPassword.value,
+              email: editNapAccInfo.napEmailNew.value,
             })
             .then(() => {});
         });
@@ -37485,6 +37499,7 @@ function ajaxSec() {
       });
 
       //adding data
+
       const addSecurity = document.querySelector("#addSecForm");
       addSecurity.addEventListener("submit", (e) => {
         const secCpassword = document.querySelector("#secCpassword").value;
