@@ -156,7 +156,7 @@ loadVehicles.addEventListener("click", () => {
                   <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
                   class="view-icon"
                   icon="bi:eye-fill"
-                  style="color: black"
+                  class="iconifys"
                   width="16"
                   height="16"
                 ></iconify-icon>

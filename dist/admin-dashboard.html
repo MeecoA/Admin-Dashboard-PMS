@@ -289,18 +289,20 @@
               <div class="distri-title">Recent Activities</div>
             </div>
             <div>
-              <table id="table_id_activity" class="display" style="width: 100%">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>ID</th>
-                    <th>User Level</th>
-                    <th>Activity Date</th>
-                    <th>Event Page</th>
-                    <th>Context</th>
-                  </tr>
-                </thead>
-              </table>
+              <div class="box-table">
+                <table id="table_id_activity" class="display" style="width: 100%">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>ID</th>
+                      <th>User Level</th>
+                      <th>Activity Date</th>
+                      <th>Event Page</th>
+                      <th>Context</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
             </div>
 
             <script></script>
@@ -308,13 +310,7 @@
           <div class="items pie-chart-box">
             <div class="content-titles distri-flex">
               <div class="sidebar-logo">
-                <iconify-icon
-                  icon="bxs:car"
-                  style="color: white"
-                  width="36"
-                  height="36"
-                  class="iconifys"
-                ></iconify-icon>
+                <iconify-icon icon="bxs:car" width="36" height="36" class="iconifys"></iconify-icon>
               </div>
               <div class="distri-title">DISTRIBUTION OF VEHICLES</div>
             </div>
@@ -337,14 +333,10 @@
                   };
 
                   const config = {
-                    type: "pie",
+                    type: "doughnut",
                     data: data,
                     options: {},
                   };
-                  // var loader = document.getElementById("preLoader");
-                  // window.addEventListener("load", () => {
-                  //   loader.style.display = "none";
-                  // });
                 </script>
                 <script>
                   const myChart = new Chart(document.getElementById("myChart"), config);

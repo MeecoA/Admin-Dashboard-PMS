@@ -1,3 +1,4 @@
+import { doc } from "firebase/firestore";
 import * as fire from "../src/index.js";
 console.log("database: ", fire.database);
 
@@ -125,15 +126,15 @@ announceLink.addEventListener("click", () => {
               <a href="#viewAnnounce" rel="modal:open" class="view-announce-button"><iconify-icon
               class="view-icon"
               icon="bi:eye-fill"
-              style="color: black"
+              class="iconifys"
               width="16"
               height="16"
             ></iconify-icon>View</a>
 
-                <a href="#editmodal" rel="modal:open" class = 'edit-button'>
+                <a href="#editmodal" rel="modal:open" class = 'edit-button-announce'>
                 <iconify-icon
                 class="view-icon"
-                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit</a>
+                icon="bxs:user-circle"  class="iconifys" width="16" height="16"></iconify-icon>Edit</a>
 
           
 
@@ -141,7 +142,7 @@ announceLink.addEventListener("click", () => {
                 <iconify-icon
                   class="view-icon"
                   icon="ep:delete-filled"
-                  style="color: black"
+                  class="iconifys"
                   width="16"
                   height="16"
                 ></iconify-icon>
@@ -227,6 +228,10 @@ announceLink.addEventListener("click", () => {
           });
         });
       }; //end of rendering announcement
+
+      // editing announcement
+      const editAnnounceForm = document.querySelector("#editAnnounceForm");
+      const editAnnounceBtn = document.querySelector(`[data-id='${doc.id}'] .edit-button-announce`);
 
       fire.myOnSnapshot(fire.announceColRef, (snapshot) => {
         snapshot.docChanges().forEach((change) => {

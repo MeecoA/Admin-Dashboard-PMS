@@ -11,18 +11,13 @@
     <div class="ajax-container items table-box">
       <div class="content-titles distri-flex">
         <div class="sidebar-logo">
-          <iconify-icon
-            icon="icon-park-solid:table-report"
-            style="color: #474747"
-            width="36"
-            height="36"
-          ></iconify-icon>
+          <iconify-icon icon="zondicons:announcement" class="iconifys" width="36" height="36"></iconify-icon>
         </div>
         <div class="distri-title">Announcements</div>
       </div>
       <!-- modal for adding -->
       <a href="#addmodal" id="addSec" rel="modal:open">
-        <iconify-icon icon="akar-icons:person-add" style="color: black" width="16" height="16"></iconify-icon>
+        <iconify-icon icon="akar-icons:person-add" class="iconifys" width="16" height="16"></iconify-icon>
         <div>ADD ENTRY</div>
       </a>
       <div id="addmodal" class="modal announce-modal">
@@ -83,9 +78,9 @@
         </form>
       </div>
       <!-- end adding -->
-      <!-- edit modal
-      <div id="editmodal" class="modal" style="max-width: 972px">
-        <form id="editNapForm" class="napForm">
+      <!-- edit modal -->
+      <div id="editmodal" class="modal announce-modal">
+        <form id="editAnnounceForm" class="announceForm">
           <div class="title-form">EDIT ANNOUNCEMENT</div>
           <div class="title-container announce-items">
             <label for="title">Title:</label>
@@ -94,13 +89,13 @@
           <div class="date-container announce-items">
             <div class="start-date end-start-date">
               <label for="startDate">Date: </label>
-              <input type="date" name="date" required />
+              <input type="date" name="postedOn" required />
             </div>
           </div>
           <div class="postedby-container announce-items">
             <div class="posted by">
               <label for="postedBy">Posted By: </label>
-              <select name="postedBy" id="postedBy" required>
+              <select name="postedBy" id="postedByEdit" required>
                 <option value="" disabled selected>Select</option>
                 <option value="administrator">Administrator</option>
                 <option value="administrator">Security</option>
@@ -119,20 +114,8 @@
             <label for="sources">Sources:</label>
             <input type="text" name="sources" required />
           </div>
-          <div class="files-container announce-items">
-            <label for="files"> Files:</label>
-            <input type="file" name="files" id="filesAttached" />
-          </div>
-          <div class="attach-container announce-items">
-            <label for="attachment"> Attachment(Picture):</label>
-            <input type="file" name="thumbnail" accept="image/*" id="thumbnail" />
-          </div>
-          <div class="add-sec-buttons">
-            <a href="#" rel="modal:close"><button class="sec-buttons cancel">CANCEL</button> </a>
-            <button class="sec-buttons add-entry" type="submit">ADD ENTRY</button>
-          </div>
         </form>
-      </div> -->
+      </div>
 
       <!-- end edit modal -->
       <div class="box-table">

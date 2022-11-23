@@ -133,32 +133,33 @@ function ajaxCouncil() {
             docu.data().phone,
             `<div class="drop-container-council">
             <button class="drop-btn-council">ACTIONS
-            <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
+            <iconify-icon icon="bxs:down-arrow" width="12" height="12" class="iconifys"></iconify-icon>
             </button>
             <div class="drop-content-council" id="dropCouncil">
               <a href="#viewCouncil" rel="modal:open" class="view-council-button"><iconify-icon
               class="view-icon"
               icon="bi:eye-fill"
-              style="color: black"
+  
               width="16"
               height="16"
+              class="iconifys"
             ></iconify-icon>View</a>
 
                 <a href="#editmodal" rel="modal:open" class = 'edit-button'>
                 <iconify-icon
                 class="view-icon"
-                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
+                icon="bxs:user-circle"  width="16" height="16" class="iconifys"></iconify-icon>Edit Info</a>
 
               <a href="#editAccInfo" rel="modal:open" class = "editCouncilAccBtn">
               <iconify-icon
                 class="view-icon"
-                icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
+                icon="fa6-solid:key"  width="16" height="16" class="iconifys"></iconify-icon>Edit Account</a>
 
                 <a href="#" class="delete-button-council">
                 <iconify-icon
                   class="view-icon"
                   icon="ep:delete-filled"
-                  style="color: black"
+                  class="iconifys"
                   width="16"
                   height="16"
                 ></iconify-icon>

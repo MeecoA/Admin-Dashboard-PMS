@@ -36046,9 +36046,11 @@ function __classPrivateFieldIn(state, receiver) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
+/* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
 
-console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_0__.database);
+
+console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_1__.database);
 
 // AJAX FOR ANNOUNCEMENTS
 const announceLink = document.querySelector("#announceLink");
@@ -36099,25 +36101,25 @@ announceLink.addEventListener("click", () => {
       const addAnnounceForm = document.querySelector("#announceForm");
       addAnnounceForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
-        const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(
+        const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.storage;
+        const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(
           storage,
           `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
         );
-        const fileRef1 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file1`);
-        const fileRef2 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file2`);
-        const fileRef3 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file3`);
+        const fileRef1 = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file1`);
+        const fileRef2 = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file2`);
+        const fileRef3 = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file3`);
         const thumbnail = document.querySelector("#thumbnail").files[0];
         const first_file = document.querySelector("#filesAttached1").files[0];
         const second_file = document.querySelector("#filesAttached2").files[0];
         const third_file = document.querySelector("#filesAttached3").files[0];
 
         var fileUrl1 = "";
-        _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef1).then((url) => {
+        _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myGetDownloadUrl(fileRef1).then((url) => {
           fileUrl1 = url;
         });
         console.log("this is file url: " + fileUrl1);
-        _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.announceColRef, {
+        _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceColRef, {
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
             posted_on: addAnnounceForm.postedOn.value,
@@ -36138,17 +36140,17 @@ announceLink.addEventListener("click", () => {
             var metadata3 = {
               contentType: third_file.type,
             };
-            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
+            _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
               console.log("UPLOADED file1");
             });
-            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
+            _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
               console.log("UPLOADED file2");
             });
 
-            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(fileRef3, third_file, metadata3).then((snapshot) => {
+            _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(fileRef3, third_file, metadata3).then((snapshot) => {
               console.log("UPLOADED file3");
             });
-            _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
+            _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
 
@@ -36173,15 +36175,15 @@ announceLink.addEventListener("click", () => {
               <a href="#viewAnnounce" rel="modal:open" class="view-announce-button"><iconify-icon
               class="view-icon"
               icon="bi:eye-fill"
-              style="color: black"
+              class="iconifys"
               width="16"
               height="16"
             ></iconify-icon>View</a>
 
-                <a href="#editmodal" rel="modal:open" class = 'edit-button'>
+                <a href="#editmodal" rel="modal:open" class = 'edit-button-announce'>
                 <iconify-icon
                 class="view-icon"
-                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit</a>
+                icon="bxs:user-circle"  class="iconifys" width="16" height="16"></iconify-icon>Edit</a>
 
           
 
@@ -36189,7 +36191,7 @@ announceLink.addEventListener("click", () => {
                 <iconify-icon
                   class="view-icon"
                   icon="ep:delete-filled"
-                  style="color: black"
+                  class="iconifys"
                   width="16"
                   height="16"
                 ></iconify-icon>
@@ -36223,8 +36225,8 @@ announceLink.addEventListener("click", () => {
         //deleting data
         const AnnounceDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         AnnounceDelete.addEventListener("click", () => {
-          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "announcements", docu.id);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDeleteDoc(docRef).then(() => {
+          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.db, "announcements", docu.id);
+          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myDeleteDoc(docRef).then(() => {
             console.log("deleted successfully");
           });
         }); //end of deleting data
@@ -36252,31 +36254,35 @@ announceLink.addEventListener("click", () => {
           viewSources.textContent = "Source: " + docu.data().sources;
           //retreiving files
 
-          const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
-          const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
-          const fileRef1 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${docu.data().title}/file1`);
-          const fileRef2 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${docu.data().title}/file2`);
-          const fileRef3 = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `announcements/files/${docu.data().title}/file3`);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(imageRef).then((url) => {
+          const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.storage;
+          const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
+          const fileRef1 = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/files/${docu.data().title}/file1`);
+          const fileRef2 = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/files/${docu.data().title}/file2`);
+          const fileRef3 = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/files/${docu.data().title}/file3`);
+          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myGetDownloadUrl(imageRef).then((url) => {
             console.log(url);
             announceViewPic.src = url;
           });
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef1).then((url) => {
+          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myGetDownloadUrl(fileRef1).then((url) => {
             console.log(url);
             viewFiles1.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} first file.</a>`;
           });
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef2).then((url) => {
+          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myGetDownloadUrl(fileRef2).then((url) => {
             console.log(url);
             viewFiles2.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} second file.</a>`;
           });
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(fileRef3).then((url) => {
+          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myGetDownloadUrl(fileRef3).then((url) => {
             console.log(url);
             viewFiles3.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} third file.</a>`;
           });
         });
       }; //end of rendering announcement
 
-      _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.announceColRef, (snapshot) => {
+      // editing announcement
+      const editAnnounceForm = document.querySelector("#editAnnounceForm");
+      const editAnnounceBtn = document.querySelector(`[data-id='${firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc.id}'] .edit-button-announce`);
+
+      _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceColRef, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             renderAnnounce(change.doc);
@@ -36615,32 +36621,33 @@ function ajaxCouncil() {
             docu.data().phone,
             `<div class="drop-container-council">
             <button class="drop-btn-council">ACTIONS
-            <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
+            <iconify-icon icon="bxs:down-arrow" width="12" height="12" class="iconifys"></iconify-icon>
             </button>
             <div class="drop-content-council" id="dropCouncil">
               <a href="#viewCouncil" rel="modal:open" class="view-council-button"><iconify-icon
               class="view-icon"
               icon="bi:eye-fill"
-              style="color: black"
+  
               width="16"
               height="16"
+              class="iconifys"
             ></iconify-icon>View</a>
 
                 <a href="#editmodal" rel="modal:open" class = 'edit-button'>
                 <iconify-icon
                 class="view-icon"
-                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
+                icon="bxs:user-circle"  width="16" height="16" class="iconifys"></iconify-icon>Edit Info</a>
 
               <a href="#editAccInfo" rel="modal:open" class = "editCouncilAccBtn">
               <iconify-icon
                 class="view-icon"
-                icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
+                icon="fa6-solid:key"  width="16" height="16" class="iconifys"></iconify-icon>Edit Account</a>
 
                 <a href="#" class="delete-button-council">
                 <iconify-icon
                   class="view-icon"
                   icon="ep:delete-filled"
-                  style="color: black"
+                  class="iconifys"
                   width="16"
                   height="16"
                 ></iconify-icon>
@@ -37394,13 +37401,13 @@ function ajaxNap() {
             docu.data().phone,
             `<div class="drop-container-nap">
             <button class="drop-btn-nap">ACTIONS
-            <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
+            <iconify-icon icon="bxs:down-arrow" class="iconifys" width="12" height="12"></iconify-icon>
             </button>
             <div class="drop-content-nap" id="dropNap">
               <a href="#viewNap" rel="modal:open" class="view-nap-button"><iconify-icon
               class="view-icon"
               icon="bi:eye-fill"
-              style="color: black"
+              class="iconifys"
               width="16"
               height="16"
             ></iconify-icon>View</a>
@@ -37408,18 +37415,18 @@ function ajaxNap() {
                 <a href="#editmodal" rel="modal:open" class = 'edit-button'>
                 <iconify-icon
                 class="view-icon"
-                icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
+                icon="bxs:user-circle" class="iconifys" width="16" height="16"></iconify-icon>Edit Info</a>
 
               <a href="#editAccInfo" rel="modal:open" class = "editNapAccBtn">
               <iconify-icon
                 class="view-icon"
-                icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
+                icon="fa6-solid:key" class="iconifys" width="16" height="16"></iconify-icon>Edit Account</a>
 
                 <a href="#" class="delete-button-nap">
                 <iconify-icon
                   class="view-icon"
                   icon="ep:delete-filled"
-                  style="color: black"
+                  class="iconifys"
                   width="16"
                   height="16"
                 ></iconify-icon>
@@ -37615,6 +37622,7 @@ function ajaxSec() {
 
       //data tables
       var t = $("#sectable").DataTable({
+        responsive: true,
         dom: "Bfrtip",
         buttons: [
           {
@@ -37798,35 +37806,36 @@ function ajaxSec() {
             docu.data().phone,
             `<div class="drop-container">
               <button class="drop-btn">ACTIONS
-              <iconify-icon icon="bxs:down-arrow" style="color: black;" width="12" height="12"></iconify-icon>
+              <iconify-icon icon="bxs:down-arrow"  width="12" height="12" class="iconifys"></iconify-icon>
               </button>
               <div class="drop-content" id="dropSec">
   
                 <a href="#viewSec" rel="modal:open" class="view-button"><iconify-icon
                 class="view-icon"
                 icon="bi:eye-fill"
-                style="color: black"
+      
                 width="16"
                 height="16"
+                class="iconifys"
               ></iconify-icon>View</a>
   
                   <a href="#editmodal" rel="modal:open" class = 'edit-button'>
                   <iconify-icon
                   class="view-icon"
-                  icon="bxs:user-circle" style="color: black;" width="16" height="16"></iconify-icon>Edit Info</a>
+                  icon="bxs:user-circle" " width="16" height="16" class="iconifys"></iconify-icon>Edit Info</a>
   
                 <a href="#editAccInfo" rel="modal:open" class = "editSecAccBtn">
                 <iconify-icon
                   class="view-icon"
-                  icon="fa6-solid:key" style="color: black;" width="16" height="16"></iconify-icon>Edit Account</a>
+                  icon="fa6-solid:key"  width="16" height="16" class="iconifys"></iconify-icon>Edit Account</a>
   
                   <a href="#" class="delete-button">
                   <iconify-icon
                     class="view-icon"
                     icon="material-symbols:archive"
-                    style="color: black"
                     width="16"
                     height="16"
+                    class="iconifys"
                   ></iconify-icon>
                   Archive</a>
   
@@ -38392,7 +38401,7 @@ loadVehicles.addEventListener("click", () => {
                   <a href="#viewVehicle" rel="modal:open" class="view-vehicle-button"><iconify-icon
                   class="view-icon"
                   icon="bi:eye-fill"
-                  style="color: black"
+                  class="iconifys"
                   width="16"
                   height="16"
                 ></iconify-icon>
