@@ -1,3 +1,4 @@
+import { doc } from "firebase/firestore";
 import * as fire from "../src/index.js";
 console.log("database: ", fire.database);
 
@@ -67,22 +68,43 @@ loadFaculty.addEventListener("click", () => {
       const buttonsColvis = document.querySelector(".buttons-colvis");
       buttonsColvis.textContent = "Filter By Category";
 
-      $(".facultyTbody").on("click", "tr", function (e) {
-        var data = t.row(this).data();
-        alert("you clicked on " + data[1] + "'s row");
-      });
       const renderFaculty = (doc) => {
         var temp = t.row
           .add([
             doc.id,
             `${doc.data().first_name} ${doc.data().last_name}`,
             doc.data().id_number,
+            doc.data().college,
             doc.data().is_activated,
             doc.data().phone_num,
+            `<button class="button-vehicles">
+                  <a href="#viewFaculty" rel="modal:open" class="view-faculty-button"><iconify-icon
+                  class="view-icon"
+                  icon="bi:eye-fill"
+                  class="iconifys"
+                  width="16"
+                  height="16"
+                ></iconify-icon>
+                <div>View</div>
+                </a></button>
+            `,
           ])
           .draw(false)
           .node();
         $(temp).attr("data-id", `${doc.id}`);
+        const viewFacultyBtn = document.querySelector(`[data-id='${doc.id}'] .view-faculty-button`);
+
+        viewFacultyBtn.addEventListener("click", () => {
+          const viewFacultyName = document.querySelector(".viewFacultyName");
+          const viewCollege = document.querySelector(".view-college");
+          const viewIdNum = document.querySelector(".viewIdNum");
+          const viewPhoneNum = document.querySelector(".viewPhoneNum");
+
+          viewFacultyName.textContent = `${doc.data().first_name} ${doc.data().last_name}`;
+          viewCollege.textContent = doc.data().college;
+          viewIdNum.textContent = doc.data().id_number;
+          viewPhoneNum.textContent = doc.data().phone_num;
+        });
       }; //end of render sec
 
       fire.myOnSnapshot(fire.accColRef, (snapshot) => {

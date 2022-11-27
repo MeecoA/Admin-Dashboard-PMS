@@ -1078,7 +1078,8 @@ border: 1px solid red;
 .unarchive-icon {
   margin-right: 5px;
 }
-.view-vehicle-button {
+.view-vehicle-button,
+.view-faculty-button {
   background-color: var(--primary-color);
   padding: 10px;
   border-radius: 15px;
@@ -1087,7 +1088,8 @@ border: 1px solid red;
   display: flex;
   font-weight: bold;
 }
-.view-vehicle-button:hover {
+.view-vehicle-button:hover,
+.view-faculty-button:hover {
   background-color: var(--action-hover-color);
   transition: 0.3s;
 }

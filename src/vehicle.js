@@ -10,12 +10,12 @@ import * as fire from "../src/index";
 
     export const doLimit = limit;
     */
-
+export let countVehicle = 1;
 //AJAX START FOR FACULTY
 const loadVehicles = document.querySelector("#vehicLink");
 
 loadVehicles.addEventListener("click", () => {
-  headerTitle.textContent = "Users";
+  headerTitle.textContent = "Vehicles";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = async function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -38,7 +38,6 @@ loadVehicles.addEventListener("click", () => {
       const vehicleQuery = fire.doQuery(colRef);
 
       let currentIndex = 0;
-      let countVehicle = 1;
 
       const docsSnap = await fire.myGetDocs(vehicleQuery);
       docsSnap.forEach(async (doc) => {
@@ -84,6 +83,7 @@ loadVehicles.addEventListener("click", () => {
         vehicleKeys.forEach((data, index) => {
           if (data !== "vehicle_length") {
             const entry = vehicle[data];
+            console.log("this is the", entry);
             // console.log('current entry: ', entry, ownerFullName);
             console.log("current entry: ", ownerFullName);
             // Id, Plate, Vehicle Owner, Vehicle(Images), Model, QR Code, Use Types
@@ -101,7 +101,7 @@ loadVehicles.addEventListener("click", () => {
               model: entry.model[0],
               qrCode: entry.qrCode,
               entry: entry.use_types,
-              registration_date: entry.createdAt.toDate(),
+              registration_date: entry.createdAt.toDate().toDateString(),
             };
 
             // Check the vehicle image
@@ -116,7 +116,9 @@ loadVehicles.addEventListener("click", () => {
             appendData["action"] = "";
             appendData["index"] = countVehicle;
             countVehicle += 1;
+
             dataVehicle.push(appendData);
+            console.log("This is the count ", countVehicle);
           }
         });
         appendData = null; //delete from memory

@@ -140,10 +140,7 @@ function ajaxNap() {
                 class="view-icon"
                 icon="bxs:user-circle" class="iconifys" width="16" height="16"></iconify-icon>Edit Info</a>
 
-              <a href="#editAccInfo" rel="modal:open" class = "editNapAccBtn">
-              <iconify-icon
-                class="view-icon"
-                icon="fa6-solid:key" class="iconifys" width="16" height="16"></iconify-icon>Edit Account</a>
+             
 
                 <a href="#" class="delete-button-nap">
                 <iconify-icon
@@ -224,44 +221,44 @@ function ajaxNap() {
             }
           }
         };
-        // Edit Account -- email and password
-        const editNapAccInfo = document.querySelector("#editNapAccForm");
-        const editNapAccBtn = document.querySelector(`[data-id='${docu.id}'] .editNapAccBtn`);
-        const emailBox = document.querySelector(".email-box");
-        const passBox = document.querySelector(".password-box");
+        // // Edit Account -- email and password
+        // const editNapAccInfo = document.querySelector("#editNapAccForm");
+        // const editNapAccBtn = document.querySelector(`[data-id='${docu.id}'] .editNapAccBtn`);
+        // const emailBox = document.querySelector(".email-box");
+        // const passBox = document.querySelector(".password-box");
 
-        // script for edit account modal
-        const changeEmailBtn = document.querySelector(".change-email-button");
-        const changePassBtn = document.querySelector(".change-password-button");
-        changeEmailBtn.addEventListener("click", () => {
-          passBox.classList.add("hide-change");
-          emailBox.classList.remove("hide-change");
-          changePassBtn.classList.remove("title-bg");
-          changeEmailBtn.classList.add("title-bg");
-        });
-        changePassBtn.addEventListener("click", () => {
-          passBox.classList.remove("hide-change");
-          emailBox.classList.add("hide-change");
-          changePassBtn.classList.add("title-bg");
-          changeEmailBtn.classList.remove("title-bg");
-        });
-        editNapAccBtn.addEventListener("click", () => {
-          passBox.classList.add("hide-change");
-          changeEmailBtn.classList.add("title-bg");
-          editNapAccInfo.napEmail.value = docu.data().email;
-          editNapAccInfo.napPassword.value = docu.data().password;
-        });
-        //for updating edit
-        editNapAccInfo.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const docRef2 = myDoc(fire.db, "admin-council", iD);
-          fire
-            .myUpdateDoc(docRef2, {
-              email: editNapAccInfo.napEmailNew.value,
-            })
-            .then(() => {});
-        });
-        // end upate
+        // // script for edit account modal
+        // const changeEmailBtn = document.querySelector(".change-email-button");
+        // const changePassBtn = document.querySelector(".change-password-button");
+        // changeEmailBtn.addEventListener("click", () => {
+        //   passBox.classList.add("hide-change");
+        //   emailBox.classList.remove("hide-change");
+        //   changePassBtn.classList.remove("title-bg");
+        //   changeEmailBtn.classList.add("title-bg");
+        // });
+        // changePassBtn.addEventListener("click", () => {
+        //   passBox.classList.remove("hide-change");
+        //   emailBox.classList.add("hide-change");
+        //   changePassBtn.classList.add("title-bg");
+        //   changeEmailBtn.classList.remove("title-bg");
+        // });
+        // editNapAccBtn.addEventListener("click", () => {
+        //   passBox.classList.add("hide-change");
+        //   changeEmailBtn.classList.add("title-bg");
+        //   editNapAccInfo.napEmail.value = docu.data().email;
+        //   editNapAccInfo.napPassword.value = docu.data().password;
+        // });
+        // //for updating edit
+        // editNapAccInfo.addEventListener("submit", (e) => {
+        //   e.preventDefault();
+        //   const docRef2 = myDoc(fire.db, "admin-council", iD);
+        //   fire
+        //     .myUpdateDoc(docRef2, {
+        //       email: editNapAccInfo.napEmailNew.value,
+        //     })
+        //     .then(() => {});
+        // });
+        // // end upate
         //viewing the council information
         const napViewPic = document.querySelector("#napViewPic");
         const viewName = document.querySelector(".viewNapName");

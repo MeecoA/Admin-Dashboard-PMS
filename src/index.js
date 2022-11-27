@@ -23,6 +23,7 @@ import {
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   getAuth,
+  updateUser,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   updateEmail,
@@ -30,6 +31,7 @@ import {
   signOut,
   updatePassword,
 } from "firebase/auth";
+
 //this config connects the backend and frontend
 //after this, intall firebase in node.js
 const firebaseConfig = {

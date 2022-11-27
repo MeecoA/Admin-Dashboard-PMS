@@ -229,11 +229,6 @@ function ajaxSec() {
                   class="view-icon"
                   icon="bxs:user-circle" " width="16" height="16" class="iconifys"></iconify-icon>Edit Info</a>
   
-                <a href="#editAccInfo" rel="modal:open" class = "editSecAccBtn">
-                <iconify-icon
-                  class="view-icon"
-                  icon="fa6-solid:key"  width="16" height="16" class="iconifys"></iconify-icon>Edit Account</a>
-  
                   <a href="#" class="delete-button">
                   <iconify-icon
                     class="view-icon"
@@ -338,47 +333,47 @@ function ajaxSec() {
               ajaxSec();
             });
         });
-        // Edit Account -- email and password
-        const editSecAccForm = document.querySelector("#editSecAccForm");
-        const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editSecAccBtn`);
-        const emailBox = document.querySelector(".email-box");
-        const passBox = document.querySelector(".password-box");
+        // // Edit Account -- email and password
+        // const editSecAccForm = document.querySelector("#editSecAccForm");
+        // const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editSecAccBtn`);
+        // const emailBox = document.querySelector(".email-box");
+        // const passBox = document.querySelector(".password-box");
 
-        // script for edit account modal
-        const changeEmailBtn = document.querySelector(".change-email-button");
-        const changePassBtn = document.querySelector(".change-password-button");
-        changeEmailBtn.addEventListener("click", () => {
-          passBox.classList.add("hide-change");
-          emailBox.classList.remove("hide-change");
-          changePassBtn.classList.remove("title-bg");
-          changeEmailBtn.classList.add("title-bg");
-        });
-        changePassBtn.addEventListener("click", () => {
-          passBox.classList.remove("hide-change");
-          emailBox.classList.add("hide-change");
-          changePassBtn.classList.add("title-bg");
-          changeEmailBtn.classList.remove("title-bg");
-        });
-        editSeccAccBtn.addEventListener("click", () => {
-          $("#editAccInfo").fadeIn();
-          passBox.classList.add("hide-change");
-          changeEmailBtn.classList.add("title-bg");
-          editSecAccForm.secEmail.value = docu.data().email;
-          editSecAccForm.secPassword.value = docu.data().password;
-        });
-        //for updating edit
-        editSecAccForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const docRef = fire.myDoc(fire.db, "security", id);
-          console.log("updated successfully");
-          fire
-            .myUpdateDoc(docRef, {
-              email: editSecAccForm.secEmailNew.value,
-            })
-            .then(() => {
-              ajaxSec();
-            });
-        });
+        // // script for edit account modal
+        // const changeEmailBtn = document.querySelector(".change-email-button");
+        // const changePassBtn = document.querySelector(".change-password-button");
+        // changeEmailBtn.addEventListener("click", () => {
+        //   passBox.classList.add("hide-change");
+        //   emailBox.classList.remove("hide-change");
+        //   changePassBtn.classList.remove("title-bg");
+        //   changeEmailBtn.classList.add("title-bg");
+        // });
+        // changePassBtn.addEventListener("click", () => {
+        //   passBox.classList.remove("hide-change");
+        //   emailBox.classList.add("hide-change");
+        //   changePassBtn.classList.add("title-bg");
+        //   changeEmailBtn.classList.remove("title-bg");
+        // });
+        // editSeccAccBtn.addEventListener("click", () => {
+        //   $("#editAccInfo").fadeIn();
+        //   passBox.classList.add("hide-change");
+        //   changeEmailBtn.classList.add("title-bg");
+        //   editSecAccForm.secEmail.value = docu.data().email;
+        //   editSecAccForm.secPassword.value = docu.data().password;
+        // });
+        // //for updating edit
+        // editSecAccForm.addEventListener("submit", (e) => {
+        //   e.preventDefault();
+        //   const docRef = fire.myDoc(fire.db, "security", id);
+        //   console.log("updated successfully");
+        //   fire
+        //     .myUpdateDoc(docRef, {
+        //       email: editSecAccForm.secEmailNew.value,
+        //     })
+        //     .then(() => {
+        //       ajaxSec();
+        //     });
+        // });
 
         const dropSec = document.querySelector(`[data-id='${docu.id}'] .drop-btn`);
         const dropSecContent = document.querySelector(`[data-id='${docu.id}'] #dropSec`);

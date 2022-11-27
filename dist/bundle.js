@@ -36581,7 +36581,7 @@ function ajaxCouncil() {
               middlename: addCouncilForm.mname.value,
               email: addCouncilForm.email.value,
               phone: addCouncilForm.phone.value,
-              idnum: addCouncilForm.idnum.value,
+              vehicles: addCouncilForm.idnum.value,
             })
             .then(() => {
               addCouncilForm.reset();
@@ -36640,10 +36640,6 @@ function ajaxCouncil() {
                 class="view-icon"
                 icon="bxs:user-circle"  width="16" height="16" class="iconifys"></iconify-icon>Edit Info</a>
 
-              <a href="#editAccInfo" rel="modal:open" class = "editCouncilAccBtn">
-              <iconify-icon
-                class="view-icon"
-                icon="fa6-solid:key"  width="16" height="16" class="iconifys"></iconify-icon>Edit Account</a>
 
                 <a href="#" class="delete-button-council">
                 <iconify-icon
@@ -36723,43 +36719,44 @@ function ajaxCouncil() {
             }
           }
         };
-        // Edit Account -- email and password
-        const editCouncilAccInfo = document.querySelector("#editCouncilAccForm");
-        const editCouncilAccBtn = document.querySelector(`[data-id='${docu.id}'] .editCouncilAccBtn`);
-        const emailBox = document.querySelector(".email-box");
-        const passBox = document.querySelector(".password-box");
+        // // Edit Account -- email and password
+        // const editCouncilAccInfo = document.querySelector("#editCouncilAccForm");
+        // const editCouncilAccBtn = document.querySelector(`[data-id='${docu.id}'] .editCouncilAccBtn`);
+        // const emailBox = document.querySelector(".email-box");
+        // const passBox = document.querySelector(".password-box");
 
-        // script for edit account modal
-        const changeEmailBtn = document.querySelector(".change-email-button");
-        const changePassBtn = document.querySelector(".change-password-button");
-        changeEmailBtn.addEventListener("click", () => {
-          passBox.classList.add("hide-change");
-          emailBox.classList.remove("hide-change");
-          changePassBtn.classList.remove("title-bg");
-          changeEmailBtn.classList.add("title-bg");
-        });
-        changePassBtn.addEventListener("click", () => {
-          passBox.classList.remove("hide-change");
-          emailBox.classList.add("hide-change");
-          changePassBtn.classList.add("title-bg");
-          changeEmailBtn.classList.remove("title-bg");
-        });
-        editCouncilAccBtn.addEventListener("click", () => {
-          passBox.classList.add("hide-change");
-          changeEmailBtn.classList.add("title-bg");
-          editCouncilAccInfo.councilEmail.value = docu.data().email;
-          editCouncilAccInfo.councilPassword.value = docu.data().password;
-        });
-        //for updating edit
-        editCouncilAccInfo.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const docRef2 = myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "admin-council", iD);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUpdateDoc(docRef2, {
-              email: editCouncilAccInfo.councilEmailNew.value,
-            })
-            .then(() => {});
-        });
-        // end upate
+        // // script for edit account modal
+        // const changeEmailBtn = document.querySelector(".change-email-button");
+        // const changePassBtn = document.querySelector(".change-password-button");
+        // changeEmailBtn.addEventListener("click", () => {
+        //   passBox.classList.add("hide-change");
+        //   emailBox.classList.remove("hide-change");
+        //   changePassBtn.classList.remove("title-bg");
+        //   changeEmailBtn.classList.add("title-bg");
+        // });
+        // changePassBtn.addEventListener("click", () => {
+        //   passBox.classList.remove("hide-change");
+        //   emailBox.classList.add("hide-change");
+        //   changePassBtn.classList.add("title-bg");
+        //   changeEmailBtn.classList.remove("title-bg");
+        // });
+        // editCouncilAccBtn.addEventListener("click", () => {
+        //   passBox.classList.add("hide-change");
+        //   changeEmailBtn.classList.add("title-bg");
+        //   editCouncilAccInfo.councilEmail.value = docu.data().email;
+        //   editCouncilAccInfo.councilPassword.value = docu.data().password;
+        // });
+        // //for updating edit
+        // editCouncilAccInfo.addEventListener("submit", (e) => {
+        //   e.preventDefault();
+        //   const docRef2 = myDoc(fire.db, "admin-council", iD);
+        //   fire
+        //     .myUpdateDoc(docRef2, {
+        //       email: editCouncilAccInfo.councilEmailNew.value,
+        //     })
+        //     .then(() => {});
+        // });
+        // // end upate
         //viewing the council information
         const councilViewPic = document.querySelector("#councilViewPic");
         const viewName = document.querySelector(".viewCouncilName");
@@ -36884,9 +36881,11 @@ displayActivityLogs();
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
+/* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
 
-console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_0__.database);
+
+console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_1__.database);
 
 //AJAX START FOR FACULTY
 const loadFaculty = document.querySelector("#resiLink");
@@ -36954,25 +36953,46 @@ loadFaculty.addEventListener("click", () => {
       const buttonsColvis = document.querySelector(".buttons-colvis");
       buttonsColvis.textContent = "Filter By Category";
 
-      $(".facultyTbody").on("click", "tr", function (e) {
-        var data = t.row(this).data();
-        alert("you clicked on " + data[1] + "'s row");
-      });
       const renderFaculty = (doc) => {
         var temp = t.row
           .add([
             doc.id,
             `${doc.data().first_name} ${doc.data().last_name}`,
             doc.data().id_number,
+            doc.data().college,
             doc.data().is_activated,
             doc.data().phone_num,
+            `<button class="button-vehicles">
+                  <a href="#viewFaculty" rel="modal:open" class="view-faculty-button"><iconify-icon
+                  class="view-icon"
+                  icon="bi:eye-fill"
+                  class="iconifys"
+                  width="16"
+                  height="16"
+                ></iconify-icon>
+                <div>View</div>
+                </a></button>
+            `,
           ])
           .draw(false)
           .node();
         $(temp).attr("data-id", `${doc.id}`);
+        const viewFacultyBtn = document.querySelector(`[data-id='${doc.id}'] .view-faculty-button`);
+
+        viewFacultyBtn.addEventListener("click", () => {
+          const viewFacultyName = document.querySelector(".viewFacultyName");
+          const viewCollege = document.querySelector(".view-college");
+          const viewIdNum = document.querySelector(".viewIdNum");
+          const viewPhoneNum = document.querySelector(".viewPhoneNum");
+
+          viewFacultyName.textContent = `${doc.data().first_name} ${doc.data().last_name}`;
+          viewCollege.textContent = doc.data().college;
+          viewIdNum.textContent = doc.data().id_number;
+          viewPhoneNum.textContent = doc.data().phone_num;
+        });
       }; //end of render sec
 
-      _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.accColRef, (snapshot) => {
+      _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.accColRef, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           let accs = [];
           if (change.type === "added") {
@@ -37038,6 +37058,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
 /* harmony import */ var firebase_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/storage */ "./node_modules/firebase/storage/dist/index.esm.js");
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/index.esm.js");
+
 
 
 
@@ -37419,10 +37440,7 @@ function ajaxNap() {
                 class="view-icon"
                 icon="bxs:user-circle" class="iconifys" width="16" height="16"></iconify-icon>Edit Info</a>
 
-              <a href="#editAccInfo" rel="modal:open" class = "editNapAccBtn">
-              <iconify-icon
-                class="view-icon"
-                icon="fa6-solid:key" class="iconifys" width="16" height="16"></iconify-icon>Edit Account</a>
+             
 
                 <a href="#" class="delete-button-nap">
                 <iconify-icon
@@ -37502,43 +37520,44 @@ function ajaxNap() {
             }
           }
         };
-        // Edit Account -- email and password
-        const editNapAccInfo = document.querySelector("#editNapAccForm");
-        const editNapAccBtn = document.querySelector(`[data-id='${docu.id}'] .editNapAccBtn`);
-        const emailBox = document.querySelector(".email-box");
-        const passBox = document.querySelector(".password-box");
+        // // Edit Account -- email and password
+        // const editNapAccInfo = document.querySelector("#editNapAccForm");
+        // const editNapAccBtn = document.querySelector(`[data-id='${docu.id}'] .editNapAccBtn`);
+        // const emailBox = document.querySelector(".email-box");
+        // const passBox = document.querySelector(".password-box");
 
-        // script for edit account modal
-        const changeEmailBtn = document.querySelector(".change-email-button");
-        const changePassBtn = document.querySelector(".change-password-button");
-        changeEmailBtn.addEventListener("click", () => {
-          passBox.classList.add("hide-change");
-          emailBox.classList.remove("hide-change");
-          changePassBtn.classList.remove("title-bg");
-          changeEmailBtn.classList.add("title-bg");
-        });
-        changePassBtn.addEventListener("click", () => {
-          passBox.classList.remove("hide-change");
-          emailBox.classList.add("hide-change");
-          changePassBtn.classList.add("title-bg");
-          changeEmailBtn.classList.remove("title-bg");
-        });
-        editNapAccBtn.addEventListener("click", () => {
-          passBox.classList.add("hide-change");
-          changeEmailBtn.classList.add("title-bg");
-          editNapAccInfo.napEmail.value = docu.data().email;
-          editNapAccInfo.napPassword.value = docu.data().password;
-        });
-        //for updating edit
-        editNapAccInfo.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const docRef2 = myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "admin-council", iD);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUpdateDoc(docRef2, {
-              email: editNapAccInfo.napEmailNew.value,
-            })
-            .then(() => {});
-        });
-        // end upate
+        // // script for edit account modal
+        // const changeEmailBtn = document.querySelector(".change-email-button");
+        // const changePassBtn = document.querySelector(".change-password-button");
+        // changeEmailBtn.addEventListener("click", () => {
+        //   passBox.classList.add("hide-change");
+        //   emailBox.classList.remove("hide-change");
+        //   changePassBtn.classList.remove("title-bg");
+        //   changeEmailBtn.classList.add("title-bg");
+        // });
+        // changePassBtn.addEventListener("click", () => {
+        //   passBox.classList.remove("hide-change");
+        //   emailBox.classList.add("hide-change");
+        //   changePassBtn.classList.add("title-bg");
+        //   changeEmailBtn.classList.remove("title-bg");
+        // });
+        // editNapAccBtn.addEventListener("click", () => {
+        //   passBox.classList.add("hide-change");
+        //   changeEmailBtn.classList.add("title-bg");
+        //   editNapAccInfo.napEmail.value = docu.data().email;
+        //   editNapAccInfo.napPassword.value = docu.data().password;
+        // });
+        // //for updating edit
+        // editNapAccInfo.addEventListener("submit", (e) => {
+        //   e.preventDefault();
+        //   const docRef2 = myDoc(fire.db, "admin-council", iD);
+        //   fire
+        //     .myUpdateDoc(docRef2, {
+        //       email: editNapAccInfo.napEmailNew.value,
+        //     })
+        //     .then(() => {});
+        // });
+        // // end upate
         //viewing the council information
         const napViewPic = document.querySelector("#napViewPic");
         const viewName = document.querySelector(".viewNapName");
@@ -37826,11 +37845,6 @@ function ajaxSec() {
                   class="view-icon"
                   icon="bxs:user-circle" " width="16" height="16" class="iconifys"></iconify-icon>Edit Info</a>
   
-                <a href="#editAccInfo" rel="modal:open" class = "editSecAccBtn">
-                <iconify-icon
-                  class="view-icon"
-                  icon="fa6-solid:key"  width="16" height="16" class="iconifys"></iconify-icon>Edit Account</a>
-  
                   <a href="#" class="delete-button">
                   <iconify-icon
                     class="view-icon"
@@ -37933,46 +37947,47 @@ function ajaxSec() {
               ajaxSec();
             });
         });
-        // Edit Account -- email and password
-        const editSecAccForm = document.querySelector("#editSecAccForm");
-        const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editSecAccBtn`);
-        const emailBox = document.querySelector(".email-box");
-        const passBox = document.querySelector(".password-box");
+        // // Edit Account -- email and password
+        // const editSecAccForm = document.querySelector("#editSecAccForm");
+        // const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editSecAccBtn`);
+        // const emailBox = document.querySelector(".email-box");
+        // const passBox = document.querySelector(".password-box");
 
-        // script for edit account modal
-        const changeEmailBtn = document.querySelector(".change-email-button");
-        const changePassBtn = document.querySelector(".change-password-button");
-        changeEmailBtn.addEventListener("click", () => {
-          passBox.classList.add("hide-change");
-          emailBox.classList.remove("hide-change");
-          changePassBtn.classList.remove("title-bg");
-          changeEmailBtn.classList.add("title-bg");
-        });
-        changePassBtn.addEventListener("click", () => {
-          passBox.classList.remove("hide-change");
-          emailBox.classList.add("hide-change");
-          changePassBtn.classList.add("title-bg");
-          changeEmailBtn.classList.remove("title-bg");
-        });
-        editSeccAccBtn.addEventListener("click", () => {
-          $("#editAccInfo").fadeIn();
-          passBox.classList.add("hide-change");
-          changeEmailBtn.classList.add("title-bg");
-          editSecAccForm.secEmail.value = docu.data().email;
-          editSecAccForm.secPassword.value = docu.data().password;
-        });
-        //for updating edit
-        editSecAccForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "security", id);
-          console.log("updated successfully");
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUpdateDoc(docRef, {
-              email: editSecAccForm.secEmailNew.value,
-            })
-            .then(() => {
-              ajaxSec();
-            });
-        });
+        // // script for edit account modal
+        // const changeEmailBtn = document.querySelector(".change-email-button");
+        // const changePassBtn = document.querySelector(".change-password-button");
+        // changeEmailBtn.addEventListener("click", () => {
+        //   passBox.classList.add("hide-change");
+        //   emailBox.classList.remove("hide-change");
+        //   changePassBtn.classList.remove("title-bg");
+        //   changeEmailBtn.classList.add("title-bg");
+        // });
+        // changePassBtn.addEventListener("click", () => {
+        //   passBox.classList.remove("hide-change");
+        //   emailBox.classList.add("hide-change");
+        //   changePassBtn.classList.add("title-bg");
+        //   changeEmailBtn.classList.remove("title-bg");
+        // });
+        // editSeccAccBtn.addEventListener("click", () => {
+        //   $("#editAccInfo").fadeIn();
+        //   passBox.classList.add("hide-change");
+        //   changeEmailBtn.classList.add("title-bg");
+        //   editSecAccForm.secEmail.value = docu.data().email;
+        //   editSecAccForm.secPassword.value = docu.data().password;
+        // });
+        // //for updating edit
+        // editSecAccForm.addEventListener("submit", (e) => {
+        //   e.preventDefault();
+        //   const docRef = fire.myDoc(fire.db, "security", id);
+        //   console.log("updated successfully");
+        //   fire
+        //     .myUpdateDoc(docRef, {
+        //       email: editSecAccForm.secEmailNew.value,
+        //     })
+        //     .then(() => {
+        //       ajaxSec();
+        //     });
+        // });
 
         const dropSec = document.querySelector(`[data-id='${docu.id}'] .drop-btn`);
         const dropSecContent = document.querySelector(`[data-id='${docu.id}'] #dropSec`);
@@ -38244,6 +38259,9 @@ loadLogs.addEventListener("click", () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "countVehicle": () => (/* binding */ countVehicle)
+/* harmony export */ });
 /* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index */ "./src/index.js");
 
 
@@ -38257,12 +38275,12 @@ __webpack_require__.r(__webpack_exports__);
 
     export const doLimit = limit;
     */
-
+let countVehicle = 1;
 //AJAX START FOR FACULTY
 const loadVehicles = document.querySelector("#vehicLink");
 
 loadVehicles.addEventListener("click", () => {
-  headerTitle.textContent = "Users";
+  headerTitle.textContent = "Vehicles";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = async function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -38285,7 +38303,6 @@ loadVehicles.addEventListener("click", () => {
       const vehicleQuery = _src_index__WEBPACK_IMPORTED_MODULE_0__.doQuery(colRef);
 
       let currentIndex = 0;
-      let countVehicle = 1;
 
       const docsSnap = await _src_index__WEBPACK_IMPORTED_MODULE_0__.myGetDocs(vehicleQuery);
       docsSnap.forEach(async (doc) => {
@@ -38331,6 +38348,7 @@ loadVehicles.addEventListener("click", () => {
         vehicleKeys.forEach((data, index) => {
           if (data !== "vehicle_length") {
             const entry = vehicle[data];
+            console.log("this is the", entry);
             // console.log('current entry: ', entry, ownerFullName);
             console.log("current entry: ", ownerFullName);
             // Id, Plate, Vehicle Owner, Vehicle(Images), Model, QR Code, Use Types
@@ -38348,7 +38366,7 @@ loadVehicles.addEventListener("click", () => {
               model: entry.model[0],
               qrCode: entry.qrCode,
               entry: entry.use_types,
-              registration_date: entry.createdAt.toDate(),
+              registration_date: entry.createdAt.toDate().toDateString(),
             };
 
             // Check the vehicle image
@@ -38363,7 +38381,9 @@ loadVehicles.addEventListener("click", () => {
             appendData["action"] = "";
             appendData["index"] = countVehicle;
             countVehicle += 1;
+
             dataVehicle.push(appendData);
+            console.log("This is the count ", countVehicle);
           }
         });
         appendData = null; //delete from memory
