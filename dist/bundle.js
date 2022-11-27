@@ -36282,6 +36282,8 @@ announceLink.addEventListener("click", () => {
       const editAnnounceForm = document.querySelector("#editAnnounceForm");
       const editAnnounceBtn = document.querySelector(`[data-id='${firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc.id}'] .edit-button-announce`);
 
+      editAnnounceBtn;
+
       _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceColRef, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {

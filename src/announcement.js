@@ -233,6 +233,8 @@ announceLink.addEventListener("click", () => {
       const editAnnounceForm = document.querySelector("#editAnnounceForm");
       const editAnnounceBtn = document.querySelector(`[data-id='${doc.id}'] .edit-button-announce`);
 
+      editAnnounceBtn;
+
       fire.myOnSnapshot(fire.announceColRef, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
