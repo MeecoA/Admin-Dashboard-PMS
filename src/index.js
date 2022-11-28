@@ -20,7 +20,7 @@ import {
   increment,
   limit,
 } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import {
   getAuth,
   updateUser,
@@ -54,6 +54,8 @@ export const auth = getAuth();
 
 //exports
 // Firestore
+export const myServerTimestamp = serverTimestamp();
+export const myUploadBytesResumable = uploadBytesResumable;
 export const myUpdatePassowrd = updatePassword;
 export const myUpdateEmail = updateEmail;
 export const doLimit = limit;
@@ -92,6 +94,7 @@ export const archivesColRef = collection(db, "archives");
 //queries
 const secQuery = query(secColRef, orderBy("createdAt"));
 const accQuery = query(accColRef, orderBy("createdAt"));
+export const announceQuery = query(announceColRef, orderBy("createdAt"));
 // const announceQuery = query(announceColRef, orderBy("createdAt"));
 // Side bar links
 
@@ -245,7 +248,6 @@ adminLogout.addEventListener("click", () => {
     confirmButtonText: "Yes, log out.",
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire("Deleted!", "Your file has been deleted.", "success");
       signOut(auth)
         .then(() => {
           window.location = "admin-login.html";

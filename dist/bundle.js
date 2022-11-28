@@ -36113,22 +36113,16 @@ announceLink.addEventListener("click", () => {
         const first_file = document.querySelector("#filesAttached1").files[0];
         const second_file = document.querySelector("#filesAttached2").files[0];
         const third_file = document.querySelector("#filesAttached3").files[0];
-
-        var fileUrl1 = "";
-        _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myGetDownloadUrl(fileRef1).then((url) => {
-          fileUrl1 = url;
-        });
-        console.log("this is file url: " + fileUrl1);
         _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceColRef, {
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
-            posted_on: addAnnounceForm.postedOn.value,
             posted_by: addAnnounceForm.postedBy.value,
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            files: [addAnnounceForm.file1.value, addAnnounceForm.file2.value, addAnnounceForm.file3.value],
-            thumbnail: addAnnounceForm.thumbnail.value,
+            // files: [addAnnounceForm.file1.value, addAnnounceForm.file2.value, addAnnounceForm.file3.value],
+            // thumbnail: addAnnounceForm.thumbnail.value,
+            createdAt: _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myServerTimestamp,
           })
           .then(() => {
             var metadata = {
@@ -36153,6 +36147,11 @@ announceLink.addEventListener("click", () => {
             _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
+            Swal.fire({
+              title: "Announcement",
+              text: "SUCCESSFULLY CREATED!",
+              icon: "success",
+            });
 
             addAnnounceForm.reset();
           });
@@ -36164,7 +36163,7 @@ announceLink.addEventListener("click", () => {
           .add([
             docu.id,
             docu.data().title,
-            docu.data().posted_on,
+            docu.data().createdAt.toDate().toDateString(),
             docu.data().posted_by,
             docu.data().priority,
             `<div class="drop-container-announce">
@@ -36278,13 +36277,7 @@ announceLink.addEventListener("click", () => {
         });
       }; //end of rendering announcement
 
-      // editing announcement
-      const editAnnounceForm = document.querySelector("#editAnnounceForm");
-      const editAnnounceBtn = document.querySelector(`[data-id='${firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.doc.id}'] .edit-button-announce`);
-
-      editAnnounceBtn;
-
-      _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceColRef, (snapshot) => {
+      _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceQuery, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             renderAnnounce(change.doc);
@@ -36295,10 +36288,12 @@ announceLink.addEventListener("click", () => {
             announceTBody.removeChild(row);
           }
           if (change.type === "modified") {
-            let row = document.querySelector(`[data-id="${change.doc.id}"]`);
-            announceTBody.removeChild(row);
+            // let row = document.querySelector(`[data-id="${change.doc.id}"]`);
+            // announceTBody.removeChild(row);
             renderAnnounce(change.doc);
           }
+
+          console.log(change.type);
         });
       });
     } //end if ready state
@@ -36513,6 +36508,7 @@ function ajaxCouncil() {
       vehiLink.classList.remove("active");
       var t = $("#councilTable").DataTable({
         dom: "Bfrtip",
+
         buttons: [
           {
             extend: "copyHtml5",
@@ -36909,6 +36905,7 @@ loadFaculty.addEventListener("click", () => {
       // rendering the data
       var t = $("table.display").DataTable({
         dom: "Bfrtip",
+
         buttons: [
           {
             extend: "copyHtml5",
@@ -36980,6 +36977,7 @@ loadFaculty.addEventListener("click", () => {
         const viewFacultyBtn = document.querySelector(`[data-id='${doc.id}'] .view-faculty-button`);
 
         viewFacultyBtn.addEventListener("click", () => {
+          $("#viewFaculty").fadeIn();
           const viewFacultyName = document.querySelector(".viewFacultyName");
           const viewCollege = document.querySelector(".view-college");
           const viewIdNum = document.querySelector(".viewIdNum");
@@ -37022,6 +37020,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "accColRef": () => (/* binding */ accColRef),
 /* harmony export */   "announceColRef": () => (/* binding */ announceColRef),
+/* harmony export */   "announceQuery": () => (/* binding */ announceQuery),
 /* harmony export */   "archivesColRef": () => (/* binding */ archivesColRef),
 /* harmony export */   "auth": () => (/* binding */ auth),
 /* harmony export */   "councilColRef": () => (/* binding */ councilColRef),
@@ -37045,11 +37044,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "myGetDownloadUrl": () => (/* binding */ myGetDownloadUrl),
 /* harmony export */   "myGetFirestore": () => (/* binding */ myGetFirestore),
 /* harmony export */   "myOnSnapshot": () => (/* binding */ myOnSnapshot),
+/* harmony export */   "myServerTimestamp": () => (/* binding */ myServerTimestamp),
 /* harmony export */   "myStorageRef": () => (/* binding */ myStorageRef),
 /* harmony export */   "myUpdateDoc": () => (/* binding */ myUpdateDoc),
 /* harmony export */   "myUpdateEmail": () => (/* binding */ myUpdateEmail),
 /* harmony export */   "myUpdatePassowrd": () => (/* binding */ myUpdatePassowrd),
 /* harmony export */   "myUploadBytes": () => (/* binding */ myUploadBytes),
+/* harmony export */   "myUploadBytesResumable": () => (/* binding */ myUploadBytesResumable),
 /* harmony export */   "napColRef": () => (/* binding */ napColRef),
 /* harmony export */   "secColRef": () => (/* binding */ secColRef),
 /* harmony export */   "storage": () => (/* binding */ storage)
@@ -37085,6 +37086,8 @@ const auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.getAuth)();
 
 //exports
 // Firestore
+const myServerTimestamp = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.serverTimestamp)();
+const myUploadBytesResumable = firebase_storage__WEBPACK_IMPORTED_MODULE_2__.uploadBytesResumable;
 const myUpdatePassowrd = firebase_auth__WEBPACK_IMPORTED_MODULE_3__.updatePassword;
 const myUpdateEmail = firebase_auth__WEBPACK_IMPORTED_MODULE_3__.updateEmail;
 const doLimit = firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.limit;
@@ -37123,6 +37126,7 @@ const archivesColRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collec
 //queries
 const secQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(secColRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.orderBy)("createdAt"));
 const accQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accColRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.orderBy)("createdAt"));
+const announceQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(announceColRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.orderBy)("createdAt"));
 // const announceQuery = query(announceColRef, orderBy("createdAt"));
 // Side bar links
 
@@ -37276,7 +37280,6 @@ adminLogout.addEventListener("click", () => {
     confirmButtonText: "Yes, log out.",
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire("Deleted!", "Your file has been deleted.", "success");
       (0,firebase_auth__WEBPACK_IMPORTED_MODULE_3__.signOut)(auth)
         .then(() => {
           window.location = "admin-login.html";
@@ -37324,6 +37327,7 @@ function ajaxNap() {
       loadNap.classList.add("active");
       var t = $("#napTable").DataTable({
         dom: "Bfrtip",
+
         buttons: [
           {
             extend: "copyHtml5",
@@ -37644,18 +37648,19 @@ function ajaxSec() {
       //data tables
       var t = $("#sectable").DataTable({
         responsive: true,
+
         dom: "Bfrtip",
         buttons: [
           {
             extend: "copyHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [1, 2, 3, 4, 5],
             },
           },
           {
             extend: "print",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [1, 2, 3, 4, 5],
             },
             customize: function (win) {
               $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
@@ -37680,7 +37685,7 @@ function ajaxSec() {
           {
             extend: "pdfHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [1, 2, 3, 4, 5],
             },
           },
           "colvis",

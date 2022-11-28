@@ -23,6 +23,7 @@ function ajaxNap() {
       loadNap.classList.add("active");
       var t = $("#napTable").DataTable({
         dom: "Bfrtip",
+
         buttons: [
           {
             extend: "copyHtml5",

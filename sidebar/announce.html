@@ -25,13 +25,7 @@
           <div class="title-form">ADD NEW ANNOUNCEMENT</div>
           <div class="title-container announce-items">
             <label for="title">Title:</label>
-            <input type="text" name="title" required />
-          </div>
-          <div class="date-container announce-items">
-            <div class="start-date end-start-date">
-              <label for="startDate">Date: </label>
-              <input type="date" name="postedOn" required />
-            </div>
+            <input type="text" name="title" required id="titleAnnounce" class="title-to" />
           </div>
           <div class="postedby-container announce-items">
             <div class="posted by">
@@ -78,45 +72,6 @@
         </form>
       </div>
       <!-- end adding -->
-      <!-- edit modal -->
-      <div id="editmodal" class="modal announce-modal">
-        <form id="editAnnounceForm" class="announceForm">
-          <div class="title-form">EDIT ANNOUNCEMENT</div>
-          <div class="title-container announce-items">
-            <label for="title">Title:</label>
-            <input type="text" name="title" required />
-          </div>
-          <div class="date-container announce-items">
-            <div class="start-date end-start-date">
-              <label for="startDate">Date: </label>
-              <input type="date" name="postedOn" required />
-            </div>
-          </div>
-          <div class="postedby-container announce-items">
-            <div class="posted by">
-              <label for="postedBy">Posted By: </label>
-              <select name="postedBy" id="postedByEdit" required>
-                <option value="" disabled selected>Select</option>
-                <option value="administrator">Administrator</option>
-                <option value="administrator">Security</option>
-              </select>
-            </div>
-          </div>
-          <div class="prio-container announce-items">
-            <label for="details">Priority:</label>
-            <input type="text" name="priority" required />
-          </div>
-          <div class="details-container announce-items">
-            <label for="details">Message: </label>
-            <textarea name="message" id="announceDetails" cols="30" rows="5" required></textarea>
-          </div>
-          <div class="sources-container announce-items">
-            <label for="sources">Sources:</label>
-            <input type="text" name="sources" required />
-          </div>
-        </form>
-      </div>
-
       <!-- end edit modal -->
       <div class="box-table">
         <div class="ajax-container">

@@ -63,23 +63,17 @@ announceLink.addEventListener("click", () => {
         const first_file = document.querySelector("#filesAttached1").files[0];
         const second_file = document.querySelector("#filesAttached2").files[0];
         const third_file = document.querySelector("#filesAttached3").files[0];
-
-        var fileUrl1 = "";
-        fire.myGetDownloadUrl(fileRef1).then((url) => {
-          fileUrl1 = url;
-        });
-        console.log("this is file url: " + fileUrl1);
         fire
           .myAddDoc(fire.announceColRef, {
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
-            posted_on: addAnnounceForm.postedOn.value,
             posted_by: addAnnounceForm.postedBy.value,
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            files: [addAnnounceForm.file1.value, addAnnounceForm.file2.value, addAnnounceForm.file3.value],
-            thumbnail: addAnnounceForm.thumbnail.value,
+            // files: [addAnnounceForm.file1.value, addAnnounceForm.file2.value, addAnnounceForm.file3.value],
+            // thumbnail: addAnnounceForm.thumbnail.value,
+            createdAt: fire.myServerTimestamp,
           })
           .then(() => {
             var metadata = {
@@ -104,6 +98,11 @@ announceLink.addEventListener("click", () => {
             fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
+            Swal.fire({
+              title: "Announcement",
+              text: "SUCCESSFULLY CREATED!",
+              icon: "success",
+            });
 
             addAnnounceForm.reset();
           });
@@ -115,7 +114,7 @@ announceLink.addEventListener("click", () => {
           .add([
             docu.id,
             docu.data().title,
-            docu.data().posted_on,
+            docu.data().createdAt.toDate().toDateString(),
             docu.data().posted_by,
             docu.data().priority,
             `<div class="drop-container-announce">
@@ -229,13 +228,7 @@ announceLink.addEventListener("click", () => {
         });
       }; //end of rendering announcement
 
-      // editing announcement
-      const editAnnounceForm = document.querySelector("#editAnnounceForm");
-      const editAnnounceBtn = document.querySelector(`[data-id='${doc.id}'] .edit-button-announce`);
-
-      editAnnounceBtn;
-
-      fire.myOnSnapshot(fire.announceColRef, (snapshot) => {
+      fire.myOnSnapshot(fire.announceQuery, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             renderAnnounce(change.doc);
@@ -246,10 +239,12 @@ announceLink.addEventListener("click", () => {
             announceTBody.removeChild(row);
           }
           if (change.type === "modified") {
-            let row = document.querySelector(`[data-id="${change.doc.id}"]`);
-            announceTBody.removeChild(row);
+            // let row = document.querySelector(`[data-id="${change.doc.id}"]`);
+            // announceTBody.removeChild(row);
             renderAnnounce(change.doc);
           }
+
+          console.log(change.type);
         });
       });
     } //end if ready state

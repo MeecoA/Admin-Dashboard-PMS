@@ -24,6 +24,7 @@ loadFaculty.addEventListener("click", () => {
       // rendering the data
       var t = $("table.display").DataTable({
         dom: "Bfrtip",
+
         buttons: [
           {
             extend: "copyHtml5",
@@ -95,6 +96,7 @@ loadFaculty.addEventListener("click", () => {
         const viewFacultyBtn = document.querySelector(`[data-id='${doc.id}'] .view-faculty-button`);
 
         viewFacultyBtn.addEventListener("click", () => {
+          $("#viewFaculty").fadeIn();
           const viewFacultyName = document.querySelector(".viewFacultyName");
           const viewCollege = document.querySelector(".view-college");
           const viewIdNum = document.querySelector(".viewIdNum");

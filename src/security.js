@@ -26,18 +26,19 @@ function ajaxSec() {
       //data tables
       var t = $("#sectable").DataTable({
         responsive: true,
+
         dom: "Bfrtip",
         buttons: [
           {
             extend: "copyHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [1, 2, 3, 4, 5],
             },
           },
           {
             extend: "print",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [1, 2, 3, 4, 5],
             },
             customize: function (win) {
               $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
@@ -62,7 +63,7 @@ function ajaxSec() {
           {
             extend: "pdfHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5],
+              columns: [1, 2, 3, 4, 5],
             },
           },
           "colvis",

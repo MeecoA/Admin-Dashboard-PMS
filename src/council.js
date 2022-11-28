@@ -22,6 +22,7 @@ function ajaxCouncil() {
       vehiLink.classList.remove("active");
       var t = $("#councilTable").DataTable({
         dom: "Bfrtip",
+
         buttons: [
           {
             extend: "copyHtml5",
