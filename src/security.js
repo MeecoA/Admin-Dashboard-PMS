@@ -43,7 +43,7 @@ function ajaxSec() {
             customize: function (win) {
               $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
               <img
-                src="https://lh6.bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
+                src="https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/header%2Fheader-print.png?alt=media&token=c86c9641-c200-4e94-89a1-c96e83c34a81"
                 alt=""
               />
               <br />
@@ -120,10 +120,10 @@ function ajaxSec() {
                   lastname: addSecurity.secLname.value,
                   middlename: addSecurity.secMname.value,
                   municipality: addSecurity.secMunicip.value,
-                  // password: addSecurity.secPassword.value,
                   phone: addSecurity.secPhone.value,
                   province: addSecurity.secProvince.value,
                   street: addSecurity.secStreet.value,
+                  isDisable: false,
                 })
                 .then(() => {
                   // alert("Security Created: ", cred.user);
@@ -266,7 +266,7 @@ function ajaxSec() {
               const docRef = fire.myDoc(fire.db, "security", docu.id);
               fire.myDeleteDoc(docRef).then(() => {
                 fire
-                  .myAddDoc(fire.archivesColRef, {
+                  .doSetDoc(fire.myDoc(fire.db, "archives", docu.id), {
                     barangay: docu.data().barangay,
                     position: docu.data().position,
                     email: docu.data().email,
@@ -277,6 +277,7 @@ function ajaxSec() {
                     phone: docu.data().phone,
                     province: docu.data().province,
                     street: docu.data().street,
+                    isDisable: true,
                   })
                   .then(() => {});
               });

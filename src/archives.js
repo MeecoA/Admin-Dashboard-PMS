@@ -112,7 +112,7 @@ loadArchives.addEventListener("click", () => {
               fire.myDeleteDoc(docRef).then(() => {
                 console.log("deleted successfully");
                 fire
-                  .myAddDoc(fire.secColRef, {
+                  .doSetDoc(fire.myDoc(fire.db, "security", docu.id), {
                     barangay: docu.data().barangay,
                     position: docu.data().position,
                     email: docu.data().email,
@@ -123,6 +123,7 @@ loadArchives.addEventListener("click", () => {
                     phone: docu.data().phone,
                     province: docu.data().province,
                     street: docu.data().street,
+                    isDisable: false,
                   })
                   .then(() => {});
               });

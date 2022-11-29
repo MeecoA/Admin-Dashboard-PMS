@@ -1403,7 +1403,8 @@ tfoot input {
   * {
     font-family: Arial, Helvetica, sans-serif;
   }
-  .header-container {
+  .header-container img {
+    height: 200px;
   }
   .title-print {
     font-size: 30px;
