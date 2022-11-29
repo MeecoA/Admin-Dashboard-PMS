@@ -416,6 +416,33 @@ a {
   grid-template-rows: 10px 10px;
   padding: 15px;
 }
+.items-times {
+  background-color: var(--items-color);
+  border-radius: 20px;
+  box-shadow: 0px 8px 15px 5px rgba(0, 0, 0, 0.25);
+  color: var(--text-color);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.time-in-title {
+  font-size: 30px;
+}
+.time-in-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 80%;
+  align-self: center;
+}
+.times {
+  font-size: 50px;
+}
+.user-logo {
+  display: flex;
+  justify-content: center;
+  margin-left: 100px;
+}
 
 .percent-box {
   display: flex;
@@ -547,10 +574,10 @@ a {
   padding: 10px;
 } */
 /* .table-body tr {
-  border-bottom: 1px solid;
+  border-bottom: 1px solid red solid red solid;
 }
 .tbody-council tr {
-  border-bottom: 1px solid;
+  border-bottom: 1px solid red solid red solid;
 }
 .tbody-council td {
   padding: 10px;
@@ -733,7 +760,7 @@ canvas {
 height: fit-content;
 } */
 /* .add-new-box {
-border: 1px solid red;
+border: 1px solid red solid red solid red;
 }
 .add-twoF-box{
 
@@ -797,7 +824,7 @@ border: 1px solid red;
   font-family: "Lexend Deca";
   text-decoration: none;
   color: var(--text-color);
-  border: 1px solid var(--border-color);
+  border: 1px solid red solid red solid var(--border-color);
 }
 
 #addSec:hover {
