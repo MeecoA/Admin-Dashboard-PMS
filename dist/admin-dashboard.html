@@ -236,35 +236,13 @@
               <div class="sidebar-logo">
                 <iconify-icon icon="bxs:car" width="36" height="36" class="iconifys"></iconify-icon>
               </div>
-              <div class="distri-title">DISTRIBUTION OF VEHICLES</div>
+              <div class="distri-title">User Records</div>
             </div>
             <div class="pie-flex">
               <div class="pie-container">
                 <div>
                   <canvas id="myChart"></canvas>
                 </div>
-                <script>
-                  const data = {
-                    labels: ["Recent", "Users", "Registered"],
-                    datasets: [
-                      {
-                        label: "My First Dataset",
-                        data: [125, 525, 125],
-                        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
-                        hoverOffset: 4,
-                      },
-                    ],
-                  };
-
-                  const config = {
-                    type: "doughnut",
-                    data: data,
-                    options: {},
-                  };
-                </script>
-                <script>
-                  const myChart = new Chart(document.getElementById("myChart"), config);
-                </script>
               </div>
             </div>
           </div>

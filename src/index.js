@@ -120,11 +120,6 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // dashboard scripts
-const userCount = document.querySelector("#userCount");
-
-onSnapshot(accQuery, (snapshot) => {
-  userCount.textContent = snapshot.size;
-});
 
 // Administrator Login
 let windowLocation = window.location.pathname;
@@ -312,6 +307,31 @@ async function displayLogs() {
       console.log("Number of length (TIME OUT): ", checkLengthTimeOut);
       timeIn.textContent = checkLengthTimeIn;
       timeOut.textContent = checkLengthTimeOut;
+      const userCount = document.querySelector("#userCount");
+
+      onSnapshot(accQuery, (snapshot) => {
+        userCount.textContent = snapshot.size;
+
+        const data = {
+          labels: ["Timed In", "Timed Out", "Registered Users", "Registered Vehicles"],
+          datasets: [
+            {
+              label: "My First Dataset",
+              data: [checkLengthTimeIn, checkLengthTimeOut, snapshot.size, 20],
+              backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 100, 86)"],
+              hoverOffset: 4,
+            },
+          ],
+        };
+
+        const config = {
+          type: "doughnut",
+          data: data,
+          options: {},
+        };
+
+        const myChart = new Chart(document.getElementById("myChart"), config);
+      });
       // Sort the data by time_scanned
       // logs.sort(function(a, b) {
       //     return new Date(a.time_scanned) - new Date(b.time_scanned);
