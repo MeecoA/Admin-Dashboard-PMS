@@ -17,14 +17,12 @@ async function displayVisitorLogs() {
             console.log("time_in", element[1]["time_in"]);
             console.log("time_out", element[1]["time_out"]);
 
-            element[1]["time_in"]["timestamp"] =
-              element[1]["time_in"]["timestamp"] === ""
-                ? ""
-                : new Date(element[1]["time_in"]["timestamp"]).toLocaleString("en-GB", { timeZone: "UTC" });
-            element[1]["time_out"]["timestamp"] =
-              element[1]["time_out"]["timestamp"] === ""
-                ? ""
-                : new Date(element[1]["time_out"]["timestamp"]).toLocaleString("en-GB", { timeZone: "UTC" });
+            element[1]['time_in']['timestamp'] = element[1]['time_in']['timestamp'] === null ? '-' : element[1]['time_in']['timestamp'].toDate().toLocaleString() + ", Gate #" + element[1]['time_in']['gate_number'];
+            
+            element[1]['time_out']['timestamp'] = element[1]['time_out']['timestamp'] === null ? '-' : element[1]['time_out']['timestamp'].toDate().toLocaleString() + ", Gate #" + element[1]['time_in']['gate_number'];
+            
+          
+            element[1]['time_out']['officer_uid'] = element[1]['time_out']['officer_uid'] === null ? '-' : element[1]['time_out']['officer_uid'];
 
             index += 1; //increment
             logs.push(element[1]);
@@ -41,11 +39,6 @@ async function displayVisitorLogs() {
           columns: [
             { data: "time_in.timestamp" },
             { data: "time_out.timestamp" },
-            {
-              data: (data, type, dataToSet) => {
-                return data.time_in.gate_number + ", " + data.time_out.gate_number;
-              },
-            },
             // {"data": "time_out.officer_uid"},
             {
               data: (data, type, dataToSet) => {

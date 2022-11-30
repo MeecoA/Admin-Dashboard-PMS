@@ -102,6 +102,12 @@ loadVehicles.addEventListener("click", () => {
               qrCode: entry.qrCode,
               entry: entry.use_types,
               registration_date: entry.createdAt.toDate().toDateString(),
+              classification: entry.classification,
+              code_category: entry.code_category,
+              license_code: entry.license_code,
+              color: entry.color,
+              year: entry.year,
+              remarks: entry.remarks,
             };
 
             // Check the vehicle image
@@ -185,10 +191,62 @@ loadVehicles.addEventListener("click", () => {
               const viewPlate = document.querySelector(".viewPlate");
               const viewModel = document.querySelector(".viewModel");
               const viewOwner = document.querySelector(".viewOwner");
+
+
+
+              const viewClassification = document.querySelector("#view-classification");
+              const viewColor = document.querySelector("#view-color");
+              const viewLicense_Category = document.querySelector("#view-license-category");
+              const viewYear = document.querySelector("#view-year");
+              const viewRemarks = document.querySelector("#view-remarks");
+
               const vehicleViewPic = document.querySelector("#vehicleViewPic");
               viewPlate.textContent = row.plate_number;
               viewModel.textContent = row.model;
               viewOwner.textContent = row.vehicle_owner;
+
+
+              // Check if the field is not yet defined
+              if(typeof(row.classification) === undefined || row.classification === null) {
+                viewClassification.textContent = "-";
+              }
+              else {
+                viewClassification.textContent = row.classification;
+              }
+              if(typeof(row.color) === undefined || row.color === null) {
+                viewColor.textContent = "-";
+              }
+              else {
+                viewColor.textContent = row.color;
+              }
+              if(typeof(row.code_category) === undefined || row.code_category === null) {
+                viewClassification.textContent = "-";
+              }
+              else {
+                viewLicense_Category.textContent = `${row.license_code}, ${row.code_category}`;
+                
+              }
+              if(typeof(row.year) === undefined || row.year === null) {
+                viewYear.textContent = "-";
+              }
+              else {
+                viewYear.textContent = row.year;
+              }
+              if(typeof(row.remarks) === undefined || row.remarks === null) {
+                viewRemarks.textContent = "-";
+              }
+              else {
+                viewRemarks.textContent = row.remarks;
+              }
+
+
+              // console.log("row.classification", row.classification);
+              // console.log("row.code_category", row.code_category);
+              // console.log("row.color", row.color);
+              // console.log("row.license_code", row.license_code);
+              // console.log("row.year", row.year);
+              // console.log("row.remarks", row.remarks);
+
               vehicleViewPic.src = row.image;
             });
           });
