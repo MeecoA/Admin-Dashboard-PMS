@@ -255,101 +255,6 @@ adminLogout.addEventListener("click", () => {
   });
 });
 
-async function displayLogs() {
-  const myQuery = query(collection(db, "logs"));
-  onSnapshot(myQuery, (snapshot) => {
-    //based on the query, //change this back!
-    const unsubCollection = onSnapshot(myQuery, (snapshot) => {
-      //based on the query
-      let logs = [];
-      let index = 0;
-      let checkLengthTimeIn = 0;
-      let checkLengthTimeOut = 0;
-
-      snapshot.docs.forEach((doc) => {
-        let unpackData = { ...doc.data() };
-        let objSize = Object.keys(unpackData).length;
-
-        // alert("Number of time in: ", objSize);
-        /** Change date formatting. */
-        Object.entries(unpackData).map((element, index) => {
-          if (objSize - 1 !== index) {
-            // ********************************
-            // element[1]['time_in']['timestamp'] = element[1]['time_in']['timestamp'] === '' ? '' : new Date(element[1]['time_in']['timestamp']).toLocaleString('en-GB',{timeZone:'UTC'})
-            // element[1]['time_out']['timestamp'] = element[1]['time_out']['timestamp'] === '' ? '' : new Date(element[1]['time_out']['timestamp']).toLocaleString('en-GB',{timeZone:'UTC'})
-            // element[1]['time_in']['timestamp'] = ""
-
-            checkLengthTimeIn += 1;
-            if (element[1]["time_out"]["timestamp"] !== null) {
-              checkLengthTimeOut += 1;
-            }
-
-            element[1]["time_out"]["timestamp"] =
-              element[1]["time_out"]["timestamp"] === null
-                ? "-"
-                : element[1]["time_out"]["timestamp"].toDate().toLocaleString();
-            element[1]["time_out"]["gate_number"] =
-              element[1]["time_out"]["gate_number"] === null ? "-" : element[1]["time_out"]["gate_number"];
-            element[1]["time_out"]["officer_uid"] =
-              element[1]["time_out"]["officer_uid"] === null ? "-" : element[1]["time_out"]["officer_uid"];
-
-            // element[1]['time_out']['timestamp'] = element[1]['time_out']['timestamp'] === null ? '' : element[1]['time_out']['timestamp'];
-            // ********************************
-
-            index += 1; //increment
-
-            logs.push(element[1]);
-          }
-        });
-      });
-      const timeIn = document.querySelector(".time-in-holder");
-      const timeOut = document.querySelector(".time-out-holder");
-      console.log(logs);
-      console.log("Number of length (TIME IN): ", checkLengthTimeIn);
-      console.log("Number of length (TIME OUT): ", checkLengthTimeOut);
-      timeIn.textContent = checkLengthTimeIn - checkLengthTimeOut;
-      timeOut.textContent = checkLengthTimeOut;
-      const userCount = document.querySelector("#userCount");
-
-      onSnapshot(accColRef, (snapshot) => {
-        userCount.textContent = snapshot.size;
-
-        const data = {
-          labels: ["Timed In", "Timed Out", "Registered Users", "Registered Vehicles"],
-          datasets: [
-            {
-              label: "My First Dataset",
-              data: [checkLengthTimeIn, checkLengthTimeOut, snapshot.size, countVehicle],
-              backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 100, 86)"],
-              hoverOffset: 4,
-            },
-          ],
-        };
-
-        const config = {
-          type: "doughnut",
-          data: data,
-          options: {},
-        };
-
-        const myChart = new Chart(document.getElementById("myChart"), config);
-      });
-      // Sort the data by time_scanned
-      // logs.sort(function(a, b) {
-      //     return new Date(a.time_scanned) - new Date(b.time_scanned);
-      // });
-
-      // logs.sort(function(a, b) {
-      //     return new Date(a.time_in.time_scanned) - new Date(b.time_in.time_scanned);
-      // });
-      // console.log('sorted:', logs);   //print the result
-
-      /** Display User DataTable */
-    }); //end of function
-  }); //end of snapshot function
-}
-displayLogs();
-
 let dataVehicle = [];
 const colRef = collection(db, "vehicle-information");
 const vehicleQuery = query(colRef);
@@ -473,3 +378,98 @@ async function getAccountInformationOwner(userUID) {
   }
   return vehicle;
 }
+
+async function displayLogs() {
+  const myQuery = query(collection(db, "logs"));
+  onSnapshot(myQuery, (snapshot) => {
+    //based on the query, //change this back!
+    const unsubCollection = onSnapshot(myQuery, (snapshot) => {
+      //based on the query
+      let logs = [];
+      let index = 0;
+      let checkLengthTimeIn = 0;
+      let checkLengthTimeOut = 0;
+
+      snapshot.docs.forEach((doc) => {
+        let unpackData = { ...doc.data() };
+        let objSize = Object.keys(unpackData).length;
+
+        // alert("Number of time in: ", objSize);
+        /** Change date formatting. */
+        Object.entries(unpackData).map((element, index) => {
+          if (objSize - 1 !== index) {
+            // ********************************
+            // element[1]['time_in']['timestamp'] = element[1]['time_in']['timestamp'] === '' ? '' : new Date(element[1]['time_in']['timestamp']).toLocaleString('en-GB',{timeZone:'UTC'})
+            // element[1]['time_out']['timestamp'] = element[1]['time_out']['timestamp'] === '' ? '' : new Date(element[1]['time_out']['timestamp']).toLocaleString('en-GB',{timeZone:'UTC'})
+            // element[1]['time_in']['timestamp'] = ""
+
+            checkLengthTimeIn += 1;
+            if (element[1]["time_out"]["timestamp"] !== null) {
+              checkLengthTimeOut += 1;
+            }
+
+            element[1]["time_out"]["timestamp"] =
+              element[1]["time_out"]["timestamp"] === null
+                ? "-"
+                : element[1]["time_out"]["timestamp"].toDate().toLocaleString();
+            element[1]["time_out"]["gate_number"] =
+              element[1]["time_out"]["gate_number"] === null ? "-" : element[1]["time_out"]["gate_number"];
+            element[1]["time_out"]["officer_uid"] =
+              element[1]["time_out"]["officer_uid"] === null ? "-" : element[1]["time_out"]["officer_uid"];
+
+            // element[1]['time_out']['timestamp'] = element[1]['time_out']['timestamp'] === null ? '' : element[1]['time_out']['timestamp'];
+            // ********************************
+
+            index += 1; //increment
+
+            logs.push(element[1]);
+          }
+        });
+      });
+      const timeIn = document.querySelector(".time-in-holder");
+      const timeOut = document.querySelector(".time-out-holder");
+      console.log(logs);
+      console.log("Number of length (TIME IN): ", checkLengthTimeIn);
+      console.log("Number of length (TIME OUT): ", checkLengthTimeOut);
+      timeIn.textContent = checkLengthTimeIn - checkLengthTimeOut;
+      timeOut.textContent = checkLengthTimeOut;
+      const userCount = document.querySelector("#userCount");
+
+      onSnapshot(accColRef, (snapshot) => {
+        userCount.textContent = snapshot.size;
+
+        const data = {
+          labels: ["Timed In", "Registered Users", "Registered Vehicles"],
+          datasets: [
+            {
+              label: "My First Dataset",
+              data: [checkLengthTimeIn, snapshot.size, countVehicle - 1],
+              backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 100, 86)"],
+              hoverOffset: 4,
+            },
+          ],
+        };
+
+        const config = {
+          type: "doughnut",
+          data: data,
+          options: {},
+        };
+
+        const myChart = new Chart(document.getElementById("myChart"), config);
+      });
+      // Sort the data by time_scanned
+      // logs.sort(function(a, b) {
+      //     return new Date(a.time_scanned) - new Date(b.time_scanned);
+      // });
+
+      // logs.sort(function(a, b) {
+      //     return new Date(a.time_in.time_scanned) - new Date(b.time_in.time_scanned);
+      // });
+      // console.log('sorted:', logs);   //print the result
+
+      /** Display User DataTable */
+    }); //end of function
+  }); //end of snapshot function
+}
+displayLogs();
