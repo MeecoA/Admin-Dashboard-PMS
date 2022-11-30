@@ -10,7 +10,7 @@ import * as fire from "../src/index";
 
     export const doLimit = limit;
     */
-export let countVehicle = 1;
+let countVehicle = 1;
 //AJAX START FOR FACULTY
 const loadVehicles = document.querySelector("#vehicLink");
 
@@ -129,7 +129,6 @@ loadVehicles.addEventListener("click", () => {
         if (currentIndex === docsSnap.docs.length) {
           // console.log('HAHAHA');
           // console.log('final vehicleInformation: ', dataVehicle);
-          const hello = "jello";
           jQuery((e) => {
             console.log("DataTable");
             var table = $("#vehictable").DataTable({

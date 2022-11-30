@@ -93,11 +93,13 @@ export const archivesColRef = collection(db, "archives");
 
 //queries
 const secQuery = query(secColRef, orderBy("createdAt"));
-const accQuery = query(accColRef, orderBy("createdAt"));
+export const accQuery = query(accColRef, where("category", "==", "FACULTY"));
+export const napQuery = query(accColRef, where("category", "==", "NAP"));
+
 export const announceQuery = query(announceColRef, orderBy("createdAt"));
 // const announceQuery = query(announceColRef, orderBy("createdAt"));
 // Side bar links
-
+let countVehicle = 1;
 // // Prevent going on to the others
 // // For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
 
@@ -305,11 +307,11 @@ async function displayLogs() {
       console.log(logs);
       console.log("Number of length (TIME IN): ", checkLengthTimeIn);
       console.log("Number of length (TIME OUT): ", checkLengthTimeOut);
-      timeIn.textContent = checkLengthTimeIn;
+      timeIn.textContent = checkLengthTimeIn - checkLengthTimeOut;
       timeOut.textContent = checkLengthTimeOut;
       const userCount = document.querySelector("#userCount");
 
-      onSnapshot(accQuery, (snapshot) => {
+      onSnapshot(accColRef, (snapshot) => {
         userCount.textContent = snapshot.size;
 
         const data = {
@@ -317,7 +319,7 @@ async function displayLogs() {
           datasets: [
             {
               label: "My First Dataset",
-              data: [checkLengthTimeIn, checkLengthTimeOut, snapshot.size, 20],
+              data: [checkLengthTimeIn, checkLengthTimeOut, snapshot.size, countVehicle],
               backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 100, 86)"],
               hoverOffset: 4,
             },
@@ -347,3 +349,127 @@ async function displayLogs() {
   }); //end of snapshot function
 }
 displayLogs();
+
+let dataVehicle = [];
+const colRef = collection(db, "vehicle-information");
+const vehicleQuery = query(colRef);
+
+let currentIndex = 0;
+
+const docsSnap = await getDocs(vehicleQuery);
+docsSnap.forEach(async (doc) => {
+  let vehicleData = { ...doc.data() };
+  let appendData = { a: "" };
+
+  const vehicle = Object.keys(vehicleData)
+    .filter((key) => key !== "vehicle_length")
+    // .filter((key) => key.includes("Name"))
+    .reduce((obj, key) => {
+      return Object.assign(obj, {
+        [key]: vehicleData[key],
+      });
+    }, {});
+
+  let ownerFullName = "";
+  let ownerProfilePic = "";
+
+  await getAccountInformationOwner(doc.id).then((evt) => {
+    // console.log('event: ', evt)
+    // If middle name is undefined
+    if (typeof evt["middle_name"] === "undefined" || evt["middle_name"].trim() === "") {
+      console.log(true);
+      evt["middle_name"] = " ";
+    }
+
+    // appendData['vehicle_owner'] = `${evt['last_name']} ${evt['first_name']} ${evt['middle_name'][0]}`;
+    ownerFullName = `${evt["last_name"]} ${evt["first_name"]} ${evt["middle_name"][0]}`;
+
+    // Check the profile picture.
+    if (typeof evt["profile_pic"] === "undefined" || evt["profile_pic"] === null) {
+      // appendData['profile_pic'] = 'https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fprofile-circled.svg?alt=media&token=5d172c80-6cc4-4ddd-841b-8877a6813010';
+      ownerProfilePic =
+        "https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fprofile-circled.svg?alt=media&token=5d172c80-6cc4-4ddd-841b-8877a6813010";
+    } else {
+      // appendData['profile_pic'] = evt['profile_pic'];
+      ownerProfilePic = evt["profile_pic"];
+    }
+  });
+
+  const vehicleKeys = Object.keys(vehicleData);
+  console.log("vehicleKeys", vehicleKeys);
+  vehicleKeys.forEach((data, index) => {
+    if (data !== "vehicle_length") {
+      const entry = vehicle[data];
+      console.log("this is the", entry);
+      // console.log('current entry: ', entry, ownerFullName);
+      console.log("current entry: ", ownerFullName);
+      // Id, Plate, Vehicle Owner, Vehicle(Images), Model, QR Code, Use Types
+
+      if (typeof entry.qrCode === "object") {
+        entry.qrCode = entry.qrCode.toString();
+      }
+
+      appendData = {
+        index: index,
+        uid: doc.id,
+        vehicle_owner: ownerFullName,
+        profile_pic: ownerProfilePic,
+        plate_number: data,
+        model: entry.model[0],
+        qrCode: entry.qrCode,
+        entry: entry.use_types,
+        registration_date: entry.createdAt.toDate().toDateString(),
+      };
+
+      // Check the vehicle image
+      if (typeof entry.images[1] === "undefined" || entry.images[1] === null) {
+        appendData["image"] =
+          "https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fvehicle-car-16-filled.svg?alt=media&token=8bb41423-816c-4de8-8a4c-22f597fd2b04";
+      } else {
+        appendData["image"] = entry.images[1];
+      }
+      console.log("appendData", appendData);
+
+      appendData["action"] = "";
+      appendData["index"] = countVehicle;
+      countVehicle += 1;
+
+      dataVehicle.push(appendData);
+      console.log("This is the count ", countVehicle);
+
+      const vehicleCount = document.querySelector("#vehicleCount");
+      vehicleCount.textContent = countVehicle - 1;
+    }
+  });
+  appendData = null; //delete from memory
+
+  // Display the table after all the neccessary are ready.
+  currentIndex = currentIndex + 1;
+  // console.log('::', currentIndex, docsSnap.docs);
+  if (currentIndex === docsSnap.docs.length) {
+    // console.log('HAHAHA');
+    // console.log('final vehicleInformation: ', dataVehicle);
+  } else {
+    // console.log('currentIndex: ' + currentIndex)
+    // console.log('currentIndex: ' + currentIndex)
+  }
+
+  // console.log(doc.id, Object.keys(vehicleData).toString(), vehicle);
+}); //end of docSnap
+
+async function getAccountInformationOwner(userUID) {
+  let vehicle = undefined;
+  const docVehicleActivity = doc(db, "account-information", userUID);
+  const docVSnap = await getDoc(docVehicleActivity);
+  if (docVSnap.exists()) {
+    // vehicle = Object.keys(docVSnap.data()).filter((e) => {
+    //     if(e !== 'vehicle_length') {
+    //         return e;
+    //     }
+    // }).toString();
+    return { ...docVSnap.data() };
+  } else {
+    vehicle = "N/A";
+  }
+  return vehicle;
+}

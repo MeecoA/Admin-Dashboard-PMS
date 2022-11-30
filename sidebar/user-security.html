@@ -220,29 +220,18 @@
     <form id="editSecForm">
       <div class="add-new-box">
         <div class="entry-title"><p>EDIT USER INFORMATION</p></div>
-        <div class="sec-pic-holder">
-          <div class="sec-pic" id="secUploadUpdate">
-            <label for="imgInputUpdate">
-              <p>
-                <img
-                  src="https://static.thenounproject.com/png/571343-200.png"
-                  id="outputUpdate"
-                  width="160"
-                  height="160"
-                  title="Upload image"
-                />
-              </p>
-            </label>
-            <input type="file" id="imgInputUpdate" class="custom-file-input" accept="image/*" />
+        <br />
+        <div class="position-holder">
+          <div class="labelbox">
+            <iconify-icon icon="bi:person-fill" style="color: black" width="25.5" height="25.5"></iconify-icon>
+            <p>Position:</p>
           </div>
-          <div class="position-holder">
-            <div>UPDATE PROFILE PICTURE</div>
-            <select name="position" id="secPosition">
-              <option value="" disabled selected>POSITION</option>
-              <option value="Officer">Officer</option>
-            </select>
-          </div>
+          <select name="position" id="secPosition">
+            <option value="" disabled selected>POSITION</option>
+            <option value="Officer">Officer</option>
+          </select>
         </div>
+
         <div class="add-sec-inputs">
           <div class="sec-input-box">
             <div class="labelbox">
@@ -342,6 +331,34 @@
       </div>
     </form>
   </div>
+
+  <div id="editmodalPhoto" class="modal" style="max-width: 972px">
+    <form id="editSecPhoto">
+      <div class="entry-title"><p>EDIT PROFILE PICTURE</p></div>
+      <div class="sec-pic-wrapper">
+        <div class="sec-pic" id="secUploadUpdate">
+          <label for="imgInputUpdate">
+            <p>
+              <img
+                src="https://static.thenounproject.com/png/571343-200.png"
+                id="outputUpdate"
+                width="200"
+                height="200"
+                title="Upload image"
+              />
+            </p>
+          </label>
+          <input type="file" id="imgInputUpdate" class="custom-file-input" accept="image/*" />
+        </div>
+      </div>
+      <br />
+      <div class="add-sec-buttons">
+        <a href="#" rel="modal:close"> <button class="sec-buttons cancel">CANCEL</button></a>
+        <button class="sec-buttons add-entry" type="submit">UPDATE ENTRY</button>
+      </div>
+    </form>
+  </div>
+
   <!-- end of edit modal -->
 
   <!-- edit modal for account  -->

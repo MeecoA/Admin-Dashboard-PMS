@@ -22,7 +22,7 @@ loadFaculty.addEventListener("click", () => {
       // generateTable();
 
       // rendering the data
-      var t = $("table.display").DataTable({
+      var t = $("#facultyTable").DataTable({
         dom: "Bfrtip",
 
         buttons: [
@@ -109,7 +109,7 @@ loadFaculty.addEventListener("click", () => {
         });
       }; //end of render sec
 
-      fire.myOnSnapshot(fire.accColRef, (snapshot) => {
+      fire.myOnSnapshot(fire.accQuery, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           let accs = [];
           if (change.type === "added") {

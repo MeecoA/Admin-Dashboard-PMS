@@ -861,6 +861,13 @@ border: 1px solid red solid red solid red;
 .add-new-box {
 }
 
+.sec-pic-wrapper {
+  display: flex;
+  justify-content: center;
+}
+#editmodalPhoto {
+  width: 600px !important;
+}
 .sec-pic-holder {
   display: grid;
   grid-template-columns: 1fr 5fr;

@@ -71,11 +71,18 @@ announceLink.addEventListener("click", () => {
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            // files: [addAnnounceForm.file1.value, addAnnounceForm.file2.value, addAnnounceForm.file3.value],
-            // thumbnail: addAnnounceForm.thumbnail.value,
+            files: [],
+            thumbnail: addAnnounceForm.thumbnail.value,
             createdAt: fire.myServerTimestamp,
           })
           .then(() => {
+            Swal.fire({
+              title: "Announcement",
+              text: "SUCCESSFULLY CREATED!",
+              icon: "success",
+            });
+
+            addAnnounceForm.reset();
             var metadata = {
               contentType: first_file.type,
             };
@@ -85,9 +92,33 @@ announceLink.addEventListener("click", () => {
             var metadata3 = {
               contentType: third_file.type,
             };
-            fire.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
-              console.log("UPLOADED file1");
-            });
+
+            const uploadTaskfile1 = fire.myUploadBytesResumable(fileRef1, first_file, metadata);
+
+            uploadTaskfile1.on(
+              "state_changed",
+              (snapshot) => {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log("Upload is " + progress + "% done");
+                switch (snapshot.state) {
+                  case "paused":
+                    console.log("Upload is paused");
+                    break;
+                  case "running":
+                    console.log("Upload is running");
+                    break;
+                }
+              },
+              (error) => {},
+              () => {
+                // Upload completed successfully, now we can get the download URL
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                  console.log("File available at", downloadURL);
+                });
+              }
+            );
+
             fire.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
               console.log("UPLOADED file2");
             });
@@ -98,13 +129,6 @@ announceLink.addEventListener("click", () => {
             fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
-            Swal.fire({
-              title: "Announcement",
-              text: "SUCCESSFULLY CREATED!",
-              icon: "success",
-            });
-
-            addAnnounceForm.reset();
           });
       });
 

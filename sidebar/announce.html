@@ -72,7 +72,59 @@
         </form>
       </div>
       <!-- end adding -->
-      <!-- end edit modal -->
+      <!-- start editing -->
+      <div id="editmodal" class="modal announce-modal">
+        <form id="announceForm" class="announceForm">
+          <div class="title-form">EDIT ANNOUNCEMENT</div>
+          <div class="title-container announce-items">
+            <label for="title">Title:</label>
+            <input type="text" name="title" required id="titleAnnounce" class="title-to" />
+          </div>
+          <div class="postedby-container announce-items">
+            <div class="posted by">
+              <label for="postedBy">Posted By: </label>
+              <select name="postedBy" id="postedBy" required>
+                <option value="" disabled selected>Select</option>
+                <option value="administrator">Administrator</option>
+                <option value="administrator">Security</option>
+              </select>
+            </div>
+          </div>
+          <div class="prio-container announce-items">
+            <label for="details">Priority:</label>
+            <input type="text" name="priority" required />
+          </div>
+          <div class="details-container announce-items">
+            <label for="details">Message: </label>
+            <textarea name="message" id="announceDetails" cols="30" rows="5" required></textarea>
+          </div>
+          <div class="sources-container announce-items">
+            <label for="sources">Sources:</label>
+            <input type="text" name="sources" required />
+          </div>
+          <div class="files-container announce-items">
+            <label for="files"> File:</label>
+            <input type="file" name="file1" id="filesAttachedEdit1" multiple="multiple" />
+          </div>
+          <div class="files-container announce-items">
+            <label for="files"> File:</label>
+            <input type="file" name="file2" id="filesAttachedEdit2" multiple="multiple" />
+          </div>
+          <div class="files-container announce-items">
+            <label for="files"> File:</label>
+            <input type="file" name="file3" id="filesAttachedEdit3" multiple="multiple" />
+          </div>
+          <div class="attach-container announce-items">
+            <label for="attachment"> Attachment(Picture):</label>
+            <input type="file" name="thumbnail" accept="image/*" id="thumbnailEdit" />
+          </div>
+          <div class="add-sec-buttons">
+            <a href="#" rel="modal:close"><button class="sec-buttons cancel">CANCEL</button> </a>
+            <button class="sec-buttons add-entry" type="submit">ADD ENTRY</button>
+          </div>
+        </form>
+      </div>
+      <!-- end editin -->
       <div class="box-table">
         <div class="ajax-container">
           <table id="announceTable" class="display">
@@ -123,10 +175,4 @@
       </div>
     </div>
   </body>
-  <script>
-    var loader = document.getElementById("preLoader1");
-    window.addEventListener("load", () => {
-      loader.style.display = "none";
-    });
-  </script>
 </html>

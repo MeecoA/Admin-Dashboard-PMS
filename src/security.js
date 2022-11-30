@@ -81,12 +81,6 @@ function ajaxSec() {
         image.src = URL.createObjectURL(e.target.files[0]);
       });
 
-      const imgInputUpdate = document.querySelector("#imgInputUpdate");
-      imgInputUpdate.addEventListener("change", (e) => {
-        var image = document.querySelector("#outputUpdate");
-        image.src = URL.createObjectURL(e.target.files[0]);
-      });
-
       //adding data
 
       const addSecurity = document.querySelector("#addSecForm");
@@ -228,8 +222,16 @@ function ajaxSec() {
                   <a href="#editmodal" rel="modal:open" class = 'edit-button'>
                   <iconify-icon
                   class="view-icon"
-                  icon="bxs:user-circle" " width="16" height="16" class="iconifys"></iconify-icon>Edit Info</a>
-  
+                  icon="bxs:user-circle" " width="16" height="16" class="iconifys"></iconify-icon>Update Info</a>
+
+                  <a href="#editmodalPhoto" rel="modal:open" class = 'edit-button-photo'>
+                  <iconify-icon
+                  class="view-icon"
+                  icon="gg:profile" width="16" height="16" class="iconifys"></iconify-icon>Update Photo</a>
+
+                 
+                 
+
                   <a href="#" class="delete-button">
                   <iconify-icon
                     class="view-icon"
@@ -288,6 +290,41 @@ function ajaxSec() {
         const editSecForm = document.querySelector("#editSecForm");
         const editSecBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);
         const secUpdateiew = document.querySelector("#outputUpdate");
+        const editPhoto = document.querySelector(`[data-id='${docu.id}'] .edit-button-photo`);
+        const editSecPhoto = document.querySelector("#editSecPhoto");
+
+        editPhoto.addEventListener("click", () => {
+          id = docu.id;
+          console.log(docu.id);
+          const imgInputUpdate = document.querySelector("#imgInputUpdate");
+          imgInputUpdate.addEventListener("change", (e) => {
+            var image = document.querySelector("#outputUpdate");
+            image.src = URL.createObjectURL(e.target.files[0]);
+          });
+          const storagePic = fire.storage;
+          const storageRef = fire.myStorageRef(storagePic, `secruity/${docu.id}/profilepic.jpg`);
+          fire.myGetDownloadUrl(storageRef).then((url) => {
+            console.log(url);
+            secUpdateiew.src = url;
+          });
+        });
+
+        editSecPhoto.addEventListener("submit", (e) => {
+          e.preventDefault();
+          console.log(docu.id);
+          const storage = fire.storage;
+          const storageRef = fire.myStorageRef(storage, `secruity/${docu.id}/profilepic.jpg`, id);
+          var file = document.querySelector("#imgInputUpdate").files[0];
+          fire.myUploadBytes(storageRef, file).then((snapshot) => {
+            console.log("UPLOADED");
+          });
+
+          Swal.fire({
+            text: "SUCCESSFULLY UPDATED!",
+            icon: "success",
+          });
+        });
+
         editSecBtn.addEventListener("click", () => {
           $("#editmodal").fadeIn();
           id = docu.id;
@@ -300,13 +337,6 @@ function ajaxSec() {
           editSecForm.secPhone.value = docu.data().phone;
           editSecForm.secProvince.value = docu.data().province;
           editSecForm.secStreet.value = docu.data().street;
-
-          const storagePic = fire.storage;
-          const storageRef = fire.myStorageRef(storagePic, `secruity/${docu.id}/profilepic.jpg`);
-          fire.myGetDownloadUrl(storageRef).then((url) => {
-            console.log(url);
-            secUpdateiew.src = url;
-          });
         });
 
         //for edit submit
@@ -328,6 +358,13 @@ function ajaxSec() {
               // email: editSecForm.secEmailNew.value,
             })
             .then(() => {
+              // const storage = fire.storage;
+              // const storageRef = fire.myStorageRef(storage, `secruity/${id}/profilepic.jpg`);
+              // var file = document.querySelector("#imgInputUpdate").files[0];
+              // fire.myUploadBytes(storageRef, file).then((snapshot) => {
+              //   console.log("UPLOADED");
+              // });
+
               Swal.fire({
                 text: "SUCCESSFULLY UPDATED!",
                 icon: "success",
@@ -335,47 +372,6 @@ function ajaxSec() {
               ajaxSec();
             });
         });
-        // // Edit Account -- email and password
-        // const editSecAccForm = document.querySelector("#editSecAccForm");
-        // const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editSecAccBtn`);
-        // const emailBox = document.querySelector(".email-box");
-        // const passBox = document.querySelector(".password-box");
-
-        // // script for edit account modal
-        // const changeEmailBtn = document.querySelector(".change-email-button");
-        // const changePassBtn = document.querySelector(".change-password-button");
-        // changeEmailBtn.addEventListener("click", () => {
-        //   passBox.classList.add("hide-change");
-        //   emailBox.classList.remove("hide-change");
-        //   changePassBtn.classList.remove("title-bg");
-        //   changeEmailBtn.classList.add("title-bg");
-        // });
-        // changePassBtn.addEventListener("click", () => {
-        //   passBox.classList.remove("hide-change");
-        //   emailBox.classList.add("hide-change");
-        //   changePassBtn.classList.add("title-bg");
-        //   changeEmailBtn.classList.remove("title-bg");
-        // });
-        // editSeccAccBtn.addEventListener("click", () => {
-        //   $("#editAccInfo").fadeIn();
-        //   passBox.classList.add("hide-change");
-        //   changeEmailBtn.classList.add("title-bg");
-        //   editSecAccForm.secEmail.value = docu.data().email;
-        //   editSecAccForm.secPassword.value = docu.data().password;
-        // });
-        // //for updating edit
-        // editSecAccForm.addEventListener("submit", (e) => {
-        //   e.preventDefault();
-        //   const docRef = fire.myDoc(fire.db, "security", id);
-        //   console.log("updated successfully");
-        //   fire
-        //     .myUpdateDoc(docRef, {
-        //       email: editSecAccForm.secEmailNew.value,
-        //     })
-        //     .then(() => {
-        //       ajaxSec();
-        //     });
-        // });
 
         const dropSec = document.querySelector(`[data-id='${docu.id}'] .drop-btn`);
         const dropSecContent = document.querySelector(`[data-id='${docu.id}'] #dropSec`);
@@ -409,6 +405,8 @@ function ajaxSec() {
           docu.data().province
         }`;
 
+        var myurl = "";
+
         viewButton.addEventListener("click", () => {
           $("#viewSec").fadeIn();
           //retrieivng the photo
@@ -417,8 +415,9 @@ function ajaxSec() {
           fire.myGetDownloadUrl(storageRef).then((url) => {
             console.log(url);
             secViewPic.src = url;
+            myurl = +`${url}`;
           });
-
+          console.log("helloo" + myurl);
           viewName.textContent = fullName;
           viewPos.textContent = docu.data().position;
           viewAddress.textContent = fullAddress;

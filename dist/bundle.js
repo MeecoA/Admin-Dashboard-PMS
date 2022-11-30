@@ -36042,12 +36042,15 @@ function __classPrivateFieldIn(state, receiver) {
 /*!*****************************!*\
   !*** ./src/announcement.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
 /* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_1__]);
+_src_index_js__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_1__.database);
@@ -36120,11 +36123,18 @@ announceLink.addEventListener("click", () => {
             priority: addAnnounceForm.priority.value,
             message: addAnnounceForm.message.value,
             sources: addAnnounceForm.sources.value,
-            // files: [addAnnounceForm.file1.value, addAnnounceForm.file2.value, addAnnounceForm.file3.value],
-            // thumbnail: addAnnounceForm.thumbnail.value,
+            files: [],
+            thumbnail: addAnnounceForm.thumbnail.value,
             createdAt: _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myServerTimestamp,
           })
           .then(() => {
+            Swal.fire({
+              title: "Announcement",
+              text: "SUCCESSFULLY CREATED!",
+              icon: "success",
+            });
+
+            addAnnounceForm.reset();
             var metadata = {
               contentType: first_file.type,
             };
@@ -36134,9 +36144,33 @@ announceLink.addEventListener("click", () => {
             var metadata3 = {
               contentType: third_file.type,
             };
-            _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
-              console.log("UPLOADED file1");
-            });
+
+            const uploadTaskfile1 = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytesResumable(fileRef1, first_file, metadata);
+
+            uploadTaskfile1.on(
+              "state_changed",
+              (snapshot) => {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log("Upload is " + progress + "% done");
+                switch (snapshot.state) {
+                  case "paused":
+                    console.log("Upload is paused");
+                    break;
+                  case "running":
+                    console.log("Upload is running");
+                    break;
+                }
+              },
+              (error) => {},
+              () => {
+                // Upload completed successfully, now we can get the download URL
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                  console.log("File available at", downloadURL);
+                });
+              }
+            );
+
             _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
               console.log("UPLOADED file2");
             });
@@ -36147,13 +36181,6 @@ announceLink.addEventListener("click", () => {
             _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
-            Swal.fire({
-              title: "Announcement",
-              text: "SUCCESSFULLY CREATED!",
-              icon: "success",
-            });
-
-            addAnnounceForm.reset();
           });
       });
 
@@ -36302,6 +36329,8 @@ announceLink.addEventListener("click", () => {
   xhttp.send();
 });
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -36309,12 +36338,15 @@ announceLink.addEventListener("click", () => {
 /*!*************************!*\
   !*** ./src/archives.js ***!
   \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
 /* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/index */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index__WEBPACK_IMPORTED_MODULE_1__]);
+_src_index__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 
@@ -36473,6 +36505,8 @@ loadArchives.addEventListener("click", () => {
 });
 //AJAX END FOR FACULTY
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -36480,11 +36514,14 @@ loadArchives.addEventListener("click", () => {
 /*!************************!*\
   !*** ./src/council.js ***!
   \************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_0__]);
+_src_index_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_0__.database);
 
@@ -36801,6 +36838,8 @@ function ajaxCouncil() {
   xhttp.send();
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -36808,11 +36847,14 @@ function ajaxCouncil() {
 /*!************************************!*\
   !*** ./src/displayActivityLogs.js ***!
   \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_index__WEBPACK_IMPORTED_MODULE_0__]);
+_index__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 async function displayActivityLogs() {
@@ -36867,6 +36909,8 @@ async function displayActivityLogs() {
 
 displayActivityLogs();
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -36874,12 +36918,15 @@ displayActivityLogs();
 /*!************************!*\
   !*** ./src/faculty.js ***!
   \************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
 /* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_1__]);
+_src_index_js__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_1__.database);
@@ -36904,7 +36951,7 @@ loadFaculty.addEventListener("click", () => {
       // generateTable();
 
       // rendering the data
-      var t = $("table.display").DataTable({
+      var t = $("#facultyTable").DataTable({
         dom: "Bfrtip",
 
         buttons: [
@@ -36991,7 +37038,7 @@ loadFaculty.addEventListener("click", () => {
         });
       }; //end of render sec
 
-      _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.accColRef, (snapshot) => {
+      _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.accQuery, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           let accs = [];
           if (change.type === "added") {
@@ -37007,6 +37054,8 @@ loadFaculty.addEventListener("click", () => {
 });
 //AJAX END FOR FACULTY
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -37014,12 +37063,14 @@ loadFaculty.addEventListener("click", () => {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "accColRef": () => (/* binding */ accColRef),
+/* harmony export */   "accQuery": () => (/* binding */ accQuery),
 /* harmony export */   "announceColRef": () => (/* binding */ announceColRef),
 /* harmony export */   "announceQuery": () => (/* binding */ announceQuery),
 /* harmony export */   "archivesColRef": () => (/* binding */ archivesColRef),
@@ -37053,6 +37104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "myUploadBytes": () => (/* binding */ myUploadBytes),
 /* harmony export */   "myUploadBytesResumable": () => (/* binding */ myUploadBytesResumable),
 /* harmony export */   "napColRef": () => (/* binding */ napColRef),
+/* harmony export */   "napQuery": () => (/* binding */ napQuery),
 /* harmony export */   "secColRef": () => (/* binding */ secColRef),
 /* harmony export */   "storage": () => (/* binding */ storage)
 /* harmony export */ });
@@ -37126,11 +37178,13 @@ const archivesColRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collec
 
 //queries
 const secQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(secColRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.orderBy)("createdAt"));
-const accQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accColRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.orderBy)("createdAt"));
+const accQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accColRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.where)("category", "==", "FACULTY"));
+const napQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(accColRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.where)("category", "==", "NAP"));
+
 const announceQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(announceColRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.orderBy)("createdAt"));
 // const announceQuery = query(announceColRef, orderBy("createdAt"));
 // Side bar links
-
+let countVehicle = 1;
 // // Prevent going on to the others
 // // For instance: User is not logged but there is an attempt on going to the Admin Dashboard and vice versa
 
@@ -37338,11 +37392,11 @@ async function displayLogs() {
       console.log(logs);
       console.log("Number of length (TIME IN): ", checkLengthTimeIn);
       console.log("Number of length (TIME OUT): ", checkLengthTimeOut);
-      timeIn.textContent = checkLengthTimeIn;
+      timeIn.textContent = checkLengthTimeIn - checkLengthTimeOut;
       timeOut.textContent = checkLengthTimeOut;
       const userCount = document.querySelector("#userCount");
 
-      (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.onSnapshot)(accQuery, (snapshot) => {
+      (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.onSnapshot)(accColRef, (snapshot) => {
         userCount.textContent = snapshot.size;
 
         const data = {
@@ -37350,7 +37404,7 @@ async function displayLogs() {
           datasets: [
             {
               label: "My First Dataset",
-              data: [checkLengthTimeIn, checkLengthTimeOut, snapshot.size, 20],
+              data: [checkLengthTimeIn, checkLengthTimeOut, snapshot.size, countVehicle],
               backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 100, 86)"],
               hoverOffset: 4,
             },
@@ -37381,6 +37435,132 @@ async function displayLogs() {
 }
 displayLogs();
 
+let dataVehicle = [];
+const colRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(db, "vehicle-information");
+const vehicleQuery = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(colRef);
+
+let currentIndex = 0;
+
+const docsSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDocs)(vehicleQuery);
+docsSnap.forEach(async (doc) => {
+  let vehicleData = { ...doc.data() };
+  let appendData = { a: "" };
+
+  const vehicle = Object.keys(vehicleData)
+    .filter((key) => key !== "vehicle_length")
+    // .filter((key) => key.includes("Name"))
+    .reduce((obj, key) => {
+      return Object.assign(obj, {
+        [key]: vehicleData[key],
+      });
+    }, {});
+
+  let ownerFullName = "";
+  let ownerProfilePic = "";
+
+  await getAccountInformationOwner(doc.id).then((evt) => {
+    // console.log('event: ', evt)
+    // If middle name is undefined
+    if (typeof evt["middle_name"] === "undefined" || evt["middle_name"].trim() === "") {
+      console.log(true);
+      evt["middle_name"] = " ";
+    }
+
+    // appendData['vehicle_owner'] = `${evt['last_name']} ${evt['first_name']} ${evt['middle_name'][0]}`;
+    ownerFullName = `${evt["last_name"]} ${evt["first_name"]} ${evt["middle_name"][0]}`;
+
+    // Check the profile picture.
+    if (typeof evt["profile_pic"] === "undefined" || evt["profile_pic"] === null) {
+      // appendData['profile_pic'] = 'https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fprofile-circled.svg?alt=media&token=5d172c80-6cc4-4ddd-841b-8877a6813010';
+      ownerProfilePic =
+        "https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fprofile-circled.svg?alt=media&token=5d172c80-6cc4-4ddd-841b-8877a6813010";
+    } else {
+      // appendData['profile_pic'] = evt['profile_pic'];
+      ownerProfilePic = evt["profile_pic"];
+    }
+  });
+
+  const vehicleKeys = Object.keys(vehicleData);
+  console.log("vehicleKeys", vehicleKeys);
+  vehicleKeys.forEach((data, index) => {
+    if (data !== "vehicle_length") {
+      const entry = vehicle[data];
+      console.log("this is the", entry);
+      // console.log('current entry: ', entry, ownerFullName);
+      console.log("current entry: ", ownerFullName);
+      // Id, Plate, Vehicle Owner, Vehicle(Images), Model, QR Code, Use Types
+
+      if (typeof entry.qrCode === "object") {
+        entry.qrCode = entry.qrCode.toString();
+      }
+
+      appendData = {
+        index: index,
+        uid: doc.id,
+        vehicle_owner: ownerFullName,
+        profile_pic: ownerProfilePic,
+        plate_number: data,
+        model: entry.model[0],
+        qrCode: entry.qrCode,
+        entry: entry.use_types,
+        registration_date: entry.createdAt.toDate().toDateString(),
+      };
+
+      // Check the vehicle image
+      if (typeof entry.images[1] === "undefined" || entry.images[1] === null) {
+        appendData["image"] =
+          "https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/placeholders%2Fvehicle-car-16-filled.svg?alt=media&token=8bb41423-816c-4de8-8a4c-22f597fd2b04";
+      } else {
+        appendData["image"] = entry.images[1];
+      }
+      console.log("appendData", appendData);
+
+      appendData["action"] = "";
+      appendData["index"] = countVehicle;
+      countVehicle += 1;
+
+      dataVehicle.push(appendData);
+      console.log("This is the count ", countVehicle);
+
+      const vehicleCount = document.querySelector("#vehicleCount");
+      vehicleCount.textContent = countVehicle - 1;
+    }
+  });
+  appendData = null; //delete from memory
+
+  // Display the table after all the neccessary are ready.
+  currentIndex = currentIndex + 1;
+  // console.log('::', currentIndex, docsSnap.docs);
+  if (currentIndex === docsSnap.docs.length) {
+    // console.log('HAHAHA');
+    // console.log('final vehicleInformation: ', dataVehicle);
+  } else {
+    // console.log('currentIndex: ' + currentIndex)
+    // console.log('currentIndex: ' + currentIndex)
+  }
+
+  // console.log(doc.id, Object.keys(vehicleData).toString(), vehicle);
+}); //end of docSnap
+
+async function getAccountInformationOwner(userUID) {
+  let vehicle = undefined;
+  const docVehicleActivity = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "account-information", userUID);
+  const docVSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDoc)(docVehicleActivity);
+  if (docVSnap.exists()) {
+    // vehicle = Object.keys(docVSnap.data()).filter((e) => {
+    //     if(e !== 'vehicle_length') {
+    //         return e;
+    //     }
+    // }).toString();
+    return { ...docVSnap.data() };
+  } else {
+    vehicle = "N/A";
+  }
+  return vehicle;
+}
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ }),
 
@@ -37388,11 +37568,14 @@ displayLogs();
 /*!********************!*\
   !*** ./src/nap.js ***!
   \********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_0__]);
+_src_index_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_0__.database);
 
@@ -37463,220 +37646,47 @@ function ajaxNap() {
       const buttonsColvis = document.querySelector(".buttons-colvis");
       buttonsColvis.textContent = "Filter By Category";
 
-      const imgInputNap = document.querySelector("#imgInputNap");
-      imgInputNap.addEventListener("change", (e) => {
-        var image = document.querySelector("#outputNap");
-        image.src = URL.createObjectURL(e.target.files[0]);
-      });
-
-      const addNapForm = document.querySelector("#addNapForm");
-      addNapForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        //adding council
-        const email = addNapForm.email.value;
-        const password = addNapForm.password.value;
-        _src_index_js__WEBPACK_IMPORTED_MODULE_0__.doAuth(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.auth, email, password).then((cred) => {
-          const userNap = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.myCollection(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "nonacademic"), cred.user.uid);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.doSetDoc(userNap, {
-              firstname: addNapForm.fname.value,
-              lastname: addNapForm.lname.value,
-              middlename: addNapForm.mname.value,
-              email: addNapForm.email.value,
-              phone: addNapForm.phone.value,
-              idnum: addNapForm.idnum.value,
-            })
-            .then(() => {
-              swal({
-                text: "SUCCESSFULLY CREATED!",
-                icon: "success",
-              });
-              addNapForm.reset();
-              var image = document.querySelector("#output");
-              image.src = "https://static.thenounproject.com/png/571343-200.png";
-            });
-          const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
-          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `nonacademic/${cred.user.uid}/profilepic.jpg`);
-          var file = document.querySelector("#imgInputNap").files[0];
-          var name = file.name;
-          var metadata = {
-            contentType: file.type,
-          };
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(storageRef, file).then((snapshot) => {
-            console.log("UPLOADED");
-          });
-        });
-      }); //end adding data
-      // creating table data for council
-      let iD;
-      const napTable = document.querySelector(".tbody-nap");
-      const renderNap = (docu) => {
-        var tableTr = t.row
+      const renderNap = (doc) => {
+        var temp = t.row
           .add([
-            docu.id,
-            `${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}`,
-            docu.data().idnum,
-            docu.data().email,
-            docu.data().phone,
-            `<div class="drop-container-nap">
-            <button class="drop-btn-nap">ACTIONS
-            <iconify-icon icon="bxs:down-arrow" class="iconifys" width="12" height="12"></iconify-icon>
-            </button>
-            <div class="drop-content-nap" id="dropNap">
-              <a href="#viewNap" rel="modal:open" class="view-nap-button"><iconify-icon
-              class="view-icon"
-              icon="bi:eye-fill"
-              class="iconifys"
-              width="16"
-              height="16"
-            ></iconify-icon>View</a>
-
-                <a href="#editmodal" rel="modal:open" class = 'edit-button'>
-                <iconify-icon
-                class="view-icon"
-                icon="bxs:user-circle" class="iconifys" width="16" height="16"></iconify-icon>Edit Info</a>
-
-             
-
-                <a href="#" class="delete-button-nap">
-                <iconify-icon
+            doc.id,
+            `${doc.data().first_name} ${doc.data().last_name}`,
+            doc.data().id_number,
+            doc.data().college,
+            doc.data().is_activated,
+            doc.data().phone_num,
+            `<button class="button-vehicles">
+                  <a href="#viewFaculty" rel="modal:open" class="view-faculty-button"><iconify-icon
                   class="view-icon"
-                  icon="ep:delete-filled"
+                  icon="bi:eye-fill"
                   class="iconifys"
                   width="16"
                   height="16"
                 ></iconify-icon>
-                Delete User</a>
-            </div>
-          </div>
-        `,
+                <div>View</div>
+                </a></button>
+            `,
           ])
           .draw(false)
           .node();
-        $(tableTr).attr("data-id", `${docu.id}`);
+        $(temp).attr("data-id", `${doc.id}`);
+        const viewFacultyBtn = document.querySelector(`[data-id='${doc.id}'] .view-faculty-button`);
 
-        const napDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button-nap`);
-        napDelete.addEventListener("click", () => {
-          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "nonacademic", docu.id);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDeleteDoc(docRef).then(() => {
-            console.log("deleted successfully");
-          });
-        }); //end of deleting data
+        viewFacultyBtn.addEventListener("click", () => {
+          $("#viewFaculty").fadeIn();
+          const viewFacultyName = document.querySelector(".viewFacultyName");
+          const viewCollege = document.querySelector(".view-college");
+          const viewIdNum = document.querySelector(".viewIdNum");
+          const viewPhoneNum = document.querySelector(".viewPhoneNum");
 
-        //editing data -- edit useer information only
-        const editNapForm = document.querySelector("#editNapForm");
-        const editNapBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);
-
-        editNapBtn.addEventListener("click", () => {
-          iD = docu.id;
-
-          editNapForm.fname.value = docu.data().firstname;
-          editNapForm.lname.value = docu.data().lastname;
-          editNapForm.mname.value = docu.data().middlename;
-          editNapForm.phone.value = docu.data().phone;
-          editNapForm.idnum.value = docu.data().idnum;
+          viewFacultyName.textContent = `${doc.data().first_name} ${doc.data().last_name}`;
+          viewCollege.textContent = doc.data().college;
+          viewIdNum.textContent = doc.data().id_number;
+          viewPhoneNum.textContent = doc.data().phone_num;
         });
+      }; //en
 
-        //for edit submit
-        editNapForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.db, "nonacademic", iD);
-
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUpdateDoc(docRef, {
-              firstname: editNapForm.fname.value,
-              lastname: editNapForm.lname.value,
-              middlename: editNapForm.mname.value,
-              phone: editNapForm.phone.value,
-              idnum: editNapForm.idnum.value,
-            })
-            .then(() => {
-              swal({
-                text: "SUCCESSFULLY UPDATED!",
-                icon: "success",
-              });
-              ajaxNap();
-            });
-        });
-
-        const dropNap = document.querySelector(`[data-id='${docu.id}'] .drop-btn-nap`);
-        const dropNapContent = document.querySelector(`[data-id='${docu.id}'] #dropNap`);
-        dropNap.addEventListener("click", () => {
-          dropNapContent.classList.toggle("show");
-        });
-        //dropdown - if user clicks outside of the dropdown
-        window.onclick = function (event) {
-          if (!event.target.matches(".drop-btn-nap")) {
-            var dropdowns = document.getElementsByClassName("drop-content-nap");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-              var openDropdown = dropdowns[i];
-              if (openDropdown.classList.contains("show")) {
-                openDropdown.classList.remove("show");
-              }
-            }
-          }
-        };
-        // // Edit Account -- email and password
-        // const editNapAccInfo = document.querySelector("#editNapAccForm");
-        // const editNapAccBtn = document.querySelector(`[data-id='${docu.id}'] .editNapAccBtn`);
-        // const emailBox = document.querySelector(".email-box");
-        // const passBox = document.querySelector(".password-box");
-
-        // // script for edit account modal
-        // const changeEmailBtn = document.querySelector(".change-email-button");
-        // const changePassBtn = document.querySelector(".change-password-button");
-        // changeEmailBtn.addEventListener("click", () => {
-        //   passBox.classList.add("hide-change");
-        //   emailBox.classList.remove("hide-change");
-        //   changePassBtn.classList.remove("title-bg");
-        //   changeEmailBtn.classList.add("title-bg");
-        // });
-        // changePassBtn.addEventListener("click", () => {
-        //   passBox.classList.remove("hide-change");
-        //   emailBox.classList.add("hide-change");
-        //   changePassBtn.classList.add("title-bg");
-        //   changeEmailBtn.classList.remove("title-bg");
-        // });
-        // editNapAccBtn.addEventListener("click", () => {
-        //   passBox.classList.add("hide-change");
-        //   changeEmailBtn.classList.add("title-bg");
-        //   editNapAccInfo.napEmail.value = docu.data().email;
-        //   editNapAccInfo.napPassword.value = docu.data().password;
-        // });
-        // //for updating edit
-        // editNapAccInfo.addEventListener("submit", (e) => {
-        //   e.preventDefault();
-        //   const docRef2 = myDoc(fire.db, "admin-council", iD);
-        //   fire
-        //     .myUpdateDoc(docRef2, {
-        //       email: editNapAccInfo.napEmailNew.value,
-        //     })
-        //     .then(() => {});
-        // });
-        // // end upate
-        //viewing the council information
-        const napViewPic = document.querySelector("#napViewPic");
-        const viewName = document.querySelector(".viewNapName");
-        const viewPhone = document.querySelector(".viewNapPhone");
-        const viewEmail = document.querySelector(".viewNapEmail");
-        const viewNapButton = document.querySelector(`[data-id='${docu.id}'] .view-nap-button`);
-        const fullName = `${docu.data().firstname} ${docu.data().middlename} ${docu.data().lastname}`;
-        viewNapButton.addEventListener("click", () => {
-          //retrieving the photo
-          const storagePic = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
-          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storagePic, `nonacademic/${docu.id}/profilepic.jpg`);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(storageRef).then((url) => {
-            console.log(url);
-            napViewPic.src = url;
-          });
-
-          viewName.textContent = fullName;
-          viewPhone.textContent = docu.data().phone;
-          viewEmail.textContent = docu.data().email;
-        });
-
-        //end viewing
-      }; //end of renderCouncil
-      _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.napColRef, (snapshot) => {
+      _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_0__.napQuery, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             renderNap(change.doc);
@@ -37699,6 +37709,8 @@ function ajaxNap() {
   xhttp.send();
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -37706,11 +37718,14 @@ function ajaxNap() {
 /*!*************************!*\
   !*** ./src/security.js ***!
   \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_0__]);
+_src_index_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_0__.database);
 
@@ -37791,12 +37806,6 @@ function ajaxSec() {
       const imgInput = document.querySelector("#imgInput");
       imgInput.addEventListener("change", (e) => {
         var image = document.querySelector("#output");
-        image.src = URL.createObjectURL(e.target.files[0]);
-      });
-
-      const imgInputUpdate = document.querySelector("#imgInputUpdate");
-      imgInputUpdate.addEventListener("change", (e) => {
-        var image = document.querySelector("#outputUpdate");
         image.src = URL.createObjectURL(e.target.files[0]);
       });
 
@@ -37939,8 +37948,16 @@ function ajaxSec() {
                   <a href="#editmodal" rel="modal:open" class = 'edit-button'>
                   <iconify-icon
                   class="view-icon"
-                  icon="bxs:user-circle" " width="16" height="16" class="iconifys"></iconify-icon>Edit Info</a>
-  
+                  icon="bxs:user-circle" " width="16" height="16" class="iconifys"></iconify-icon>Update Info</a>
+
+                  <a href="#editmodalPhoto" rel="modal:open" class = 'edit-button-photo'>
+                  <iconify-icon
+                  class="view-icon"
+                  icon="gg:profile" width="16" height="16" class="iconifys"></iconify-icon>Update Photo</a>
+
+                 
+                 
+
                   <a href="#" class="delete-button">
                   <iconify-icon
                     class="view-icon"
@@ -37998,6 +38015,41 @@ function ajaxSec() {
         const editSecForm = document.querySelector("#editSecForm");
         const editSecBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);
         const secUpdateiew = document.querySelector("#outputUpdate");
+        const editPhoto = document.querySelector(`[data-id='${docu.id}'] .edit-button-photo`);
+        const editSecPhoto = document.querySelector("#editSecPhoto");
+
+        editPhoto.addEventListener("click", () => {
+          id = docu.id;
+          console.log(docu.id);
+          const imgInputUpdate = document.querySelector("#imgInputUpdate");
+          imgInputUpdate.addEventListener("change", (e) => {
+            var image = document.querySelector("#outputUpdate");
+            image.src = URL.createObjectURL(e.target.files[0]);
+          });
+          const storagePic = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
+          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storagePic, `secruity/${docu.id}/profilepic.jpg`);
+          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(storageRef).then((url) => {
+            console.log(url);
+            secUpdateiew.src = url;
+          });
+        });
+
+        editSecPhoto.addEventListener("submit", (e) => {
+          e.preventDefault();
+          console.log(docu.id);
+          const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
+          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `secruity/${docu.id}/profilepic.jpg`, id);
+          var file = document.querySelector("#imgInputUpdate").files[0];
+          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(storageRef, file).then((snapshot) => {
+            console.log("UPLOADED");
+          });
+
+          Swal.fire({
+            text: "SUCCESSFULLY UPDATED!",
+            icon: "success",
+          });
+        });
+
         editSecBtn.addEventListener("click", () => {
           $("#editmodal").fadeIn();
           id = docu.id;
@@ -38010,13 +38062,6 @@ function ajaxSec() {
           editSecForm.secPhone.value = docu.data().phone;
           editSecForm.secProvince.value = docu.data().province;
           editSecForm.secStreet.value = docu.data().street;
-
-          const storagePic = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
-          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storagePic, `secruity/${docu.id}/profilepic.jpg`);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(storageRef).then((url) => {
-            console.log(url);
-            secUpdateiew.src = url;
-          });
         });
 
         //for edit submit
@@ -38037,6 +38082,13 @@ function ajaxSec() {
               // email: editSecForm.secEmailNew.value,
             })
             .then(() => {
+              // const storage = fire.storage;
+              // const storageRef = fire.myStorageRef(storage, `secruity/${id}/profilepic.jpg`);
+              // var file = document.querySelector("#imgInputUpdate").files[0];
+              // fire.myUploadBytes(storageRef, file).then((snapshot) => {
+              //   console.log("UPLOADED");
+              // });
+
               Swal.fire({
                 text: "SUCCESSFULLY UPDATED!",
                 icon: "success",
@@ -38044,47 +38096,6 @@ function ajaxSec() {
               ajaxSec();
             });
         });
-        // // Edit Account -- email and password
-        // const editSecAccForm = document.querySelector("#editSecAccForm");
-        // const editSeccAccBtn = document.querySelector(`[data-id='${docu.id}'] .editSecAccBtn`);
-        // const emailBox = document.querySelector(".email-box");
-        // const passBox = document.querySelector(".password-box");
-
-        // // script for edit account modal
-        // const changeEmailBtn = document.querySelector(".change-email-button");
-        // const changePassBtn = document.querySelector(".change-password-button");
-        // changeEmailBtn.addEventListener("click", () => {
-        //   passBox.classList.add("hide-change");
-        //   emailBox.classList.remove("hide-change");
-        //   changePassBtn.classList.remove("title-bg");
-        //   changeEmailBtn.classList.add("title-bg");
-        // });
-        // changePassBtn.addEventListener("click", () => {
-        //   passBox.classList.remove("hide-change");
-        //   emailBox.classList.add("hide-change");
-        //   changePassBtn.classList.add("title-bg");
-        //   changeEmailBtn.classList.remove("title-bg");
-        // });
-        // editSeccAccBtn.addEventListener("click", () => {
-        //   $("#editAccInfo").fadeIn();
-        //   passBox.classList.add("hide-change");
-        //   changeEmailBtn.classList.add("title-bg");
-        //   editSecAccForm.secEmail.value = docu.data().email;
-        //   editSecAccForm.secPassword.value = docu.data().password;
-        // });
-        // //for updating edit
-        // editSecAccForm.addEventListener("submit", (e) => {
-        //   e.preventDefault();
-        //   const docRef = fire.myDoc(fire.db, "security", id);
-        //   console.log("updated successfully");
-        //   fire
-        //     .myUpdateDoc(docRef, {
-        //       email: editSecAccForm.secEmailNew.value,
-        //     })
-        //     .then(() => {
-        //       ajaxSec();
-        //     });
-        // });
 
         const dropSec = document.querySelector(`[data-id='${docu.id}'] .drop-btn`);
         const dropSecContent = document.querySelector(`[data-id='${docu.id}'] #dropSec`);
@@ -38118,6 +38129,8 @@ function ajaxSec() {
           docu.data().province
         }`;
 
+        var myurl = "";
+
         viewButton.addEventListener("click", () => {
           $("#viewSec").fadeIn();
           //retrieivng the photo
@@ -38126,8 +38139,9 @@ function ajaxSec() {
           _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myGetDownloadUrl(storageRef).then((url) => {
             console.log(url);
             secViewPic.src = url;
+            myurl = +`${url}`;
           });
-
+          console.log("helloo" + myurl);
           viewName.textContent = fullName;
           viewPos.textContent = docu.data().position;
           viewAddress.textContent = fullAddress;
@@ -38166,6 +38180,8 @@ function ajaxSec() {
 }
 //AJAX END FOR SECURITY
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -38173,11 +38189,14 @@ function ajaxSec() {
 /*!*************************!*\
   !*** ./src/userLogs.js ***!
   \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_0__]);
+_src_index_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_0__.database);
 
@@ -38345,6 +38364,8 @@ loadLogs.addEventListener("click", () => {
   xhttp.send();
 }); //ajax end for user logs
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -38352,14 +38373,14 @@ loadLogs.addEventListener("click", () => {
 /*!************************!*\
   !*** ./src/vehicle.js ***!
   \************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "countVehicle": () => (/* binding */ countVehicle)
-/* harmony export */ });
 /* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index__WEBPACK_IMPORTED_MODULE_0__]);
+_src_index__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 /* 
@@ -38491,7 +38512,6 @@ loadVehicles.addEventListener("click", () => {
         if (currentIndex === docsSnap.docs.length) {
           // console.log('HAHAHA');
           // console.log('final vehicleInformation: ', dataVehicle);
-          const hello = "jello";
           jQuery((e) => {
             console.log("DataTable");
             var table = $("#vehictable").DataTable({
@@ -38588,6 +38608,8 @@ loadVehicles.addEventListener("click", () => {
 });
 //AJAX END FOR FACULTY
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -38595,11 +38617,14 @@ loadVehicles.addEventListener("click", () => {
 /*!****************************!*\
   !*** ./src/visitorLogs.js ***!
   \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_0__]);
+_src_index_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_0__.database);
 
@@ -38741,6 +38766,8 @@ loadVisitors.addEventListener("click", () => {
   xhttp.send();
 }); //ajax end for visitor logs
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -40708,6 +40735,75 @@ const unwrap = (value) => reverseTransformCache.get(value);
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 		var resolveQueue = (queue) => {
+/******/ 			if(queue && !queue.d) {
+/******/ 				queue.d = 1;
+/******/ 				queue.forEach((fn) => (fn.r--));
+/******/ 				queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 			}
+/******/ 		}
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackQueues]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [];
+/******/ 					queue.d = 0;
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						resolveQueue(queue);
+/******/ 					}, (e) => {
+/******/ 						obj[webpackError] = e;
+/******/ 						resolveQueue(queue);
+/******/ 					});
+/******/ 					var obj = {};
+/******/ 					obj[webpackQueues] = (fn) => (fn(queue));
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			var ret = {};
+/******/ 			ret[webpackQueues] = x => {};
+/******/ 			ret[webpackExports] = dep;
+/******/ 			return ret;
+/******/ 		}));
+/******/ 		__webpack_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue;
+/******/ 			hasAwait && ((queue = []).d = 1);
+/******/ 			var depQueues = new Set();
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = resolve;
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn;
+/******/ 				var getResult = () => (currentDeps.map((d) => {
+/******/ 					if(d[webpackError]) throw d[webpackError];
+/******/ 					return d[webpackExports];
+/******/ 				}))
+/******/ 				var promise = new Promise((resolve) => {
+/******/ 					fn = () => (resolve(getResult));
+/******/ 					fn.r = 0;
+/******/ 					var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 					currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
+/******/ 				});
+/******/ 				return fn.r ? promise : getResult();
+/******/ 			}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
+/******/ 			queue && (queue.d = 0);
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
