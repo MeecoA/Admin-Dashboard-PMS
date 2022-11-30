@@ -1233,7 +1233,7 @@ border: 1px solid red solid red solid red;
   width: 959px;
 }
 #announceForm,
-#editAnnounceForm {
+#announceEditForm {
   display: flex;
   flex-direction: column;
   font-size: 30px;
@@ -1317,6 +1317,34 @@ border: 1px solid red solid red solid red;
   padding-right: 10px;
   border-radius: 20px;
   background-color: red;
+  color: white;
+  font-family: "Lexend Deca";
+}
+.high-important {
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 20px;
+  background-color: red;
+  color: white;
+  font-family: "Lexend Deca";
+}
+.normal-important {
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 20px;
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+  font-family: "Lexend Deca";
+}
+.low-important {
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 20px;
+  background-color: green;
   color: white;
   font-family: "Lexend Deca";
 }

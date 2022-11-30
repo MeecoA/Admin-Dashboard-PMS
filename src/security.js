@@ -313,7 +313,7 @@ function ajaxSec() {
           e.preventDefault();
           console.log(docu.id);
           const storage = fire.storage;
-          const storageRef = fire.myStorageRef(storage, `secruity/${docu.id}/profilepic.jpg`, id);
+          const storageRef = fire.myStorageRef(storage, `secruity/${id}/profilepic.jpg`);
           var file = document.querySelector("#imgInputUpdate").files[0];
           fire.myUploadBytes(storageRef, file).then((snapshot) => {
             console.log("UPLOADED");

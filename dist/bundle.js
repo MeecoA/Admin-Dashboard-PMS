@@ -36059,6 +36059,10 @@ console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_1__.database);
 const announceLink = document.querySelector("#announceLink");
 
 announceLink.addEventListener("click", () => {
+  ajaxAnnounce();
+});
+
+function ajaxAnnounce() {
   headerTitle.textContent = "Announcements";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -36144,32 +36148,9 @@ announceLink.addEventListener("click", () => {
             var metadata3 = {
               contentType: third_file.type,
             };
-
-            const uploadTaskfile1 = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytesResumable(fileRef1, first_file, metadata);
-
-            uploadTaskfile1.on(
-              "state_changed",
-              (snapshot) => {
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log("Upload is " + progress + "% done");
-                switch (snapshot.state) {
-                  case "paused":
-                    console.log("Upload is paused");
-                    break;
-                  case "running":
-                    console.log("Upload is running");
-                    break;
-                }
-              },
-              (error) => {},
-              () => {
-                // Upload completed successfully, now we can get the download URL
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                  console.log("File available at", downloadURL);
-                });
-              }
-            );
+            _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(fileRef1, first_file, metadata2).then((snapshot) => {
+              console.log("UPLOADED file2");
+            });
 
             _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
               console.log("UPLOADED file2");
@@ -36185,12 +36166,13 @@ announceLink.addEventListener("click", () => {
       });
 
       const announceTBody = document.querySelector(".table-body-announce");
+      let id;
       const renderAnnounce = (docu) => {
         var tableTr = t.row
           .add([
             docu.id,
             docu.data().title,
-            docu.data().createdAt.toDate().toDateString(),
+            docu.data().createdAt.toDate().toLocaleString(),
             docu.data().posted_by,
             docu.data().priority,
             `<div class="drop-container-announce">
@@ -36256,7 +36238,46 @@ announceLink.addEventListener("click", () => {
             console.log("deleted successfully");
           });
         }); //end of deleting data
+        // editing announcement
 
+        const ediBtnAnnounce = document.querySelector(`[data-id='${docu.id}'] .edit-button-announce`);
+        const announceEditForm = document.querySelector("#announceEditForm");
+        ediBtnAnnounce.addEventListener("click", () => {
+          id = docu.id;
+          announceEditForm.title.value = docu.data().title;
+          announceEditForm.postedBy.value = docu.data().posted_by;
+          announceEditForm.priority.value = docu.data().priority;
+          announceEditForm.message.value = docu.data().message;
+          announceEditForm.sources.value = docu.data().sources;
+        });
+
+        announceEditForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.db, "announcements", id);
+
+          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUpdateDoc(docRef, {
+              title: announceEditForm.title.value,
+              postedBy: announceEditForm.postedBy.value,
+              priority: announceEditForm.priority.value,
+              message: announceEditForm.message.value,
+              sources: announceEditForm.sources.value,
+            })
+            .then(() => {
+              // const storage = fire.storage;
+              // const storageRef = fire.myStorageRef(storage, `secruity/${id}/profilepic.jpg`);
+              // var file = document.querySelector("#imgInputUpdate").files[0];
+              // fire.myUploadBytes(storageRef, file).then((snapshot) => {
+              //   console.log("UPLOADED");
+              // });
+
+              Swal.fire({
+                text: "SUCCESSFULLY UPDATED!",
+                icon: "success",
+              });
+              ajaxAnnounce();
+            });
+        });
+        //end editing announcement
         //viewing announcement
         const announceViewPic = document.querySelector("#announceViewPic");
         const viewPrio = document.querySelector(".viewPrio");
@@ -36274,8 +36295,26 @@ announceLink.addEventListener("click", () => {
           $("#viewAnnounce").fadeIn();
           viewAnnounceTitle.textContent = docu.data().title;
           viewMessage.textContent = docu.data().message;
-          viewPrio.textContent = docu.data().priority;
-          viewPostedOn.textContent = docu.data().posted_on;
+          if (docu.data().priority === "Importance: High") {
+            viewPrio.classList.add("high-important");
+            viewPrio.classList.remove("normal-important");
+            viewPrio.classList.remove("low-important");
+            viewPrio.textContent = docu.data().priority;
+          }
+          if (docu.data().priority === "Importance: Normal") {
+            viewPrio.classList.remove("high-important");
+            viewPrio.classList.add("normal-important");
+            viewPrio.classList.remove("low-important");
+            viewPrio.textContent = docu.data().priority;
+          }
+          if (docu.data().priority === "Importance: Low") {
+            viewPrio.classList.remove("high-important");
+            viewPrio.classList.remove("normal-important");
+            viewPrio.classList.add("low-important");
+            viewPrio.textContent = docu.data().priority;
+          }
+
+          viewPostedOn.textContent = docu.data().createdAt.toDate().toLocaleString();
           viewPostedBy.textContent = docu.data().posted_by;
           viewSources.textContent = "Source: " + docu.data().sources;
           //retreiving files
@@ -36327,7 +36366,7 @@ announceLink.addEventListener("click", () => {
   };
   xhttp.open("GET", "../sidebar/announce.html", true);
   xhttp.send();
-});
+}
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -37528,7 +37567,7 @@ async function displayLogs() {
           datasets: [
             {
               label: "My First Dataset",
-              data: [checkLengthTimeIn, snapshot.size, countVehicle - 1],
+              data: [checkLengthTimeIn - checkLengthTimeOut, snapshot.size, countVehicle - 1],
               backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 100, 86)"],
               hoverOffset: 4,
             },
@@ -38038,7 +38077,7 @@ function ajaxSec() {
           e.preventDefault();
           console.log(docu.id);
           const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.storage;
-          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `secruity/${docu.id}/profilepic.jpg`, id);
+          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myStorageRef(storage, `secruity/${id}/profilepic.jpg`);
           var file = document.querySelector("#imgInputUpdate").files[0];
           _src_index_js__WEBPACK_IMPORTED_MODULE_0__.myUploadBytes(storageRef, file).then((snapshot) => {
             console.log("UPLOADED");
