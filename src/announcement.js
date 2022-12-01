@@ -114,27 +114,27 @@ function ajaxAnnounce() {
             fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
-            var metadata = {
-              contentType: first_file.type,
-            };
-            var metadata2 = {
-              contentType: second_file.type,
-            };
-            var metadata3 = {
-              contentType: third_file.type,
-            };
+            // var metadata = {
+            //   contentType: first_file.type,
+            // };
+            // var metadata2 = {
+            //   contentType: second_file.type,
+            // };
+            // var metadata3 = {
+            //   contentType: third_file.type,
+            // };
 
-            fire.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
-              console.log("UPLOADED file2");
-            });
+            // fire.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
+            //   console.log("UPLOADED file2");
+            // });
 
-            fire.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
-              console.log("UPLOADED file2");
-            });
+            // fire.myUploadBytes(fileRef2, second_file, metadata2).then((snapshot) => {
+            //   console.log("UPLOADED file2");
+            // });
 
-            fire.myUploadBytes(fileRef3, third_file, metadata3).then((snapshot) => {
-              console.log("UPLOADED file3");
-            });
+            // fire.myUploadBytes(fileRef3, third_file, metadata3).then((snapshot) => {
+            //   console.log("UPLOADED file3");
+            // });
           });
       });
 
@@ -353,25 +353,25 @@ function ajaxAnnounce() {
 
           const storage = fire.storage;
           const imageRef = fire.myStorageRef(storage, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
-          const fileRef1 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file1`);
-          const fileRef2 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file2`);
-          const fileRef3 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file3`);
+          // const fileRef1 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file1`);
+          // const fileRef2 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file2`);
+          // const fileRef3 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file3`);
           fire.myGetDownloadUrl(imageRef).then((url) => {
             console.log(url);
             announceViewPic.src = url;
           });
-          fire.myGetDownloadUrl(fileRef1).then((url) => {
-            console.log(url);
-            viewFiles1.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} first file.</a>`;
-          });
-          fire.myGetDownloadUrl(fileRef2).then((url) => {
-            console.log(url);
-            viewFiles2.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} second file.</a>`;
-          });
-          fire.myGetDownloadUrl(fileRef3).then((url) => {
-            console.log(url);
-            viewFiles3.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} third file.</a>`;
-          });
+          // fire.myGetDownloadUrl(fileRef1).then((url) => {
+          //   console.log(url);
+          //   viewFiles1.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} first file.</a>`;
+          // });
+          // fire.myGetDownloadUrl(fileRef2).then((url) => {
+          //   console.log(url);
+          //   viewFiles2.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} second file.</a>`;
+          // });
+          // fire.myGetDownloadUrl(fileRef3).then((url) => {
+          //   console.log(url);
+          //   viewFiles3.innerHTML = `<a href="${url}">Click to Open ${docu.data().title} third file.</a>`;
+          // });
         });
       }; //end of rendering announcement
 
