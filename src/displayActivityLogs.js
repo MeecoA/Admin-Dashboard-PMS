@@ -33,7 +33,7 @@ async function displayActivityLogs() {
       pageLength: 10,
       data: activity,
       columns: [
-        { data: "id" },
+        // { data: "id" },
         { data: "uid" },
         { data: "user_level" },
         { data: "timestamp" },

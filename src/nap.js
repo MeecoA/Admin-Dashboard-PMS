@@ -28,26 +28,28 @@ function ajaxNap() {
           {
             extend: "copyHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4],
+              columns: [1, 2, 3, 5],
             },
           },
           {
             extend: "print",
+            header: true,
+            title: "NAP Report - Administrator",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4],
+              columns: [1, 2, 3, 5],
             },
             customize: function (win) {
               $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
               <img
-                src="https://lh6.googleusercontent.com/ijbIEy2U5qlRSzF8bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
+                src="https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/header%2Fheader-print.png?alt=media&token=c86c9641-c200-4e94-89a1-c96e83c34a81"
                 alt=""
               />
               <br />
               <br />
               <div class="print-type-holder">
                 <div class="title-print">NON ACADEMIC PERSONNEL</div>
-                  <br>
-                  <br>
+                <br>
+                <br>
               </div>
             </div>
             
@@ -59,7 +61,7 @@ function ajaxNap() {
           {
             extend: "pdfHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4],
+              columns: [1, 2, 3, 5],
             },
           },
           "colvis",

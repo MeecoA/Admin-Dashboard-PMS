@@ -17,12 +17,22 @@ async function displayVisitorLogs() {
             console.log("time_in", element[1]["time_in"]);
             console.log("time_out", element[1]["time_out"]);
 
-            element[1]['time_in']['timestamp'] = element[1]['time_in']['timestamp'] === null ? '-' : element[1]['time_in']['timestamp'].toDate().toLocaleString() + ", Gate #" + element[1]['time_in']['gate_number'];
-            
-            element[1]['time_out']['timestamp'] = element[1]['time_out']['timestamp'] === null ? '-' : element[1]['time_out']['timestamp'].toDate().toLocaleString() + ", Gate #" + element[1]['time_in']['gate_number'];
-            
-          
-            element[1]['time_out']['officer_uid'] = element[1]['time_out']['officer_uid'] === null ? '-' : element[1]['time_out']['officer_uid'];
+            element[1]["time_in"]["timestamp"] =
+              element[1]["time_in"]["timestamp"] === null
+                ? "-"
+                : element[1]["time_in"]["timestamp"].toDate().toLocaleString() +
+                  ", Gate #" +
+                  element[1]["time_in"]["gate_number"];
+
+            element[1]["time_out"]["timestamp"] =
+              element[1]["time_out"]["timestamp"] === null
+                ? "-"
+                : element[1]["time_out"]["timestamp"].toDate().toLocaleString() +
+                  ", Gate #" +
+                  element[1]["time_in"]["gate_number"];
+
+            element[1]["time_out"]["officer_uid"] =
+              element[1]["time_out"]["officer_uid"] === null ? "-" : element[1]["time_out"]["officer_uid"];
 
             index += 1; //increment
             logs.push(element[1]);
@@ -61,19 +71,21 @@ async function displayVisitorLogs() {
           buttons: [
             {
               extend: "copyHtml5",
+              header: true,
+              title: "Visitor Logs Report - Administrator",
               exportOptions: {
-                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                columns: [0, 1, 2, 3, 4, 5, 6, 7],
               },
             },
             {
               extend: "print",
               exportOptions: {
-                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                columns: [0, 1, 2, 3, 4, 5, 6, 7],
               },
               customize: function (win) {
                 $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
                 <img
-                  src="https://lh6.googleusercontent.com/ijbIEy2U5qlRSzF8bkpk9msm1TjRHhU-RYmsdtvaRjxmY9XJCzYcTnfmNWLc-WcylYSiGyRHPdGJ6VgTPdyCv65j76HgtfrymqFjdv7nZNdYx-kML0ryA6whkuWzwx-mpCg-s0vgFtMxBb4s3AhrRuv6Iv0lXY5IhgKLJlJYud06NpP6YJWMT82XubNKEGo1=w1280"
+                  src="https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/header%2Fheader-print.png?alt=media&token=c86c9641-c200-4e94-89a1-c96e83c34a81"
                   alt=""
                 />
                 <br />
@@ -99,6 +111,8 @@ async function displayVisitorLogs() {
             "colvis",
           ],
         });
+        const buttonsColvis = document.querySelector(".buttons-colvis");
+        buttonsColvis.textContent = "Filter By Category";
       }); //jQuery
     }); //end of function
   }); //end of snapshot function

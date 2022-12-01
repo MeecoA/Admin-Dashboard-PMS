@@ -140,9 +140,48 @@ loadVehicles.addEventListener("click", () => {
             var table = $("#vehictable").DataTable({
               scrollX: true,
               data: dataVehicle,
+              dom: "Bfrtip",
+              buttons: [
+                {
+                  extend: "copyHtml5",
+                  exportOptions: {
+                    columns: [1, 2, 3, 4],
+                  },
+                },
+                {
+                  extend: "print",
+                  header: true,
+                  title: "Vehicles Information Report - Administrator",
+                  exportOptions: {
+                    columns: [1, 2, 3, 4],
+                  },
+                  customize: function (win) {
+                    $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
+                    <img
+                      src="https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/header%2Fheader-print.png?alt=media&token=c86c9641-c200-4e94-89a1-c96e83c34a81"
+                      alt=""
+                    />
+                    <br />
+                    <br />
+                    <div class="print-type-holder">
+                      <div class="title-print">VEHICLE INFORMATION</div>
+                      <br>
+                      <br>
+                    </div>
+                  </div>
+                  
+                  `);
 
+                    $(win.document.body).find("table").addClass("compact").css("font-size", "inherit");
+                  },
+                },
+                {
+                  extend: "pdfHtml5",
+                },
+                "colvis",
+              ],
               columns: [
-                { data: "index" },
+                // { data: "index" },
                 { data: "uid" },
                 {
                   data: (data, type, dataToSet) => {
@@ -175,9 +214,9 @@ loadVehicles.addEventListener("click", () => {
               createdRow: function (row, data, dataIndex) {
                 $(row).attr("data-id", `${data.uid}`);
               },
-
-              dom: "Bfrtip",
             });
+            const buttonsColvis = document.querySelector(".buttons-colvis");
+            buttonsColvis.textContent = "Filter By Category";
             // $("#vehictable").on("click", "tbody tr", function () {
             //   var row = table.row($(this)).data();
             //   console.log(row); //full row of array data
@@ -192,8 +231,6 @@ loadVehicles.addEventListener("click", () => {
               const viewModel = document.querySelector(".viewModel");
               const viewOwner = document.querySelector(".viewOwner");
 
-
-
               const viewClassification = document.querySelector("#view-classification");
               const viewColor = document.querySelector("#view-color");
               const viewLicense_Category = document.querySelector("#view-license-category");
@@ -205,40 +242,32 @@ loadVehicles.addEventListener("click", () => {
               viewModel.textContent = row.model;
               viewOwner.textContent = row.vehicle_owner;
 
-
               // Check if the field is not yet defined
-              if(typeof(row.classification) === undefined || row.classification === null) {
+              if (typeof row.classification === undefined || row.classification === null) {
                 viewClassification.textContent = "-";
-              }
-              else {
+              } else {
                 viewClassification.textContent = row.classification;
               }
-              if(typeof(row.color) === undefined || row.color === null) {
+              if (typeof row.color === undefined || row.color === null) {
                 viewColor.textContent = "-";
-              }
-              else {
+              } else {
                 viewColor.textContent = row.color;
               }
-              if(typeof(row.code_category) === undefined || row.code_category === null) {
+              if (typeof row.code_category === undefined || row.code_category === null) {
                 viewClassification.textContent = "-";
-              }
-              else {
+              } else {
                 viewLicense_Category.textContent = `${row.license_code}, ${row.code_category}`;
-                
               }
-              if(typeof(row.year) === undefined || row.year === null) {
+              if (typeof row.year === undefined || row.year === null) {
                 viewYear.textContent = "-";
-              }
-              else {
+              } else {
                 viewYear.textContent = row.year;
               }
-              if(typeof(row.remarks) === undefined || row.remarks === null) {
+              if (typeof row.remarks === undefined || row.remarks === null) {
                 viewRemarks.textContent = "-";
-              }
-              else {
+              } else {
                 viewRemarks.textContent = row.remarks;
               }
-
 
               // console.log("row.classification", row.classification);
               // console.log("row.code_category", row.code_category);

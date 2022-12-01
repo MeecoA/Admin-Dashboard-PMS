@@ -34,24 +34,47 @@ function ajaxAnnounce() {
           {
             extend: "copyHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4],
+              columns: [1, 2, 3, 4],
             },
           },
           {
             extend: "print",
+            header: true,
+            title: "Announcements Report - Administrator",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4],
+              columns: [1, 2, 3, 4],
+            },
+            customize: function (win) {
+              $(win.document.body).css("font-size", "12pt").prepend(`<div class="header-container">
+              <img
+                src="https://firebasestorage.googleapis.com/v0/b/bulsu---pms.appspot.com/o/header%2Fheader-print.png?alt=media&token=c86c9641-c200-4e94-89a1-c96e83c34a81"
+                alt=""
+              />
+              <br />
+              <br />
+              <div class="print-type-holder">
+                <div class="title-print">ANNOUNCEMENTS</div>
+                <br>
+                <br>
+              </div>
+            </div>
+            
+            `);
+
+              $(win.document.body).find("table").addClass("compact").css("font-size", "inherit");
             },
           },
           {
             extend: "pdfHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4],
+              columns: [1, 2, 3, 4],
             },
           },
           "colvis",
         ],
       });
+      const buttonsColvis = document.querySelector(".buttons-colvis");
+      buttonsColvis.textContent = "Filter By Category";
       const addAnnounceForm = document.querySelector("#announceForm");
       addAnnounceForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -64,6 +87,7 @@ function ajaxAnnounce() {
         const fileRef2 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file2`);
         const fileRef3 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file3`);
         const thumbnail = document.querySelector("#thumbnail").files[0];
+        const filesAttached1 = document.querySelector("#filesAttached1");
         const first_file = document.querySelector("#filesAttached1").files[0];
         const second_file = document.querySelector("#filesAttached2").files[0];
         const third_file = document.querySelector("#filesAttached3").files[0];
@@ -87,6 +111,9 @@ function ajaxAnnounce() {
             });
 
             addAnnounceForm.reset();
+            fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
+              console.log("UPLOADED");
+            });
             var metadata = {
               contentType: first_file.type,
             };
@@ -96,7 +123,8 @@ function ajaxAnnounce() {
             var metadata3 = {
               contentType: third_file.type,
             };
-            fire.myUploadBytes(fileRef1, first_file, metadata2).then((snapshot) => {
+
+            fire.myUploadBytes(fileRef1, first_file, metadata).then((snapshot) => {
               console.log("UPLOADED file2");
             });
 
@@ -107,13 +135,11 @@ function ajaxAnnounce() {
             fire.myUploadBytes(fileRef3, third_file, metadata3).then((snapshot) => {
               console.log("UPLOADED file3");
             });
-            fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
-              console.log("UPLOADED");
-            });
           });
       });
 
       const announceTBody = document.querySelector(".table-body-announce");
+      let title;
       let id;
       const renderAnnounce = (docu) => {
         var tableTr = t.row
@@ -139,7 +165,12 @@ function ajaxAnnounce() {
                 <a href="#editmodal" rel="modal:open" class = 'edit-button-announce'>
                 <iconify-icon
                 class="view-icon"
-                icon="bxs:user-circle"  class="iconifys" width="16" height="16"></iconify-icon>Edit</a>
+                icon="bxs:user-circle"  class="iconifys" width="16" height="16"></iconify-icon>Edit Details</a>
+
+                <a href="#editmodalPhotoAnnounce" rel="modal:open" class = 'edit-button-announce-photo'>
+                <iconify-icon
+                class="view-icon"
+                icon="bxs:user-circle"  class="iconifys" width="16" height="16"></iconify-icon>Edit Photo</a>
 
           
 
@@ -178,12 +209,64 @@ function ajaxAnnounce() {
             }
           }
         };
+
+        // editing photo
+        const editmodalPhotoAnnounce = document.querySelector(`[data-id="${docu.id}"] .edit-button-announce-photo`);
+        const editAnnouncePhotoForm = document.querySelector("#editAnnouncePhotoForm");
+        const announceViewUpdate = document.querySelector("#outputUpdateAnnounce");
+
+        editmodalPhotoAnnounce.addEventListener("click", () => {
+          title = docu.data().title;
+          console.log(docu.id);
+          const imgInputUpdate = document.querySelector("#imgInputUpdateAnnounce");
+          imgInputUpdate.addEventListener("change", (e) => {
+            var image = document.querySelector("#outputUpdateAnnounce");
+            image.src = URL.createObjectURL(e.target.files[0]);
+          });
+
+          const storagePic = fire.storage;
+          const imageRef = fire.myStorageRef(storagePic, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
+          fire.myGetDownloadUrl(imageRef).then((url) => {
+            console.log(url);
+            announceViewUpdate.src = url;
+          });
+        });
+
+        editAnnouncePhotoForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          console.log(docu.id);
+          const storage = fire.storage;
+          const storageRef = fire.myStorageRef(storage, `announcements/thumbnail/${title}/profilepic.jpg`);
+          var file = document.querySelector("#imgInputUpdateAnnounce").files[0];
+          fire.myUploadBytes(storageRef, file).then((snapshot) => {
+            console.log("UPLOADED");
+          });
+          Swal.fire({
+            text: "SUCCESSFULLY UPDATED!",
+            icon: "success",
+          });
+        });
+
         //deleting data
         const AnnounceDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         AnnounceDelete.addEventListener("click", () => {
           const docRef = fire.myDoc(fire.db, "announcements", docu.id);
-          fire.myDeleteDoc(docRef).then(() => {
-            console.log("deleted successfully");
+
+          Swal.fire({
+            title: "Are you sure you want to Delete?",
+            text: `Announcement: ${docu.data().title}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Deleted!", "Announcement has been deleted", "success");
+              fire.myDeleteDoc(docRef).then(() => {
+                console.log("deleted successfully");
+              });
+            }
           });
         }); //end of deleting data
         // editing announcement

@@ -188,6 +188,7 @@ window.addEventListener("DOMContentLoaded", () => {
           switch (error.code) {
             case "auth/wrong-password":
               adminPassError.textContent = "Wrong Password!";
+              adminPassError.style.color = "red";
               adminPassword.style.border = "2px solid red";
               break;
             case "auth/too-many-requests":
@@ -432,10 +433,10 @@ async function displayLogs() {
       console.log("Number of length (TIME IN): ", checkLengthTimeIn);
       console.log("Number of length (TIME OUT): ", checkLengthTimeOut);
       timeIn.textContent = checkLengthTimeIn - checkLengthTimeOut;
-      timeOut.textContent = checkLengthTimeOut;
+      // timeOut.textContent = checkLengthTimeOut;
       const userCount = document.querySelector("#userCount");
 
-      onSnapshot(accColRef, (snapshot) => {
+      const snappy = onSnapshot(accColRef, (snapshot) => {
         userCount.textContent = snapshot.size;
 
         const data = {

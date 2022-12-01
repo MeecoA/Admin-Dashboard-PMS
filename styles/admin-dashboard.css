@@ -434,6 +434,7 @@ a {
   align-items: center;
   width: 80%;
   align-self: center;
+  border: 1px solid red;
 }
 .times {
   font-size: 50px;
@@ -1403,6 +1404,12 @@ tfoot input {
   color: red;
   font-size: 15px;
 }
+.admin-pass-error {
+  margin-left: 5px;
+  color: red !important;
+  font-size: 15px;
+}
+
 .validate {
   border: 2px solid red !important;
 }
