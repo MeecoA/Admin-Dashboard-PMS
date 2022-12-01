@@ -59,13 +59,13 @@ loadVehicles.addEventListener("click", () => {
         await getAccountInformationOwner(doc.id).then((evt) => {
           // console.log('event: ', evt)
           // If middle name is undefined
-          if (typeof evt["middle_name"] === "undefined" || evt["middle_name"].trim() === "") {
-            console.log(true);
-            evt["middle_name"] = " ";
-          }
+          // if (typeof evt["middle_name"] === "undefined" || evt["middle_name"].trim() === "") {
+          //   console.log(true);
+          //   evt["middle_name"] = " ";
+          // }
 
           // appendData['vehicle_owner'] = `${evt['last_name']} ${evt['first_name']} ${evt['middle_name'][0]}`;
-          ownerFullName = `${evt["last_name"]} ${evt["first_name"]} ${evt["middle_name"][0]}`;
+          ownerFullName = `${evt["last_name"]} ${evt["first_name"]} `;
 
           // Check the profile picture.
           if (typeof evt["profile_pic"] === "undefined" || evt["profile_pic"] === null) {
