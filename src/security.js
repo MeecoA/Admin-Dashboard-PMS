@@ -294,8 +294,8 @@ function ajaxSec() {
                   .then(() => {});
               });
             }
-          }); //end of deleting data
-        });
+          });
+        }); //end of deleting data
         //editing data -- edit useer information only
         const editSecForm = document.querySelector("#editSecForm");
         const editSecBtn = document.querySelector(`[data-id='${docu.id}'] .edit-button`);
