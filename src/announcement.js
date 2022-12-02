@@ -83,14 +83,14 @@ function ajaxAnnounce() {
           storage,
           `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
         );
-        const fileRef1 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file1`);
-        const fileRef2 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file2`);
-        const fileRef3 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file3`);
+        // const fileRef1 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file1`);
+        // const fileRef2 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file2`);
+        // const fileRef3 = fire.myStorageRef(storage, `announcements/files/${addAnnounceForm.title.value}/file3`);
         const thumbnail = document.querySelector("#thumbnail").files[0];
-        const filesAttached1 = document.querySelector("#filesAttached1");
-        const first_file = document.querySelector("#filesAttached1").files[0];
-        const second_file = document.querySelector("#filesAttached2").files[0];
-        const third_file = document.querySelector("#filesAttached3").files[0];
+        // const filesAttached1 = document.querySelector("#filesAttached1");
+        // const first_file = document.querySelector("#filesAttached1").files[0];
+        // const second_file = document.querySelector("#filesAttached2").files[0];
+        // const third_file = document.querySelector("#filesAttached3").files[0];
         fire
           .myAddDoc(fire.announceColRef, {
             id: addAnnounceForm.title.value,
@@ -318,9 +318,9 @@ function ajaxAnnounce() {
         const viewPostedBy = document.querySelector(".viewPostedBy");
         const viewMessage = document.querySelector(".viewMessage");
         const viewSources = document.querySelector(".viewSources");
-        const viewFiles1 = document.querySelector(".viewFiles1");
-        const viewFiles2 = document.querySelector(".viewFiles2");
-        const viewFiles3 = document.querySelector(".viewFiles3");
+        // const viewFiles1 = document.querySelector(".viewFiles1");
+        // const viewFiles2 = document.querySelector(".viewFiles2");
+        // const viewFiles3 = document.querySelector(".viewFiles3");
         const viewAnnounceBtn = document.querySelector(`[data-id='${docu.id}'] .view-announce-button`);
 
         viewAnnounceBtn.addEventListener("click", () => {
