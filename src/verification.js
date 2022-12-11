@@ -6,7 +6,7 @@ console.log("database: ", fire.database);
 const loadVerify = document.querySelector("#veriLink");
 
 loadVerify.addEventListener("click", () => {
-  headerTitle.textContent = "Users";
+  headerTitle.textContent = "Verification";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = async function () {
     if (this.readyState == 4 && this.status == 200) {

@@ -5,7 +5,7 @@ import * as fire from "../src/index";
 const loadArchives = document.querySelector("#archiveLink");
 
 loadArchives.addEventListener("click", () => {
-  headerTitle.textContent = "Users";
+  headerTitle.textContent = "Archives";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = async function () {
     if (this.readyState == 4 && this.status == 200) {
