@@ -18,7 +18,7 @@ loadFaculty.addEventListener("click", () => {
       napLink.classList.remove("active");
       vehiLink.classList.remove("active");
       archiveLink.classList.remove("active");
-
+      veriLink.classList.remove("active");
       // generateTable();
 
       // rendering the data

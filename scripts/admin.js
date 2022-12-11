@@ -6,6 +6,7 @@ let vehiLink = document.querySelector("#vehicLink");
 let logLink = document.querySelector("#logsLink");
 let archiveLink = document.querySelector("#archiveLink");
 let annoLink = document.querySelector(".anno-link");
+let veriLink = document.querySelector("#veriLink");
 let napLink = document.querySelector("#napLink");
 let dropDown = document.querySelector(".menu-btn");
 let dropdownContent = document.querySelector(".dropdown-container");

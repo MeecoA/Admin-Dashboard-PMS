@@ -28,6 +28,8 @@ function ajaxAnnounce() {
       logLink.classList.remove("active");
       annoLink.classList.add("active");
       napLink.classList.remove("active");
+      veriLink.classList.remove("active");
+
       var t = $("#announceTable").DataTable({
         dom: "Bfrtip",
         buttons: [
@@ -93,6 +95,9 @@ function ajaxAnnounce() {
         // const third_file = document.querySelector("#filesAttached3").files[0];
         fire
           .myAddDoc(fire.announceColRef, {
+            to: "+639263620832",
+            from: "+15643331633",
+            body: addAnnounceForm.message.value,
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
             posted_by: addAnnounceForm.postedBy.value,

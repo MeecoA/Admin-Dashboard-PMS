@@ -134,7 +134,7 @@ function generateDropdown() {
     secLink.classList.remove("active");
     persLink.classList.remove("active");
     vehiLink.classList.remove("active");
-
+    veriLink.classList.remove("active");
     // resiLink.classList.remove("active");
     visiLink.classList.remove("active");
     napLink.classList.remove("active");

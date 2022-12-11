@@ -21,6 +21,8 @@ loadArchives.addEventListener("click", () => {
       dropdownContent.style.display = "none";
       dropDown.classList.remove("active");
       dropDownLogs.classList.remove("active");
+      veriLink.classList.remove("active");
+
       dropdownContentLogs.style.display = "none";
 
       var t = $("#archtable").DataTable({

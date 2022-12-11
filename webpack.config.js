@@ -16,6 +16,7 @@ module.exports = {
     "./src/displayActivityLogs.js",
     "./src/adminLogin.js",
     "./src/archives.js",
+    "./src/verification.js",
   ],
   output: {
     path: path.resolve(__dirname, "dist"),

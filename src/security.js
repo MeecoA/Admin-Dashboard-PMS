@@ -22,7 +22,7 @@ function ajaxSec() {
       logsLink.classList.remove("active");
       napLink.classList.remove("active");
       vehiLink.classList.remove("active");
-
+      veriLink.classList.remove("active");
       //data tables
       var t = $("#sectable").DataTable({
         responsive: true,

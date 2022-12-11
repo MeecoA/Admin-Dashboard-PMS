@@ -20,6 +20,7 @@ function ajaxCouncil() {
       visiLink.classList.remove("active");
       napLink.classList.remove("active");
       vehiLink.classList.remove("active");
+      veriLink.classList.remove("active");
       var t = $("#councilTable").DataTable({
         dom: "Bfrtip",
 

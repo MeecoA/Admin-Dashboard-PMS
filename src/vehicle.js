@@ -32,7 +32,7 @@ loadVehicles.addEventListener("click", () => {
       dropDown.classList.remove("active");
       dropDownLogs.classList.remove("active");
       dropdownContentLogs.style.display = "none";
-
+      veriLink.classList.remove("active");
       let dataVehicle = [];
       const colRef = fire.myCollection(fire.db, "vehicle-information");
       const vehicleQuery = fire.doQuery(colRef);

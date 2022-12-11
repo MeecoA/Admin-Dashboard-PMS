@@ -19,6 +19,7 @@ import {
   arrayRemove,
   increment,
   limit,
+  deleteField,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import {
@@ -54,6 +55,7 @@ export const auth = getAuth();
 
 //exports
 // Firestore
+export const doDeleteField = deleteField;
 export const myServerTimestamp = serverTimestamp();
 export const myUploadBytesResumable = uploadBytesResumable;
 export const myUpdatePassowrd = updatePassword;

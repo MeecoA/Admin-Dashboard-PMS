@@ -1,0 +1,141 @@
+<style>
+  .swal2-popup {
+    width: 75% !important;
+  }
+
+  .accept-verification,
+  .deny-verification {
+    background-color: aliceblue;
+    padding: 1em 2em;
+    border-radius: 1em;
+    cursor: pointer;
+    margin: 0.5em 1em;
+  }
+  .view-verification {
+    background-color: #1d90ed;
+    padding: 8px;
+    border-radius: 20px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .view-verification:hover {
+    cursor: pointer;
+    background-color: #99d4ff;
+    transition: 0.3s;
+  }
+
+  .popup-verification {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around;
+    gap: 1em;
+    padding: 1em;
+    /* margin-left: 7em; */
+  }
+  .popup-verification div {
+    height: inherit;
+    /* object-fit: contain; */
+    /* width: 500px; */
+    border-radius: 1em;
+    border: 2px solid gainsboro;
+    padding: 1em;
+    flex: 1;
+  }
+  .popup-verification div > img {
+    object-fit: contain;
+    width: 100%;
+    height: 450px;
+  }
+  /* .popup-verification > img::before {
+         content: 'OR / CR';
+    }
+    .popup-verification > img::after {
+         content: 'KYC Verification';
+    } */
+
+  .popup-accept,
+  .popup-deny {
+    padding: 1em 2em;
+    border-radius: 1em;
+    cursor: pointer;
+    margin: 0.5em 1em;
+  }
+
+  .popup-accept {
+    background-color: rgb(14, 120, 225);
+    color: white;
+  }
+  .popup-deny {
+    background-color: dimgrey;
+    color: white;
+  }
+
+  @media screen and (max-width: 960px) {
+    .popup-verification {
+      flex-direction: column;
+    }
+  }
+</style>
+<!-- <table id="table_vehicles" class="display" style>
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>ID</th>
+      <th>Vehicle Owner</th>
+      <th>Plate Number</th>
+      <th>Model</th>
+      <th>Registration Date</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+</table> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security</title>
+  </head>
+  <body>
+    <div class="ajax-container items table-box">
+      <div class="content-titles distri-flex">
+        <div class="sidebar-logo">
+          <iconify-icon
+            icon="material-symbols:domain-verification"
+            class="iconifys"
+            width="36"
+            height="36"
+          ></iconify-icon>
+        </div>
+        <div class="distri-title">Verification of Documents</div>
+      </div>
+      <div class="box-table">
+        <div class="ajax-container">
+          <table id="table_vehicles" class="display">
+            <thead>
+              <tr>
+                <th>Index</th>
+                <th>ID</th>
+                <th>Vehicle Owner</th>
+                <th>Plate Number</th>
+                <th>Model</th>
+                <th>Registration Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
