@@ -36147,8 +36147,8 @@ function ajaxAnnounce() {
         // const second_file = document.querySelector("#filesAttached2").files[0];
         // const third_file = document.querySelector("#filesAttached3").files[0];
         _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceColRef, {
-            to: "+639263620832",
-            from: "+15643331633",
+            to: "+639052354473",
+            from: "+18658003391",
             body: addAnnounceForm.message.value,
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
@@ -36481,7 +36481,7 @@ _src_index__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ?
 const loadArchives = document.querySelector("#archiveLink");
 
 loadArchives.addEventListener("click", () => {
-  headerTitle.textContent = "Users";
+  headerTitle.textContent = "Archives";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = async function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -38881,7 +38881,7 @@ console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_1__.database);
 const loadVerify = document.querySelector("#veriLink");
 
 loadVerify.addEventListener("click", () => {
-  headerTitle.textContent = "Users";
+  headerTitle.textContent = "Verification";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = async function () {
     if (this.readyState == 4 && this.status == 200) {

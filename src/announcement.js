@@ -95,8 +95,8 @@ function ajaxAnnounce() {
         // const third_file = document.querySelector("#filesAttached3").files[0];
         fire
           .myAddDoc(fire.announceColRef, {
-            to: "+639263620832",
-            from: "+15643331633",
+            to: "+639052354473",
+            from: "+18658003391",
             body: addAnnounceForm.message.value,
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
