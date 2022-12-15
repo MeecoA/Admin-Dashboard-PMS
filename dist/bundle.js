@@ -38081,6 +38081,8 @@ function ajaxSec() {
                     text: "SUCCESSFULLY CREATED!",
                     icon: "success",
                   });
+                  const addsecModal = document.querySelector("#addmodal");
+                  addsecModal.style.display = "none";
                   // end
                   window.onclick = function (event) {
                     if (event.target == modal) {
