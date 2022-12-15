@@ -98,41 +98,40 @@ function ajaxAnnounce() {
         const colRef = fire.myCollection(fire.db, "account-information");
         const accountQuery = fire.doQuery(colRef);
         const docsSnap = await fire.myGetDocs(accountQuery);
-        
 
         function sendSMSMessage(phoneNumber, smsMessage) {
           var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-              if (this.readyState == 4 && this.status == 0) {
-                var responseText = JSON.parse(this.responseText);
-                // alert('It worked');
-                console.log("responseText: ", responseText);
-              }
-              else {
-                console.log("State: ", this.status, " | Status: ", this.status);
-              }
-            };
-            xhttp.open("GET", `http://192.168.0.102:8090/SendSMS?username=user&password=pass&phone=${phoneNumber}&message=${smsMessage}`, true);
-            xhttp.send();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 0) {
+              var responseText = JSON.parse(this.responseText);
+              // alert('It worked');
+              console.log("responseText: ", responseText);
+            } else {
+              console.log("State: ", this.status, " | Status: ", this.status);
+            }
+          };
+          xhttp.open(
+            "GET",
+            `http://192.168.0.102:8090/SendSMS?username=user&password=pass&phone=${phoneNumber}&message=${smsMessage}`,
+            true
+          );
+          xhttp.send();
         }
 
-
         let phoneNumberList = [];
-        docsSnap.forEach(async doc => {
-          let vehicleData = {...doc.data()};
+        docsSnap.forEach(async (doc) => {
+          let vehicleData = { ...doc.data() };
 
-          if(vehicleData["phone_num"].startsWith("+63")) {
+          if (vehicleData["phone_num"].startsWith("+63")) {
             const currentNumber = vehicleData["phone_num"].replace("+", "");
-            const currentMessage = `${addAnnounceForm.title.value}- ${addAnnounceForm.message.value}`
+            const currentMessage = `${addAnnounceForm.title.value}- ${addAnnounceForm.message.value}`;
             // phoneNumberList.push(vehicleData["phone_num"].replace("+", ""));
             console.log("phoneNumberList: ", currentMessage, currentNumber);
             sendSMSMessage(currentNumber, currentMessage);
           }
         });
 
-        
         // window.alert("Announcement made.");
-        
 
         // const message = `${addAnnounceForm.title.value}- ${addAnnounceForm.message.value}`;
         // console.log("639052354473", encodeURIComponent(message));
@@ -156,7 +155,6 @@ function ajaxAnnounce() {
         // deleteUser("wIHQmo7nxwceS5dBgma6ukXl2Py1");
         // deleteUser("osomG2vvswWnaUYzzK4fXKuHUpt1");
 
-
         fire
           .myAddDoc(fire.announceColRef, {
             // to: "+639052354473",
@@ -178,14 +176,18 @@ function ajaxAnnounce() {
               text: "SUCCESSFULLY CREATED!",
               icon: "success",
             }).then(() => {
-              window.location.reload();
+              // window.location.reload();
             });
 
             addAnnounceForm.reset();
             fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
-            // swal.close(); 
+            const addModal = document.querySelector("#addmodal");
+            const blocker = document.querySelector(".blocker");
+            addModal.style.display = "none";
+            blocker.style.display = "none";
+            // swal.close();
 
             // var metadata = {
             //   contentType: first_file.type,
@@ -215,7 +217,6 @@ function ajaxAnnounce() {
       let title;
       let id;
       const renderAnnounce = (docu) => {
-
         console.log("docu.data(): ", docu.data());
 
         var tableTr = t.row
