@@ -36047,13 +36047,15 @@ function __classPrivateFieldIn(state, receiver) {
 "use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
-/* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_1__]);
-_src_index_js__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/index.esm.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
+/* harmony import */ var _src_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/index.js */ "./src/index.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_src_index_js__WEBPACK_IMPORTED_MODULE_2__]);
+_src_index_js__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
-console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_1__.database);
+
+console.log("database: ", _src_index_js__WEBPACK_IMPORTED_MODULE_2__.database);
 
 // AJAX FOR ANNOUNCEMENTS
 const announceLink = document.querySelector("#announceLink");
@@ -36131,10 +36133,10 @@ function ajaxAnnounce() {
       const buttonsColvis = document.querySelector(".buttons-colvis");
       buttonsColvis.textContent = "Filter By Category";
       const addAnnounceForm = document.querySelector("#announceForm");
-      addAnnounceForm.addEventListener("submit", (e) => {
+      addAnnounceForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.storage;
-        const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(
+        const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.storage;
+        const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myStorageRef(
           storage,
           `announcements/thumbnail/${addAnnounceForm.title.value}/profilepic.jpg`
         );
@@ -36146,10 +36148,73 @@ function ajaxAnnounce() {
         // const first_file = document.querySelector("#filesAttached1").files[0];
         // const second_file = document.querySelector("#filesAttached2").files[0];
         // const third_file = document.querySelector("#filesAttached3").files[0];
-        _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceColRef, {
-            to: "+639052354473",
-            from: "+18658003391",
-            body: "Announcement!: " + addAnnounceForm.title.value + " " + addAnnounceForm.message.value,
+
+        const colRef = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myCollection(_src_index_js__WEBPACK_IMPORTED_MODULE_2__.db, "account-information");
+        const accountQuery = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.doQuery(colRef);
+        const docsSnap = await _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myGetDocs(accountQuery);
+        
+
+        function sendSMSMessage(phoneNumber, smsMessage) {
+          var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 0) {
+                var responseText = JSON.parse(this.responseText);
+                // alert('It worked');
+                console.log("responseText: ", responseText);
+              }
+              else {
+                console.log("State: ", this.status, " | Status: ", this.status);
+              }
+            };
+            xhttp.open("GET", `http://192.168.0.102:8090/SendSMS?username=user&password=pass&phone=${phoneNumber}&message=${smsMessage}`, true);
+            xhttp.send();
+        }
+
+
+        let phoneNumberList = [];
+        docsSnap.forEach(async doc => {
+          let vehicleData = {...doc.data()};
+
+          if(vehicleData["phone_num"].startsWith("+63")) {
+            const currentNumber = vehicleData["phone_num"].replace("+", "");
+            const currentMessage = `${addAnnounceForm.title.value}- ${addAnnounceForm.message.value}`
+            // phoneNumberList.push(vehicleData["phone_num"].replace("+", ""));
+            console.log("phoneNumberList: ", currentMessage, currentNumber);
+            sendSMSMessage(currentNumber, currentMessage);
+          }
+        });
+
+        
+        // window.alert("Announcement made.");
+        
+
+        // const message = `${addAnnounceForm.title.value}- ${addAnnounceForm.message.value}`;
+        // console.log("639052354473", encodeURIComponent(message));
+        // sendSMSMessage("639052354473", encodeURIComponent(message));
+
+        // async function deleteUser(userUID) {
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "account-information", userUID));
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "vehicle-information", userUID));
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "system-activity", userUID));
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "logs", userUID));
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "linkages", userUID));
+
+        //   await console.log("Done!");
+        // }
+        // deleteUser("0Ih1pYJn5fb63HD1vlJoksKlkWB2");
+        // deleteUser("1m53o10ku4ORwYkQifKsxPFhm9h1");
+        // deleteUser("RStGejmim3hLLWqcmlpoh00d99o1");
+        // deleteUser("eVYjJfzfb0hBpFLDetNuOZpEx5h1");
+        // deleteUser("mWzeSivijSUBGM7Goyxx5YHcZgz1");
+        // deleteUser("ntfNzJhIpQVY2aVhMDGyxbpE7tI3");
+        // deleteUser("wIHQmo7nxwceS5dBgma6ukXl2Py1");
+        // deleteUser("osomG2vvswWnaUYzzK4fXKuHUpt1");
+
+
+        _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_2__.announceColRef, {
+            // to: "+639052354473",
+            // from: "+18658003391",
+            // body: "Announcement!: " + addAnnounceForm.title.value + " " + addAnnounceForm.message.value,
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
             posted_by: addAnnounceForm.postedBy.value,
@@ -36158,19 +36223,23 @@ function ajaxAnnounce() {
             sources: addAnnounceForm.sources.value,
             files: [],
             thumbnail: addAnnounceForm.thumbnail.value,
-            createdAt: _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myServerTimestamp,
+            createdAt: _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myServerTimestamp,
           })
           .then(() => {
             Swal.fire({
               title: "Announcement",
               text: "SUCCESSFULLY CREATED!",
               icon: "success",
+            }).then(() => {
+              window.location.reload();
             });
 
             addAnnounceForm.reset();
-            _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
+            _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
+            // swal.close(); 
+
             // var metadata = {
             //   contentType: first_file.type,
             // };
@@ -36199,6 +36268,9 @@ function ajaxAnnounce() {
       let title;
       let id;
       const renderAnnounce = (docu) => {
+
+        console.log("docu.data(): ", docu.data());
+
         var tableTr = t.row
           .add([
             docu.id,
@@ -36281,9 +36353,9 @@ function ajaxAnnounce() {
             image.src = URL.createObjectURL(e.target.files[0]);
           });
 
-          const storagePic = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.storage;
-          const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storagePic, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myGetDownloadUrl(imageRef).then((url) => {
+          const storagePic = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.storage;
+          const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myStorageRef(storagePic, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
+          _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myGetDownloadUrl(imageRef).then((url) => {
             console.log(url);
             announceViewUpdate.src = url;
           });
@@ -36292,10 +36364,10 @@ function ajaxAnnounce() {
         editAnnouncePhotoForm.addEventListener("submit", (e) => {
           e.preventDefault();
           console.log(docu.id);
-          const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.storage;
-          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/thumbnail/${title}/profilepic.jpg`);
+          const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.storage;
+          const storageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myStorageRef(storage, `announcements/thumbnail/${title}/profilepic.jpg`);
           var file = document.querySelector("#imgInputUpdateAnnounce").files[0];
-          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUploadBytes(storageRef, file).then((snapshot) => {
+          _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myUploadBytes(storageRef, file).then((snapshot) => {
             console.log("UPLOADED");
           });
           Swal.fire({
@@ -36307,7 +36379,7 @@ function ajaxAnnounce() {
         //deleting data
         const AnnounceDelete = document.querySelector(`[data-id='${docu.id}'] .delete-button`);
         AnnounceDelete.addEventListener("click", () => {
-          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.db, "announcements", docu.id);
+          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_2__.db, "announcements", docu.id);
 
           Swal.fire({
             title: "Are you sure you want to Delete?",
@@ -36320,7 +36392,7 @@ function ajaxAnnounce() {
           }).then((result) => {
             if (result.isConfirmed) {
               Swal.fire("Deleted!", "Announcement has been deleted", "success");
-              _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myDeleteDoc(docRef).then(() => {
+              _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myDeleteDoc(docRef).then(() => {
                 console.log("deleted successfully");
               });
             }
@@ -36341,9 +36413,9 @@ function ajaxAnnounce() {
 
         announceEditForm.addEventListener("submit", (e) => {
           e.preventDefault();
-          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.db, "announcements", id);
+          const docRef = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_2__.db, "announcements", id);
 
-          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myUpdateDoc(docRef, {
+          _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myUpdateDoc(docRef, {
               title: announceEditForm.title.value,
               postedBy: announceEditForm.postedBy.value,
               priority: announceEditForm.priority.value,
@@ -36407,12 +36479,12 @@ function ajaxAnnounce() {
           viewSources.textContent = "Source: " + docu.data().sources;
           //retreiving files
 
-          const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.storage;
-          const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myStorageRef(storage, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
+          const storage = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.storage;
+          const imageRef = _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myStorageRef(storage, `announcements/thumbnail/${docu.data().title}/profilepic.jpg`);
           // const fileRef1 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file1`);
           // const fileRef2 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file2`);
           // const fileRef3 = fire.myStorageRef(storage, `announcements/files/${docu.data().title}/file3`);
-          _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myGetDownloadUrl(imageRef).then((url) => {
+          _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myGetDownloadUrl(imageRef).then((url) => {
             console.log(url);
             announceViewPic.src = url;
           });
@@ -36431,7 +36503,7 @@ function ajaxAnnounce() {
         });
       }; //end of rendering announcement
 
-      _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceQuery, (snapshot) => {
+      _src_index_js__WEBPACK_IMPORTED_MODULE_2__.myOnSnapshot(_src_index_js__WEBPACK_IMPORTED_MODULE_2__.announceQuery, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             renderAnnounce(change.doc);

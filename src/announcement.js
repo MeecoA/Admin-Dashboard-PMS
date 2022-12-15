@@ -1,3 +1,4 @@
+import { deleteUser } from "firebase/auth";
 import { doc } from "firebase/firestore";
 import * as fire from "../src/index.js";
 console.log("database: ", fire.database);
@@ -78,7 +79,7 @@ function ajaxAnnounce() {
       const buttonsColvis = document.querySelector(".buttons-colvis");
       buttonsColvis.textContent = "Filter By Category";
       const addAnnounceForm = document.querySelector("#announceForm");
-      addAnnounceForm.addEventListener("submit", (e) => {
+      addAnnounceForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const storage = fire.storage;
         const imageRef = fire.myStorageRef(
@@ -93,11 +94,74 @@ function ajaxAnnounce() {
         // const first_file = document.querySelector("#filesAttached1").files[0];
         // const second_file = document.querySelector("#filesAttached2").files[0];
         // const third_file = document.querySelector("#filesAttached3").files[0];
+
+        const colRef = fire.myCollection(fire.db, "account-information");
+        const accountQuery = fire.doQuery(colRef);
+        const docsSnap = await fire.myGetDocs(accountQuery);
+        
+
+        function sendSMSMessage(phoneNumber, smsMessage) {
+          var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 0) {
+                var responseText = JSON.parse(this.responseText);
+                // alert('It worked');
+                console.log("responseText: ", responseText);
+              }
+              else {
+                console.log("State: ", this.status, " | Status: ", this.status);
+              }
+            };
+            xhttp.open("GET", `http://192.168.0.102:8090/SendSMS?username=user&password=pass&phone=${phoneNumber}&message=${smsMessage}`, true);
+            xhttp.send();
+        }
+
+
+        let phoneNumberList = [];
+        docsSnap.forEach(async doc => {
+          let vehicleData = {...doc.data()};
+
+          if(vehicleData["phone_num"].startsWith("+63")) {
+            const currentNumber = vehicleData["phone_num"].replace("+", "");
+            const currentMessage = `${addAnnounceForm.title.value}- ${addAnnounceForm.message.value}`
+            // phoneNumberList.push(vehicleData["phone_num"].replace("+", ""));
+            console.log("phoneNumberList: ", currentMessage, currentNumber);
+            sendSMSMessage(currentNumber, currentMessage);
+          }
+        });
+
+        
+        // window.alert("Announcement made.");
+        
+
+        // const message = `${addAnnounceForm.title.value}- ${addAnnounceForm.message.value}`;
+        // console.log("639052354473", encodeURIComponent(message));
+        // sendSMSMessage("639052354473", encodeURIComponent(message));
+
+        // async function deleteUser(userUID) {
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "account-information", userUID));
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "vehicle-information", userUID));
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "system-activity", userUID));
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "logs", userUID));
+        //   await fire.myDeleteDoc(fire.myDoc(fire.db, "linkages", userUID));
+
+        //   await console.log("Done!");
+        // }
+        // deleteUser("0Ih1pYJn5fb63HD1vlJoksKlkWB2");
+        // deleteUser("1m53o10ku4ORwYkQifKsxPFhm9h1");
+        // deleteUser("RStGejmim3hLLWqcmlpoh00d99o1");
+        // deleteUser("eVYjJfzfb0hBpFLDetNuOZpEx5h1");
+        // deleteUser("mWzeSivijSUBGM7Goyxx5YHcZgz1");
+        // deleteUser("ntfNzJhIpQVY2aVhMDGyxbpE7tI3");
+        // deleteUser("wIHQmo7nxwceS5dBgma6ukXl2Py1");
+        // deleteUser("osomG2vvswWnaUYzzK4fXKuHUpt1");
+
+
         fire
           .myAddDoc(fire.announceColRef, {
-            to: "+639052354473",
-            from: "+18658003391",
-            body: "Announcement!: " + addAnnounceForm.title.value + " " + addAnnounceForm.message.value,
+            // to: "+639052354473",
+            // from: "+18658003391",
+            // body: "Announcement!: " + addAnnounceForm.title.value + " " + addAnnounceForm.message.value,
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
             posted_by: addAnnounceForm.postedBy.value,
@@ -113,12 +177,16 @@ function ajaxAnnounce() {
               title: "Announcement",
               text: "SUCCESSFULLY CREATED!",
               icon: "success",
+            }).then(() => {
+              window.location.reload();
             });
 
             addAnnounceForm.reset();
             fire.myUploadBytes(imageRef, thumbnail).then((snapshot) => {
               console.log("UPLOADED");
             });
+            // swal.close(); 
+
             // var metadata = {
             //   contentType: first_file.type,
             // };
@@ -147,6 +215,9 @@ function ajaxAnnounce() {
       let title;
       let id;
       const renderAnnounce = (docu) => {
+
+        console.log("docu.data(): ", docu.data());
+
         var tableTr = t.row
           .add([
             docu.id,
