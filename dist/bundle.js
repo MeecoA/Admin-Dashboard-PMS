@@ -36149,7 +36149,7 @@ function ajaxAnnounce() {
         _src_index_js__WEBPACK_IMPORTED_MODULE_1__.myAddDoc(_src_index_js__WEBPACK_IMPORTED_MODULE_1__.announceColRef, {
             to: "+639052354473",
             from: "+18658003391",
-            body: "Announcement!: " + addAnnounceForm.title.value + addAnnounceForm.message.value,
+            body: "Announcement!: " + addAnnounceForm.title.value + " " + addAnnounceForm.message.value,
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
             posted_by: addAnnounceForm.postedBy.value,
