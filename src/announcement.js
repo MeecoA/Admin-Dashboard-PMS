@@ -97,7 +97,7 @@ function ajaxAnnounce() {
           .myAddDoc(fire.announceColRef, {
             to: "+639052354473",
             from: "+18658003391",
-            body: addAnnounceForm.message.value,
+            body: "Announcement!: " + addAnnounceForm.title.value + addAnnounceForm.message.value,
             id: addAnnounceForm.title.value,
             title: addAnnounceForm.title.value,
             posted_by: addAnnounceForm.postedBy.value,
